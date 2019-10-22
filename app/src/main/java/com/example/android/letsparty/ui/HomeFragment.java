@@ -1,4 +1,4 @@
-package com.example.android.letsparty;
+package com.example.android.letsparty.ui;
 
 import android.support.v4.app.Fragment;
 
