@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.letsparty.R;
@@ -22,6 +23,8 @@ public class PasswordResetActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_reset);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.reset_password);
         et_email = findViewById(R.id.et_email);
         Button btn_reset = findViewById(R.id.btn_reset);
         btn_reset.setOnClickListener(new View.OnClickListener() {
