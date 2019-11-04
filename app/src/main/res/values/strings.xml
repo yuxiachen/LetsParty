@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">LetsParty</string>
+    <!-- navigation icon title-->
+    <string name="title_trending">Trending</string>
+    <string name="title_my_event">My Events</string>
+    <string name="title_inbox">Inbox</string>
+    <string name="title_me">Me</string>
+
+    <!--login screen-->
+    <string name="mail">Email</string>
+    <string name="password">Password</string>
+    <string name="signup">SignUp</string>
+    <string name="login">LogIn</string>
+    <string name="forgetPassword"><u>Forget password?</u></string>
+    <string name="error_invalid_email">Error: Please enter a valid email!</string>
+    <string name="error_empty_password">Error: Password can not be empty!</string>
+    <string name="error_email_not_verified">Error: Please verify your email address before login!</string>
+
+    <!--signup screen-->
+    <string name="username">Username</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="error_invalid_confirm_password">Error: Confirm password is not consistent with the password entered!</string>
+    <string name="error_invalid_username">Error: User name can not be empty!</string>
+    <string name="error_invalid_password">Error: Password should be at least 8 characters!</string>
+
+
+    <!--password reset screen-->
+    <string name="enter_email_for_reset">Please enter your email address, and we will send you a link to reset your password.</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="link_sent">A link has been sent to your email, please using it to reset your password.</string>
+
 </resources>
