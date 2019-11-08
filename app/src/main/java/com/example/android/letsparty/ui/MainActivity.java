@@ -1,7 +1,6 @@
 package com.example.android.letsparty.ui;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.MenuItem;
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    public void replaceFragment(Fragment selectedFragment){
+    public void replaceFragment(Fragment selectedFragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_frame, selectedFragment);
         transaction.addToBackStack(null);
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState (Bundle outState, PersistableBundle outPersistentState){
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
         if (selectedFragment != null && selectedFragment.isAdded()) {
             getSupportFragmentManager().putFragment(outState, "SelectFragment", selectedFragment);
