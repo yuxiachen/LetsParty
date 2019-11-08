@@ -61,8 +61,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         }
         public void updateUI(Event event){
             eventTitleTextView.setText(event.getTitle());
-            eventTimeTextView.setText(event.getTime());
-            eventLocationTextView.setText(event.getLocation());
+            eventTimeTextView.setText(event.getTime().toDate().toString());
+            eventLocationTextView.setText(event.getLocation().getAddressLine());
         }
     }
 

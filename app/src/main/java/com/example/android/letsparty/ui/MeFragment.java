@@ -1,4 +1,6 @@
 package com.example.android.letsparty.ui;
 
-public class MeFragment {
+import androidx.fragment.app.Fragment;
+
+public class MeFragment extends Fragment {
 }
