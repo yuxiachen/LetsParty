@@ -5,6 +5,7 @@ import com.google.firebase.Timestamp;
 public class Event {
     private String category;
     private String title;
+    private String imgUrl;
     private Timestamp time;
     private Location location;
     public Event(String category, String title, Timestamp time, Location location) {
@@ -26,5 +27,14 @@ public class Event {
 
     public Location getLocation(){
         return location;
+    }
+
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
     }
 }

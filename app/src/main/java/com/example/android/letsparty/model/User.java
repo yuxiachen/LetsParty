@@ -8,7 +8,15 @@ public class User {
     private String email;
     private String userId;
     private List<User> friends;
-    private List<Event> publishedEvents;
+
+    public User() {
+    }
+
+    public User(String userName, String email){
+        this.email = email;
+        this.userName = userName;
+    }
+
     public User(String userId, String userName, String email) {
         this.userId = userId;
         this.email = email;

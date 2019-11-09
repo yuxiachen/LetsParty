@@ -11,6 +11,7 @@
     <string name="password">Password</string>
     <string name="signup">SignUp</string>
     <string name="login">LogIn</string>
+    <string name="logout">LogOut</string>
     <string name="forgetPassword"><u>Forget password?</u></string>
     <string name="error_invalid_email">Error: Please enter a valid email!</string>
     <string name="error_empty_password">Error: Password can not be empty!</string>
