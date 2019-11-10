@@ -5,11 +5,13 @@
     <dimen name="paragraph_margin">16dp</dimen>
     <dimen name="screen_margin">24dp</dimen>
 
-    <dimen name="title_text_size">24sp</dimen>
+    <dimen name="title_text_size">20sp</dimen>
     <dimen name="normal_text_size">18sp</dimen>
 
     <dimen name="line_height">36dp</dimen>
 
     <dimen name="large_corner_radius">8dp</dimen>
     <dimen name="small_corner_radius">4dp</dimen>
+
+    <dimen name="img_size">80dp</dimen>
 </resources>

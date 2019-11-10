@@ -34,8 +34,8 @@ public class MyEventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflateView = inflater.inflate(R.layout.fragment_my_events, container, false);
 
-        viewPager = (ViewPager)inflateView.findViewById(R.id.viewpager);
-        tabLayout = (TabLayout)inflateView.findViewById(R.id.tablayout);
+        viewPager = (ViewPager) inflateView.findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) inflateView.findViewById(R.id.tablayout);
 
         postedFragment = new PostedFragment();
         upcomingFragment = new UpcomingFragment();
