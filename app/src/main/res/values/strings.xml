@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lets</string>
+    <string name="app_name">LetsParty</string>
     <!-- navigation icon title-->
     <string name="title_trending">Trending</string>
     <string name="title_my_event">My Events</string>

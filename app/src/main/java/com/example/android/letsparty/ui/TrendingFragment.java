@@ -35,7 +35,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trending, null);
-        Log.e("aaa",  "inflate the view");
         recyclerView = view.findViewById(R.id.trending_event_list);
         resultEvents = new ArrayList<>();
         eventKeys = new ArrayList<>();
@@ -49,7 +48,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    Log.e("aaa", "result: ");
                     resultEvents.clear();
                     eventKeys.clear();
                     for (QueryDocumentSnapshot document : task.getResult()) {

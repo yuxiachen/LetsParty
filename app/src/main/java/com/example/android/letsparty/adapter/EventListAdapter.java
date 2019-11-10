@@ -1,8 +1,6 @@
 package com.example.android.letsparty.adapter;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.letsparty.R;
 import com.example.android.letsparty.model.Event;
-import com.example.android.letsparty.ui.TrendingFragment;
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.EventItemViewHolder> implements View.OnClickListener {
@@ -46,9 +40,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     public void onBindViewHolder(EventItemViewHolder eventItemViewHolder, int i){
         Event currEvent = mEventList.get(i);
         eventItemViewHolder.updateUI(currEvent);
-        Picasso.with(eventItemViewHolder.itemView.getContext())
-                .load(currEvent.getImgUrl()).fit().centerCrop()
-                .into(eventItemViewHolder.eventImageView);
     }
 
     public int getItemCount(){
@@ -78,10 +69,11 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             eventTitleTextView.setText(event.getTitle());
             eventTimeTextView.setText(event.getTime().toDate().toString());
             eventLocationTextView.setText(event.getLocation().getAddressLine());
+            Picasso.get().load(event.getImgUrl())
+                    .fit()
+                    .into(eventImageView);
         }
     }
-
-
 
     public interface OnEventItemClickedListener{
         void OnEventItemClicked(String key);
