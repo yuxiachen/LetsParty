@@ -8,6 +8,7 @@ public class Event {
     private String imgUrl;
     private Timestamp time;
     private Location location;
+
     public Event(String category, String title, Timestamp time, Location location, String imgUrl) {
         this.category = category;
         this.time = time;
