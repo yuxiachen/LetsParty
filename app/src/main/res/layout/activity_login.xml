@@ -38,6 +38,7 @@
         android:layout_marginTop="@dimen/paragraph_margin"
         android:layout_marginRight="@dimen/screen_margin"
         android:hint="@string/mail"
+        android:inputType="textEmailAddress"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/im_logo" />
@@ -51,6 +52,7 @@
         android:layout_marginTop="@dimen/paragraph_margin"
         android:layout_marginRight="@dimen/screen_margin"
         android:hint="@string/password"
+        android:inputType="textPassword"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_email" />

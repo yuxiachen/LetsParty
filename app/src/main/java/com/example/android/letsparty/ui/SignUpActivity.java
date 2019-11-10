@@ -15,10 +15,18 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.letsparty.R;
+import com.example.android.letsparty.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText et_email;
@@ -105,14 +113,26 @@ public class SignUpActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Toast.makeText(getApplicationContext(), "Sign Up Successfully, please check your email for verification!", Toast.LENGTH_LONG).show();
+                                                //User user = new User(username, email);
+                                                FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+                                                Map<String, String> userMap = new HashMap<>();
+                                                userMap.put("username", username);
+                                                userMap.put("email", email);
+                                                mFirestore.collection("users").add(userMap);
                                                 openLoginActivity();
                                             }
                                         }
                                     });
 
                         } else {
-                            // If sign in fails, display a message to the user.
-                            showErrorMessage("Error: " + task.getException().getMessage());
+                            //If user is already registered
+                            if(task.getException() instanceof FirebaseAuthUserCollisionException)
+                                Toast.makeText(getApplicationContext(), "You are already registered", Toast.LENGTH_SHORT).show();
+                            // If sign up fails, display a message to the user
+                            else{
+                                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
                         }
                     }
                 });
