@@ -19,7 +19,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -56,7 +55,7 @@ public class EventDetailActivity extends AppCompatActivity {
                             currEvent = documentSnapshot.toObject(Event.class);
                             setupView(currEvent);
                         } else {
-                            Log.e("aaa", "data not exist" + documentSnapshot.toString());
+                            Log.e(EventDetailActivity.class.getSimpleName(), "data not exist" + documentSnapshot.toString());
                         }
                     }
                 });
@@ -68,10 +67,8 @@ public class EventDetailActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.getResult().exists()) {
-                            Log.e("aaa", "exists");
                             joinState = true;
                         } else {
-                            Log.e("aaa", "not exists");
                             joinState = false;
                         }
                     }
