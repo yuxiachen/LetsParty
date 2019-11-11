@@ -94,7 +94,7 @@ public class PostedFragment extends Fragment implements EventListAdapter.OnEvent
                     }
                     mAdapter.notifyDataSetChanged();
                 } else {
-                    Log.e("aaa", "task failed" + task.getResult());
+                    Log.e(PostedFragment.class.getSimpleName(), "task failed" + task.getResult());
                 }
             }
         });

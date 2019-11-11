@@ -113,7 +113,7 @@ public class HistoryFragment extends Fragment implements EventListAdapter.OnEven
                     }
                     mAdapter.notifyDataSetChanged();
                 } else {
-                    Log.e("aaa", "task failed" + task.getResult());
+                    Log.e(HistoryFragment.class.getSimpleName(), "task failed" + task.getResult());
                 }
             }
         });

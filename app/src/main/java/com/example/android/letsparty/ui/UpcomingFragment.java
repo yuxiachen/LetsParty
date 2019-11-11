@@ -113,7 +113,7 @@ public class UpcomingFragment extends Fragment implements EventListAdapter.OnEve
                     }
                     mAdapter.notifyDataSetChanged();
                 } else {
-                    Log.e("aaa", "task failed" + task.getResult());
+                    Log.e(UpcomingFragment.class.getSimpleName(), "task failed" + task.getResult());
                 }
             }
         });
