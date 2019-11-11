@@ -72,7 +72,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra("key", key);
         startActivity(intent);
-
     }
 
     @Override

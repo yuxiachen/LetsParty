@@ -30,4 +30,9 @@
     <string name="reset_password">Reset Password</string>
     <string name="link_sent">A link has been sent to your email, please using it to reset your password.</string>
 
+
+    <!--Event detail screen -->
+    <string name="join">Join</string>
+    <string name="quit">Quit</string>
+
 </resources>

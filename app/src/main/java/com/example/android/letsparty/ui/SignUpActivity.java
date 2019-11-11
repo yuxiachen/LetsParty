@@ -118,7 +118,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                 Map<String, String> userMap = new HashMap<>();
                                                 userMap.put("username", username);
                                                 userMap.put("email", email);
-                                                mFirestore.collection("users").add(userMap);
+                                                mFirestore.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(userMap);
                                                 openLoginActivity();
                                             }
                                         }
