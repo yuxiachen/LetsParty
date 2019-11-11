@@ -44,7 +44,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("events").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("events").orderBy("time").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {

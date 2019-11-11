@@ -95,7 +95,7 @@ public class HistoryFragment extends Fragment implements EventListAdapter.OnEven
             }
         });
 
-        db.collection("events").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("events").orderBy("time").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
