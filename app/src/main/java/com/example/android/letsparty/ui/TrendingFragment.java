@@ -58,7 +58,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                     }
                     mAdapter.notifyDataSetChanged();
                 } else {
-                    Log.e("aaa", "task failed" + task.getResult());
+                    Log.e(TrendingFragment.class.getSimpleName(), "task failed" + task.getResult());
                 }
             }
         });
