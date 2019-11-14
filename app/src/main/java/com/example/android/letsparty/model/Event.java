@@ -39,7 +39,6 @@ public class Event {
     public String getImgUrl() {
         return imgUrl;
     }
-
     public String getOrganizer() {
         return organizer;
     }
