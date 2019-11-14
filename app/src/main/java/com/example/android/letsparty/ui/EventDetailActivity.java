@@ -15,21 +15,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.letsparty.R;
 import com.example.android.letsparty.model.Event;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class EventDetailActivity extends AppCompatActivity {
 
     private Event currEvent;
-    private FirebaseFirestore db;
+    private FirebaseDatabase db;
     private String userId;
     private String eventKey;
     private boolean joinState;
@@ -40,39 +36,49 @@ public class EventDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
         eventKey = getIntent().getStringExtra("key");
-        db = FirebaseFirestore.getInstance();
+        db = FirebaseDatabase.getInstance();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        btn_join = findViewById(R.id.btn_join);
         fetchJoinState();
         fetchEvent();
     }
 
     private void fetchEvent() {
-        db.collection("events").document(eventKey).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            currEvent = documentSnapshot.toObject(Event.class);
-                            setupView(currEvent);
-                        } else {
-                            Log.e(EventDetailActivity.class.getSimpleName(), "data not exist" + documentSnapshot.toString());
-                        }
-                    }
-                });
+        db.getReference(getString(R.string.db_event)).child(eventKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    currEvent = dataSnapshot.getValue(Event.class);
+                    setupView(currEvent);
+                } else {
+                    Log.e(EventDetailActivity.class.getSimpleName(), "data not exist");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void fetchJoinState() {
-        db.collection("users/" + userId + "/joinedEvents").document(eventKey).get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.getResult().exists()) {
-                            joinState = true;
-                        } else {
-                            joinState = false;
-                        }
-                    }
-                });
+        db.getReference(getString(R.string.db_joined_user) + "/" + eventKey).child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    joinState = true;
+                } else {
+                    joinState = false;
+                }
+                setButtonText();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void setupView(Event event) {
@@ -84,7 +90,7 @@ public class EventDetailActivity extends AppCompatActivity {
         TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText(event.getTitle());
         TextView tv_time = findViewById(R.id.tv_time);
-        tv_time.setText(event.getTime().toDate().toString());
+        tv_time.setText(Long.toString(event.getTime()));
         TextView tv_category = findViewById(R.id.tv_category);
         tv_category.setText(event.getCategory());
         TextView tv_location = findViewById(R.id.tv_location);
@@ -95,7 +101,7 @@ public class EventDetailActivity extends AppCompatActivity {
         tv_publisher.setText(event.getOrganizer());
         TextView tv_description = findViewById(R.id.tv_description);
         tv_description.setText(event.getDescription());
-        btn_join = findViewById(R.id.btn_join);
+
         btn_join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,19 +124,15 @@ public class EventDetailActivity extends AppCompatActivity {
     }
 
     private void quitEvent() {
-        db.collection("events/" + eventKey + "/joinedUsers").document(userId).delete();
-        db.collection("users/" + userId + "/joinedEvents").document(eventKey).delete();
+        db.getReference(getString(R.string.db_joined_user) + "/" + eventKey).child(userId).removeValue();
+        db.getReference(getString(R.string.db_joined_event) + "/" + userId).child(eventKey).removeValue();
         joinState = false;
         setButtonText();
     }
 
     private void joinEvent() {
-        Map<String, Object> data = new HashMap<>();
-        data.put(userId, db.document("users/" + userId));
-        db.collection("events/" + eventKey + "/joinedUsers").document(userId).set(data);
-        data.clear();
-        data.put(eventKey, db.document("users/" + eventKey));
-        db.collection("users/" + userId + "/joinedEvents").document(eventKey).set(data);
+        db.getReference(getString(R.string.db_joined_user) + "/" + eventKey).child(userId).setValue(userId);
+        db.getReference(getString(R.string.db_joined_event) + "/" + userId).child(eventKey).setValue(eventKey);
         joinState = true;
         setButtonText();
     }

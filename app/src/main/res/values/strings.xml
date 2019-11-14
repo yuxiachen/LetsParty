@@ -6,6 +6,13 @@
     <string name="title_inbox">Inbox</string>
     <string name="title_me">Me</string>
 
+    <!-- Database name-->
+    <string name="db_user">users</string>
+    <string name="db_event">events</string>
+    <string name="db_joined_event">joinedEvents</string>
+    <string name="db_joined_user">joinedUsers</string>
+
+
     <!--login screen-->
     <string name="mail">Email</string>
     <string name="password">Password</string>

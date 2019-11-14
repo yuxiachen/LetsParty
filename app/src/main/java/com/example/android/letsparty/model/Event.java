@@ -1,18 +1,15 @@
 package com.example.android.letsparty.model;
 
-import com.google.firebase.Timestamp;
-
 public class Event {
     private String category;
     private String title;
     private String imgUrl;
-    private Timestamp time;
+    private long time;
     private Location location;
-    private String description;
     private int minPeople;
     private String organizer;
-
-    public Event(String category, String title, Timestamp time, Location location, String imgUrl) {
+    private String description;
+    public Event(String category, String title, long time, Location location, String imgUrl) {
         this.category = category;
         this.time = time;
         this.title = title;
@@ -26,7 +23,7 @@ public class Event {
         return title;
     }
 
-    public Timestamp getTime(){
+    public long getTime(){
         return time;
     }
 
@@ -42,16 +39,15 @@ public class Event {
     public String getImgUrl() {
         return imgUrl;
     }
-
-    public String getDescription() {
-        return description;
+    public String getOrganizer() {
+        return organizer;
     }
 
     public int getMinPeople() {
         return minPeople;
     }
 
-    public String getOrganizer() {
-        return organizer;
+    public String getDescription() {
+        return description;
     }
 }
