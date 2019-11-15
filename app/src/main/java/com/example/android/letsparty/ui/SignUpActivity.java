@@ -17,16 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.android.letsparty.R;
 import com.example.android.letsparty.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText et_email;
@@ -113,12 +108,10 @@ public class SignUpActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Toast.makeText(getApplicationContext(), "Sign Up Successfully, please check your email for verification!", Toast.LENGTH_LONG).show();
-                                                //User user = new User(username, email);
-                                                FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-                                                Map<String, String> userMap = new HashMap<>();
-                                                userMap.put("username", username);
-                                                userMap.put("email", email);
-                                                mFirestore.collection("users").add(userMap);
+                                                User user = new User(username, email);
+                                                String userId = auth.getUid();
+                                                FirebaseDatabase db = FirebaseDatabase.getInstance();
+                                                db.getReference(getString(R.string.db_user)).child(userId).setValue(user);
                                                 openLoginActivity();
                                             }
                                         }

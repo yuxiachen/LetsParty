@@ -1,6 +1,5 @@
 package com.example.android.letsparty.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +66,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
 
         public void updateUI(Event event){
             eventTitleTextView.setText(event.getTitle());
-            eventTimeTextView.setText(event.getTime().toDate().toString());
+            eventTimeTextView.setText(Long.toString(event.getTime()));
             eventLocationTextView.setText(event.getLocation().getAddressLine());
             Picasso.get().load(event.getImgUrl())
                     .fit()
