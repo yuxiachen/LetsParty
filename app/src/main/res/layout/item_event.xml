@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp">
+    android:layout_margin="@dimen/item_margin">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
+        android:layout_margin="@dimen/item_margin"
         tools:context=".ui.MainActivity">
 
         <ImageView
@@ -18,8 +18,7 @@
             android:layout_height="@dimen/img_size"
             android:background="@drawable/img_shape"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/title_item_event"
@@ -36,8 +35,7 @@
             style="?normalText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="@dimen/item_margin"
             app:layout_constraintLeft_toLeftOf="@+id/title_item_event"
             app:layout_constraintTop_toBottomOf="@+id/title_item_event" />
 
@@ -51,4 +49,5 @@
             app:layout_constraintTop_toBottomOf="@+id/time_item_event" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>
