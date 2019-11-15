@@ -9,6 +9,7 @@ public class Event {
     private int minPeople;
     private String organizer;
     private String description;
+    private boolean friendsOnly;
 
     public Event(String category, String title, long time, Location location, String imgUrl) {
         this.category = category;
@@ -40,6 +41,7 @@ public class Event {
     public String getImgUrl() {
         return imgUrl;
     }
+
     public String getOrganizer() {
         return organizer;
     }
@@ -50,5 +52,9 @@ public class Event {
 
     public String getDescription() {
         return description;
+    }
+
+    public boolean getFriendsOnly() {
+        return friendsOnly;
     }
 }

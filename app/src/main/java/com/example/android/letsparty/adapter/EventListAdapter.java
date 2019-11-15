@@ -13,6 +13,7 @@ import com.example.android.letsparty.R;
 import com.example.android.letsparty.model.Event;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.EventItemViewHolder> implements View.OnClickListener {
@@ -65,8 +66,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         }
 
         public void updateUI(Event event){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
             eventTitleTextView.setText(event.getTitle());
-            eventTimeTextView.setText(Long.toString(event.getTime()));
+            eventTimeTextView.setText(sdf.format(event.getTime()));
             eventLocationTextView.setText(event.getLocation().getAddressLine());
             Picasso.get().load(event.getImgUrl())
                     .fit()

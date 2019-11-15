@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import androidx.viewpager.widget.ViewPager;
@@ -30,12 +32,13 @@ public class MyEventsFragment extends Fragment {
     private List<Fragment> fragments;
     private List<String> titles;
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View inflateView = inflater.inflate(R.layout.fragment_my_events, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_my_events, null);
 
-        viewPager = (ViewPager) inflateView.findViewById(R.id.viewpager);
-        tabLayout = (TabLayout) inflateView.findViewById(R.id.tablayout);
+        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
 
         postedFragment = new PostedFragment();
         upcomingFragment = new UpcomingFragment();
@@ -69,6 +72,6 @@ public class MyEventsFragment extends Fragment {
 
         tabLayout.setupWithViewPager(viewPager);
 
-        return inflateView;
+        return view;
     }
 }

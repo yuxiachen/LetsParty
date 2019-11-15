@@ -16,86 +16,90 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.android.letsparty.R;
 import com.example.android.letsparty.adapter.EventListAdapter;
 import com.example.android.letsparty.model.Event;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class PostedFragment extends Fragment implements EventListAdapter.OnEventItemClickedListener {
+
     private RecyclerView recyclerView;
     private EventListAdapter mAdapter;
     private ArrayList<Event> resultEvents;
     private ArrayList<String> eventKeys;
     private ArrayList<String> eventIDs;
-    private Map<String, Object> map;
+    private String userId;
+    private View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_trending, null);
-        recyclerView = view.findViewById(R.id.trending_event_list);
+        view = inflater.inflate(R.layout.fragment_posted, null);
+
+        recyclerView = view.findViewById(R.id.posted_event_list);
+
         resultEvents = new ArrayList<>();
         eventKeys = new ArrayList<>();
         eventIDs = new ArrayList<>();
-        map = new HashMap<>();
-        final Date date = new Date();
+
         mAdapter = new EventListAdapter(resultEvents, eventKeys, this);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(mAdapter);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        DocumentReference documentReference = db.collection("user_published_events").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        DatabaseReference postedEventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_posted_event)).child(userId);
 
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        postedEventRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
                     eventIDs.clear();
-                    map.clear();
-                    if (task.getResult().getData() != null) {
-                        Map<String, Object> map = task.getResult().getData();
-                        for (Map.Entry<String, Object> entry : map.entrySet()) {
-                            eventIDs.add(entry.getKey());
-                            Log.d("TAG", entry.getKey());
-                        }
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        eventIDs.add(snapshot.getKey());
                     }
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    Log.e(PostedFragment.class.getSimpleName(), "No relation exists");
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
-        db.collection("events").orderBy("time").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event));
+
+        eventRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
                     resultEvents.clear();
                     eventKeys.clear();
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        if (eventIDs.contains(document.getId())) {
-                            if (document.getTimestamp("time").compareTo(new Timestamp(date)) > 0) {
-                                Event event = document.toObject(Event.class);
-                                String key = document.getId();
-                                resultEvents.add(event);
-                                eventKeys.add(key);
-                            }
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        if (eventIDs.contains(snapshot.getKey())) {
+                            Event event = snapshot.getValue(Event.class);
+                            String key = snapshot.getKey();
+                            resultEvents.add(event);
+                            eventKeys.add(key);
                         }
                     }
                     mAdapter.notifyDataSetChanged();
                 } else {
-                    Log.e(PostedFragment.class.getSimpleName(), "task failed" + task.getResult());
+                    Log.e(PostedFragment.class.getSimpleName(), "No data exists");
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
@@ -106,7 +110,6 @@ public class PostedFragment extends Fragment implements EventListAdapter.OnEvent
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra("key", key);
         startActivity(intent);
-
     }
 
     @Override

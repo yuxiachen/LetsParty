@@ -22,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+
 public class EventDetailActivity extends AppCompatActivity {
 
     private Event currEvent;
@@ -83,6 +85,9 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private void setupView(Event event) {
         if (event == null) return;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(event.getTitle());
         ImageView iv_poster = findViewById(R.id.iv_poster);
@@ -90,14 +95,14 @@ public class EventDetailActivity extends AppCompatActivity {
         TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText(event.getTitle());
         TextView tv_time = findViewById(R.id.tv_time);
-        tv_time.setText(Long.toString(event.getTime()));
+        tv_time.setText(sdf.format(event.getTime()));
         TextView tv_category = findViewById(R.id.tv_category);
         tv_category.setText(event.getCategory());
         TextView tv_location = findViewById(R.id.tv_location);
         tv_location.setText(event.getLocation().getAddressLine());
         TextView tv_min_number = findViewById(R.id.tv_min_number);
-        TextView tv_publisher = findViewById(R.id.tv_organizer);
         tv_min_number.setText(Integer.toString(event.getMinPeople()));
+        TextView tv_publisher = findViewById(R.id.tv_organizer);
         tv_publisher.setText(event.getOrganizer());
         TextView tv_description = findViewById(R.id.tv_description);
         tv_description.setText(event.getDescription());
