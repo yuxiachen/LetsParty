@@ -2,6 +2,7 @@ package com.example.android.letsparty.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(mAdapter);
 
-        DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference("events");
+        DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event));
 
         eventRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -56,6 +57,8 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                         eventKeys.add(key);
                     }
                     mAdapter.notifyDataSetChanged();
+                } else {
+                    Log.e(TrendingFragment.class.getSimpleName(), "No data exists");
                 }
             }
 
@@ -74,7 +77,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra("key", key);
         startActivity(intent);
-
     }
 
     @Override

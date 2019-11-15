@@ -6,6 +6,13 @@
     <string name="title_inbox">Inbox</string>
     <string name="title_me">Me</string>
 
+    <!-- Database name-->
+    <string name="db_user">users</string>
+    <string name="db_event">events</string>
+    <string name="db_joined_event">joinedEvents</string>
+    <string name="db_joined_user">joinedUsers</string>
+
+
     <!--login screen-->
     <string name="mail">Email</string>
     <string name="password">Password</string>
@@ -29,5 +36,10 @@
     <string name="enter_email_for_reset">Please enter your email address, and we will send you a link to reset your password.</string>
     <string name="reset_password">Reset Password</string>
     <string name="link_sent">A link has been sent to your email, please using it to reset your password.</string>
+
+
+    <!--Event detail screen -->
+    <string name="join">Join</string>
+    <string name="quit">Quit</string>
 
 </resources>
