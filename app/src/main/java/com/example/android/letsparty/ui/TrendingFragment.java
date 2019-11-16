@@ -35,6 +35,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trending, null);
+
         recyclerView = view.findViewById(R.id.trending_event_list);
         resultEvents = new ArrayList<>();
         eventKeys = new ArrayList<>();
@@ -67,8 +68,8 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
 
             }
         });
-        return view;
 
+        return view;
     }
 
 

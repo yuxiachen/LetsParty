@@ -9,6 +9,7 @@
     <!-- Database name-->
     <string name="db_user">users</string>
     <string name="db_event">events</string>
+    <string name="db_posted_event">postedEvents</string>
     <string name="db_joined_event">joinedEvents</string>
     <string name="db_joined_user">joinedUsers</string>
 
