@@ -30,8 +30,7 @@ public class UpcomingFragment extends Fragment implements EventListAdapter.OnEve
     private EventListAdapter mAdapter;
     private ArrayList<Event> resultEvents;
     private ArrayList<String> eventKeys;
-    private ArrayList<String> eventIDs_1;
-    private ArrayList<String> eventIDs_2;
+    private ArrayList<String> eventIDs;
     private String userId;
 
     @Nullable
@@ -43,8 +42,7 @@ public class UpcomingFragment extends Fragment implements EventListAdapter.OnEve
 
         resultEvents = new ArrayList<>();
         eventKeys = new ArrayList<>();
-        eventIDs_1 = new ArrayList<>();
-        eventIDs_2 = new ArrayList<>();
+        eventIDs = new ArrayList<>();
 
         mAdapter = new EventListAdapter(resultEvents, eventKeys, this);
 
@@ -53,67 +51,44 @@ public class UpcomingFragment extends Fragment implements EventListAdapter.OnEve
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        // Find the User Posted Event ID
-        DatabaseReference postedEventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_posted_event)).child(userId);
+        // Find the User Joined Event ID ( Include Posted Event )
+        DatabaseReference postedEventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_joined_event)).child(userId);
 
         postedEventRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    eventIDs_1.clear();
+                    eventIDs.clear();
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        eventIDs_1.add(snapshot.getKey());
+                        eventIDs.add(snapshot.getKey());
                     }
 
-                    // Find the User Joined Event ID
-                    DatabaseReference joinedEventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_joined_event)).child(userId);
+                    // Find the Event
+                    DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event));
 
-                    joinedEventRef.addValueEventListener(new ValueEventListener() {
+                    eventRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
-                                eventIDs_2.clear();
+                                resultEvents.clear();
+                                eventKeys.clear();
 
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    eventIDs_2.add(snapshot.getKey());
-                                }
-
-                                // Find the Event
-                                DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event));
-
-                                eventRef.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.exists()) {
-                                            resultEvents.clear();
-                                            eventKeys.clear();
-
-                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                if (eventIDs_1.contains(snapshot.getKey()) || eventIDs_2.contains(snapshot.getKey())) {
-                                                    Long time = (Long)snapshot.child("time").getValue();
-                                                    if (new Date().getTime() < time) {
-                                                        Event event = snapshot.getValue(Event.class);
-                                                        String key = snapshot.getKey();
-                                                        resultEvents.add(event);
-                                                        eventKeys.add(key);
-                                                    }
-                                                }
-                                            }
-
-                                            mAdapter.notifyDataSetChanged();
-                                        } else {
-                                            Log.e(UpcomingFragment.class.getSimpleName(), "No data exists");
+                                    if (eventIDs.contains(snapshot.getKey())) {
+                                        Long time = (Long)snapshot.child("time").getValue();
+                                        if (new Date().getTime() < time) {
+                                            Event event = snapshot.getValue(Event.class);
+                                            String key = snapshot.getKey();
+                                            resultEvents.add(event);
+                                            eventKeys.add(key);
                                         }
                                     }
+                                }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
+                                mAdapter.notifyDataSetChanged();
                             } else {
-                                Log.e(UpcomingFragment.class.getSimpleName(), "No relation exists");
+                                Log.e(UpcomingFragment.class.getSimpleName(), "No data exists");
                             }
                         }
 
