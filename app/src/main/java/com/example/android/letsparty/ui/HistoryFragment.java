@@ -55,6 +55,7 @@ public class HistoryFragment extends Fragment implements EventListAdapter.OnEven
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        // Find the User Posted Event ID
         DatabaseReference postedEventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_posted_event)).child(userId);
 
         postedEventRef.addValueEventListener(new ValueEventListener() {
@@ -62,65 +63,69 @@ public class HistoryFragment extends Fragment implements EventListAdapter.OnEven
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     eventIDs_1.clear();
+
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         eventIDs_1.add(snapshot.getKey());
                     }
-                    mAdapter.notifyDataSetChanged();
-                } else {
-                    Log.e(HistoryFragment.class.getSimpleName(), "No relation exists");
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Find the User Joined Event ID
+                    DatabaseReference joinedEventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_joined_event)).child(userId);
 
-            }
-        });
+                    joinedEventRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                eventIDs_2.clear();
 
-        DatabaseReference joinedEventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_joined_event)).child(userId);
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    eventIDs_2.add(snapshot.getKey());
+                                }
 
-        joinedEventRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    eventIDs_2.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        eventIDs_2.add(snapshot.getKey());
-                    }
-                    mAdapter.notifyDataSetChanged();
-                } else {
-                    Log.e(HistoryFragment.class.getSimpleName(), "No relation exists");
-                }
-            }
+                                // Find the Event
+                                DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event));
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                eventRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.exists()) {
+                                            resultEvents.clear();
+                                            eventKeys.clear();
 
-            }
-        });
+                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                if (eventIDs_1.contains(snapshot.getKey()) || eventIDs_2.contains(snapshot.getKey())) {
+                                                    Long time = (Long)snapshot.child("time").getValue();
+                                                    if (new Date().getTime() > time) {
+                                                        Event event = snapshot.getValue(Event.class);
+                                                        String key = snapshot.getKey();
+                                                        resultEvents.add(event);
+                                                        eventKeys.add(key);
+                                                    }
+                                                }
+                                            }
 
-        DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event));
+                                            mAdapter.notifyDataSetChanged();
+                                        } else {
+                                            Log.e(UpcomingFragment.class.getSimpleName(), "No data exists");
+                                        }
+                                    }
 
-        eventRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    resultEvents.clear();
-                    eventKeys.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        if (eventIDs_1.contains(snapshot.getKey()) || eventIDs_2.contains(snapshot.getKey())) {
-                            Long time = (Long)snapshot.child("time").getValue();
-                            if (new Date().getTime() > time) {
-                                Event event = snapshot.getValue(Event.class);
-                                String key = snapshot.getKey();
-                                resultEvents.add(event);
-                                eventKeys.add(key);
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            } else {
+                                Log.e(UpcomingFragment.class.getSimpleName(), "No relation exists");
                             }
                         }
-                    }
-                    mAdapter.notifyDataSetChanged();
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 } else {
-                    Log.e(HistoryFragment.class.getSimpleName(), "No data exists");
+                    Log.e(UpcomingFragment.class.getSimpleName(), "No relation exists");
                 }
             }
 

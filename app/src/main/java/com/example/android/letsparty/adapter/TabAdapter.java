@@ -2,13 +2,14 @@ package com.example.android.letsparty.adapter;
 
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-public class TabAdapter extends FragmentPagerAdapter {
+public class TabAdapter extends FragmentStatePagerAdapter {
     // Fragment List
     private List<Fragment> fragments;
     private List<String> titles;
@@ -20,6 +21,7 @@ public class TabAdapter extends FragmentPagerAdapter {
         this.titles = titles;
     }
 
+    @Nullable
     @Override
     public Fragment getItem(int position) {
         return fragments.get(position);
