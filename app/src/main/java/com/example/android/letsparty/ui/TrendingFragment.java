@@ -24,6 +24,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TrendingFragment extends Fragment implements EventListAdapter.OnEventItemClickedListener{
 
@@ -55,8 +56,12 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Event event = snapshot.getValue(Event.class);
                         String key = snapshot.getKey();
-                        resultEvents.add(event);
-                        eventKeys.add(key);
+
+                        Long time = (Long)snapshot.child("time").getValue();
+                        if (new Date().getTime() < time) {
+                            resultEvents.add(event);
+                            eventKeys.add(key);
+                        }
                     }
                     mAdapter.notifyDataSetChanged();
                 } else {
