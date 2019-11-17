@@ -21,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,9 +66,9 @@ public class UpcomingFragment extends Fragment implements EventListAdapter.OnEve
                     }
 
                     // Find the Event
-                    DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event));
+                    Query eventQuery = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event)).orderByChild("time");
 
-                    eventRef.addValueEventListener(new ValueEventListener() {
+                    eventQuery.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
