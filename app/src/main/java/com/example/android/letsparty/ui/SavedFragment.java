@@ -57,7 +57,7 @@ public class SavedFragment extends Fragment implements EventListAdapter.OnEventI
         // Find the User Saved Event ID
         DatabaseReference savedEventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_saved_event)).child(userId);
 
-        savedEventRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        savedEventRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {

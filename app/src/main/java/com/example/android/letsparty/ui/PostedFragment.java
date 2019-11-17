@@ -58,7 +58,7 @@ public class PostedFragment extends Fragment implements EventListAdapter.OnEvent
         // Find the User Posted Event ID
         DatabaseReference postedEventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_posted_event)).child(userId);
 
-        postedEventRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        postedEventRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {

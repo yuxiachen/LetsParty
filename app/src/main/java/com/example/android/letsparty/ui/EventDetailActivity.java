@@ -119,9 +119,10 @@ public class EventDetailActivity extends AppCompatActivity {
     private void setupView(Event event) {
         if (event == null) return;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.dateFormat));
 
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(event.getTitle());
 
         ImageView iv_poster = findViewById(R.id.iv_poster);
@@ -189,6 +190,11 @@ public class EventDetailActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
     public void setButtonText() {
