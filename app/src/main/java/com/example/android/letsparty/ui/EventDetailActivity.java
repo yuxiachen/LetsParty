@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class EventDetailActivity extends AppCompatActivity {
 
@@ -132,6 +133,10 @@ public class EventDetailActivity extends AppCompatActivity {
         String time = getString(R.string.eventTime) + " " + sdf.format(event.getTime());
         TextView tv_time = findViewById(R.id.tv_time);
         tv_time.setText(time);
+
+        if (new Date().getTime() > event.getTime()) {
+            btn_join.setEnabled(false);
+        }
 
         String category = getString(R.string.eventCategory) + " " + event.getCategory();
         TextView tv_category = findViewById(R.id.tv_category);
