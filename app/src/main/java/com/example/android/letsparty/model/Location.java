@@ -9,6 +9,11 @@ public class Location {
 
     public Location() {}
 
+    public Location(String city, String state) {
+        this.city = city;
+        this.state = state;
+    }
+
     public Location(String addressLine, String city, String country, String state, String zipCode) {
         this.addressLine = addressLine;
         this.city = city;

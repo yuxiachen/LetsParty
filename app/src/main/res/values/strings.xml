@@ -42,4 +42,17 @@
     <string name="join">Join</string>
     <string name="quit">Quit</string>
 
+    <string-array name="interest_array">
+        <item>Sports</item>
+        <item>Kid</item>
+        <item>Entertainment</item>
+        <item>Music</item>
+        <item>Workout</item>
+        <item>Other</item>
+    </string-array>
+
+    <string name="mBuilderTitle">Areas of Interest:</string>
+    <string name="mBuilderOK">OK</string>
+    <string name="mBuilderDismiss">Dismiss</string>
+    <string name="mBuilderClearAll">Clear all</string>
 </resources>
