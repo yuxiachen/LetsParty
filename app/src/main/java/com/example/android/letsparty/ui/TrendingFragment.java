@@ -20,9 +20,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TrendingFragment extends Fragment implements EventListAdapter.OnEventItemClickedListener{
 
@@ -43,9 +45,9 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(mAdapter);
 
-        DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event));
+        Query eventQuery = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event)).orderByChild("time");
 
-        eventRef.addValueEventListener(new ValueEventListener() {
+        eventQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -54,8 +56,12 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Event event = snapshot.getValue(Event.class);
                         String key = snapshot.getKey();
-                        resultEvents.add(event);
-                        eventKeys.add(key);
+
+                        Long time = (Long)snapshot.child("time").getValue();
+                        if (new Date().getTime() < time) {
+                            resultEvents.add(event);
+                            eventKeys.add(key);
+                        }
                     }
                     mAdapter.notifyDataSetChanged();
                 } else {
