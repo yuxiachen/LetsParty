@@ -42,12 +42,13 @@
     <activity android:name=".ui.MainActivity"
         android:theme="@style/AppThemeWithoutActionBar"
         android:screenOrientation="portrait"/>
-    <activity android:name=".ui.PasswordResetActivity"
+    <activity android:name=".ui.PasswordForgotActivity"
         android:screenOrientation="portrait"/>
     <activity android:name=".ui.EventDetailActivity"
         android:screenOrientation="portrait"/>
-
         <activity android:name=".ui.EditProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.PasswordResetActivity"
             android:screenOrientation="portrait"/>
     </application>
 

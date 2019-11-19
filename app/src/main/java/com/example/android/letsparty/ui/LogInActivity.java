@@ -108,7 +108,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void openPasswordResetActivity() {
-        Intent intent = new Intent(this, PasswordResetActivity.class);
+        Intent intent = new Intent(this, PasswordForgotActivity.class);
         startActivity(intent);
     }
 
