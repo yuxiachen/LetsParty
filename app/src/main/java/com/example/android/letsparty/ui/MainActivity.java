@@ -2,6 +2,14 @@ package com.example.android.letsparty.ui;
 
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.view.MenuItem;
+
 import android.os.PersistableBundle;
 import android.view.MenuItem;
 
@@ -26,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         fragmentManager = getSupportFragmentManager();
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

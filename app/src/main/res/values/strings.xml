@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">LetsParty</string>
+
+    <!-- Date Format -->
+    <string name="dateFormat">yyyy-MM-dd HH:mm:ss</string>
+
     <!-- navigation icon title-->
     <string name="title_trending">Trending</string>
     <string name="title_my_event">My Events</string>
@@ -9,9 +13,10 @@
     <!-- Database name-->
     <string name="db_user">users</string>
     <string name="db_event">events</string>
+    <string name="db_posted_event">postedEvents</string>
     <string name="db_joined_event">joinedEvents</string>
+    <string name="db_saved_event">savedEvents</string>
     <string name="db_joined_user">joinedUsers</string>
-
 
     <!--login screen-->
     <string name="mail">Email</string>
@@ -42,8 +47,16 @@
     <string name="empty_result">No result found.</string>
 
     <!--Event detail screen -->
+    <string name="eventCategory">Category: </string>
+    <string name="eventTime">Time: </string>
+    <string name="eventLocation">Location: </string>
+    <string name="eventPeople">Minimum Number of People: </string>
+    <string name="eventOrganizer">Organizer: </string>
+    <string name="eventDescription">Description: </string>
     <string name="join">Join</string>
     <string name="quit">Quit</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 
     <string-array name="interest_array">
         <item>Sports</item>

@@ -118,6 +118,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Event event = snapshot.getValue(Event.class);
                         String key = snapshot.getKey();
+
                         resultEvents.add(event);
                         eventKeys.add(key);
                     }
