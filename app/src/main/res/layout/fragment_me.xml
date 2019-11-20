@@ -13,6 +13,7 @@
         android:layout_width="@dimen/img_size"
         android:layout_height="@dimen/img_size"
         android:src="@drawable/default_profile_logo"
+        android:layout_marginBottom="@dimen/screen_margin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
@@ -29,7 +30,7 @@
 
     <TextView
         android:id="@+id/email_item_user"
-        style="?title"
+        style="?normalText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/line_margin"
@@ -58,17 +59,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="@dimen/screen_margin"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_profile"
                 android:id="@+id/profile_label_image"/>
 
             <TextView
                 android:id="@+id/editProfile_item_user"
-                style="?title"
+                style="?normalText"
+                android:text="@string/edit_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/screen_margin"/>
@@ -90,13 +93,15 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_password"
                 android:id="@+id/password_label_image" />
 
             <TextView
                 android:id="@+id/changePwd_item_user"
-                style="?title"
+                style="?normalText"
+                android:text="@string/change_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/screen_margin"/>
@@ -119,13 +124,15 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_friends"
                 android:id="@+id/friends_label_image"/>
 
             <TextView
                 android:id="@+id/friends_item_user"
-                style="?title"
+                style="?normalText"
+                android:text="@string/friends"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/screen_margin"/>

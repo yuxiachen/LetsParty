@@ -32,8 +32,6 @@ public class MeFragment extends Fragment {
     private ImageView userImageView;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
-    private ImageView profile_label_image, password_label_image, friends_label_image;
-    private TextView editProfile_item_user, changePwd_item_user, friends_item_user;
     private CardView profile_card_view, password_card_view, friends_card_view;
     @Nullable
     @Override
@@ -52,7 +50,7 @@ public class MeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                userUsernameTextView.setText("Username: " + user.getUserName());
+                userUsernameTextView.setText(user.getUserName());
                 userEmailTextView.setText("Email: " + user.getEmail());
                 if(user.getProfileImageUrl() != null) {
                     Picasso.get().load(user.getProfileImageUrl())
@@ -66,20 +64,6 @@ public class MeFragment extends Fragment {
                 Toast.makeText(getActivity(), databaseError.getCode(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        editProfile_item_user = view.findViewById(R.id.editProfile_item_user);
-        changePwd_item_user = view.findViewById(R.id.changePwd_item_user);
-        friends_item_user = view.findViewById(R.id.friends_item_user);
-        profile_label_image = view.findViewById(R.id.profile_label_image);
-        password_label_image = view.findViewById(R.id.password_label_image);
-        friends_label_image = view.findViewById(R.id.friends_label_image);
-
-        editProfile_item_user.setText("Edit Profile");
-        changePwd_item_user.setText("Change Password");
-        friends_item_user.setText("Friends");
-        profile_label_image.setImageResource(R.drawable.profile_logo);
-        password_label_image.setImageResource(R.drawable.key_logo);
-        friends_label_image.setImageResource(R.drawable.friends_logo);
 
         profile_card_view = view.findViewById(R.id.profile_card_view);
         profile_card_view.setOnClickListener(new View.OnClickListener() {

@@ -94,9 +94,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     tv_interest.setText(user.getInterest());
                 }
 
-                if (user.getProfileImageUrl() == null) {
-                    imageView_item_etProfile.setImageResource(R.drawable.default_profile_logo);
-                } else {
+                if (user.getProfileImageUrl() != null) {
                     Picasso.get().load(user.getProfileImageUrl())
                             .fit()
                             .into(imageView_item_etProfile);

@@ -46,6 +46,12 @@
     <string name="search">Search</string>
     <string name="empty_result">No result found.</string>
 
+    <!--Me Screen-->
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_password">Change password</string>
+    <string name="friends">Friends</string>
+
+
     <!--Event detail screen -->
     <string name="eventCategory">Category: </string>
     <string name="eventTime">Time: </string>

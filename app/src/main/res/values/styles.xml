@@ -42,7 +42,7 @@
         <item name="android:paddingRight">@dimen/line_margin</item>
     </style>
     <style name="myButton">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/normal_text_size</item>
         <item name="android:background">@drawable/button_background</item>
     </style>
 
