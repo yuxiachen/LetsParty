@@ -38,7 +38,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
     private ArrayList<String> eventKeys;
     private SearchView searchInTrending;
     private ConstraintLayout frame;
-    private TextView searchTitle;
+    private TextView emptyResult;
 
     @Nullable
     @Override
@@ -48,7 +48,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         frame = view.findViewById(R.id.fragment_trending);
         frame.requestFocus();
         searchInTrending = view.findViewById(R.id.search_in_trending);
-        searchTitle = view.findViewById(R.id.search_result_title);
+        emptyResult = view.findViewById(R.id.tv_no_result);
 
         recyclerView = view.findViewById(R.id.trending_event_list);
         resultEvents = new ArrayList<>();
@@ -56,11 +56,8 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         mAdapter = new EventListAdapter(resultEvents, eventKeys, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(mAdapter);
-
         showTrending();
-        CharSequence query = searchInTrending.getQuery();
         searchInTrending.setIconifiedByDefault(false);
-        searchInTrending.setQueryHint("Search");
         searchInTrending.setSubmitButtonEnabled(true);
         searchInTrending.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -68,9 +65,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                 Query queryResult = FirebaseDatabase.getInstance().getReference("events")
                         .orderByChild("category").startAt(query).endAt(query + "\uf8ff");
                 queryResult.addListenerForSingleValueEvent(resultListener);
-                searchTitle.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.VISIBLE);
-
                 return false;
             }
 
@@ -78,8 +72,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty()) {
                     showTrending();
-                    searchTitle.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
+                    emptyResult.setVisibility(View.GONE);
                 }
                 return false;
             }
@@ -103,6 +96,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                 }
                 mAdapter.notifyDataSetChanged();
             } else {
+                emptyResult.setVisibility(View.VISIBLE);
                 Log.e(TrendingFragment.class.getSimpleName(), "No data exists");
             }
         }
@@ -112,23 +106,20 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
 
         }
     };
-    public void showTrending(){
-        Query eventQuery = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event)).orderByChild("time");
+    private void showTrending(){
+        long currTime = new Date().getTime();
+        Query eventQuery = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event)).orderByChild("time").startAt(currTime);
         eventQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                resultEvents.clear();
+                eventKeys.clear();
                 if (dataSnapshot.exists()) {
-                    resultEvents.clear();
-                    eventKeys.clear();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Event event = snapshot.getValue(Event.class);
                         String key = snapshot.getKey();
-
-                        Long time = (Long) snapshot.child("time").getValue();
-                        if (new Date().getTime() < time) {
-                            resultEvents.add(event);
-                            eventKeys.add(key);
-                        }
+                        resultEvents.add(event);
+                        eventKeys.add(key);
                     }
                     mAdapter.notifyDataSetChanged();
                 } else {

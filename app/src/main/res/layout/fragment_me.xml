@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/screen_margin"
+    android:paddingRight="@dimen/screen_margin"
+    android:paddingTop="@dimen/screen_margin">
 
     <ImageView
         android:id="@+id/imageView_item_user"
         android:layout_width="@dimen/img_size"
         android:layout_height="@dimen/img_size"
+        android:src="@drawable/default_profile_logo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
@@ -20,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/line_margin"
-        android:textStyle="bold"
+        android:layout_marginTop="@dimen/line_margin"
         app:layout_constraintLeft_toRightOf="@id/imageView_item_user"
         app:layout_constraintTop_toTopOf="@+id/imageView_item_user" />
 
@@ -30,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/line_margin"
-        android:textStyle="bold"
+        android:layout_marginTop="@dimen/line_margin"
         app:layout_constraintLeft_toRightOf="@id/imageView_item_user"
         app:layout_constraintTop_toBottomOf="@+id/username_item_user" />
 
@@ -40,6 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/logout"
+        android:layout_marginBottom="@dimen/screen_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
@@ -48,112 +52,85 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/profile_card_view"
-        android:layout_margin="@dimen/screen_margin"
         android:clickable="true"
-        app:cardElevation="3dp"
-        app:contentPadding="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/screen_margin"
         app:layout_constraintTop_toBottomOf="@+id/imageView_item_user">
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:id="@+id/profile_label_image"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="16dp"/>
+                android:id="@+id/profile_label_image"/>
 
             <TextView
                 android:id="@+id/editProfile_item_user"
                 style="?title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/line_margin"
-                android:textStyle="bold"
-                android:layout_toRightOf="@+id/profile_label_image"
-                android:layout_alignParentTop="true"/>
+                android:layout_marginStart="@dimen/screen_margin"/>
 
-        </RelativeLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/password_card_view"
-        android:layout_margin="@dimen/screen_margin"
         android:clickable="true"
-        app:cardElevation="3dp"
-        app:contentPadding="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/screen_margin"
         app:layout_constraintTop_toBottomOf="@+id/profile_card_view">
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:id="@+id/password_label_image"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="16dp"/>
+                android:id="@+id/password_label_image" />
 
             <TextView
                 android:id="@+id/changePwd_item_user"
                 style="?title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/line_margin"
-                android:textStyle="bold"
-                android:layout_toRightOf="@+id/password_label_image"
-                android:layout_alignParentTop="true"/>
+                android:layout_marginStart="@dimen/screen_margin"/>
 
-        </RelativeLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/friends_card_view"
-        android:layout_margin="@dimen/screen_margin"
         android:clickable="true"
-        app:cardElevation="3dp"
-        app:contentPadding="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/screen_margin"
         app:layout_constraintTop_toBottomOf="@+id/password_card_view">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:id="@+id/friends_label_image"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="16dp"/>
+                android:id="@+id/friends_label_image"/>
 
             <TextView
                 android:id="@+id/friends_item_user"
                 style="?title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/line_margin"
-                android:textStyle="bold"
-                android:layout_toRightOf="@+id/friends_label_image"
-                android:layout_alignParentTop="true"/>
+                android:layout_marginStart="@dimen/screen_margin"/>
 
-        </RelativeLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

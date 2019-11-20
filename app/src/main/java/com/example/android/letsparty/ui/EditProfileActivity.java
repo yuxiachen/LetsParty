@@ -235,14 +235,17 @@ public class EditProfileActivity extends AppCompatActivity {
         btn_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //trigger the camera
-                try {
+                //try {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile
-                            (getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", createImageFile())); //this one has some problem
+                    Log.e("aaaa", "put extra");
+                    //intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile
+                            //(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", createImageFile())); //this one has some problem
+                    Log.e("aaaa", "start");
                     startActivityForResult(intent, CAMERA_REQUEST_CODE);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                //}
+                // catch (IOException ex) {
+                  //  ex.printStackTrace();
+                //}
             }
         });
     }
@@ -261,8 +264,14 @@ public class EditProfileActivity extends AppCompatActivity {
             mImageUri = data.getData();
             Picasso.get().load(mImageUri).into(imageView_item_etProfile);
         } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
-            mImageUri = Uri.parse(cameraFilePath);
-            Picasso.get().load(mImageUri).into(imageView_item_etProfile);
+            try {
+                createImageFile();
+                mImageUri = Uri.parse(cameraFilePath);
+                Picasso.get().load(mImageUri).into(imageView_item_etProfile);
+            } catch (Exception e) {
+                Log.e("aaa", "can't save image" + e.getMessage());
+            }
+
         }
     }
 
@@ -273,6 +282,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private File createImageFile() throws IOException {
+
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp+"_";

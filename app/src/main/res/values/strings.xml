@@ -37,6 +37,9 @@
     <string name="reset_password">Reset Password</string>
     <string name="link_sent">A link has been sent to your email, please using it to reset your password.</string>
 
+    <!--Trending screen-->
+    <string name="search">Search</string>
+    <string name="empty_result">No result found.</string>
 
     <!--Event detail screen -->
     <string name="join">Join</string>

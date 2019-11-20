@@ -54,10 +54,7 @@ public class MeFragment extends Fragment {
                 User user = dataSnapshot.getValue(User.class);
                 userUsernameTextView.setText("Username: " + user.getUserName());
                 userEmailTextView.setText("Email: " + user.getEmail());
-                if(user.getProfileImageUrl()==null){
-                    userImageView.setImageResource(R.drawable.default_profile_logo);
-                }
-                else{
+                if(user.getProfileImageUrl() != null) {
                     Picasso.get().load(user.getProfileImageUrl())
                             .fit()
                             .into(userImageView);
