@@ -42,6 +42,15 @@
     <string name="reset_password">Reset Password</string>
     <string name="link_sent">A link has been sent to your email, please using it to reset your password.</string>
 
+    <!--Trending screen-->
+    <string name="search">Search</string>
+    <string name="empty_result">No result found.</string>
+
+    <!--Me Screen-->
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_password">Change password</string>
+    <string name="friends">Friends</string>
+
 
     <!--Event detail screen -->
     <string name="eventCategory">Category: </string>
@@ -55,4 +64,17 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
 
+    <string-array name="interest_array">
+        <item>Sports</item>
+        <item>Kid</item>
+        <item>Entertainment</item>
+        <item>Music</item>
+        <item>Workout</item>
+        <item>Other</item>
+    </string-array>
+
+    <string name="mBuilderTitle">Areas of Interest:</string>
+    <string name="mBuilderOK">OK</string>
+    <string name="mBuilderDismiss">Dismiss</string>
+    <string name="mBuilderClearAll">Clear all</string>
 </resources>

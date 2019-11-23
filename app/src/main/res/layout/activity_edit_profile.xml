@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/imageView_item_etProfile"
+        android:layout_width="@dimen/img_size"
+        android:layout_height="@dimen/img_size"
+        android:clickable="true"
+        android:src="@drawable/ic_add_photo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/paragraph_margin"/>
+
+    <Button
+        android:id="@+id/btn_camera"
+        style="?button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/screen_margin"
+        android:text="Take a picture"
+        app:layout_constraintLeft_toRightOf="@id/imageView_item_etProfile"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/paragraph_margin"/>
+
+
+    <TextView
+        android:id="@+id/tv_label_username"
+        style="?normalText"
+        android:text="Username: "
+        android:layout_width="100dp"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginLeft="@dimen/screen_margin"
+        android:layout_marginTop="@dimen/paragraph_margin"
+        android:layout_marginRight="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/et_profile_username"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_item_etProfile" />
+
+    <EditText
+        android:id="@+id/et_profile_username"
+        style="?editText"
+        android:layout_width="250dp"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginTop="@dimen/paragraph_margin"
+        android:layout_marginRight="@dimen/screen_margin"
+        app:layout_constraintLeft_toRightOf="@id/tv_label_username"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_item_etProfile" />
+
+    <TextView
+        android:id="@+id/tv_label_email"
+        style="?normalText"
+        android:text="Email: "
+        android:layout_width="100dp"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginLeft="@dimen/screen_margin"
+        android:layout_marginTop="@dimen/paragraph_margin"
+        android:layout_marginRight="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/et_profile_email"
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_username" />
+
+
+    <EditText
+        android:id="@+id/et_profile_email"
+        style="?editText"
+        android:layout_width="250dp"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginTop="@dimen/paragraph_margin"
+        android:layout_marginRight="@dimen/screen_margin"
+        android:inputType="textEmailAddress"
+        app:layout_constraintLeft_toRightOf="@id/tv_label_email"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_profile_username" />
+
+    <TextView
+        android:id="@+id/tv_label_city"
+        style="?normalText"
+        android:text="City: "
+        android:layout_width="50dp"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginLeft="@dimen/screen_margin"
+        android:layout_marginTop="@dimen/paragraph_margin"
+        android:layout_marginRight="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/et_profile_city"
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_email" />
+
+
+    <EditText
+        android:id="@+id/et_profile_city"
+        style="?editText"
+        android:layout_width="100dp"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginTop="@dimen/paragraph_margin"
+        android:layout_marginRight="@dimen/screen_margin"
+        app:layout_constraintRight_toLeftOf="@+id/tv_label_state"
+        app:layout_constraintLeft_toRightOf="@id/tv_label_city"
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_email" />
+
+    <TextView
+        android:id="@+id/tv_label_state"
+        style="?normalText"
+        android:text="State: "
+        android:layout_width="50dp"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginTop="@dimen/paragraph_margin"
+        android:layout_marginRight="10dp"
+        app:layout_constraintLeft_toRightOf="@id/et_profile_city"
+        app:layout_constraintRight_toLeftOf="@+id/et_profile_state"
+        app:layout_constraintTop_toBottomOf="@+id/et_profile_email" />
+
+    <EditText
+        android:id="@+id/et_profile_state"
+        style="?editText"
+        android:layout_width="100dp"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginTop="@dimen/paragraph_margin"
+        android:layout_marginRight="@dimen/screen_margin"
+        app:layout_constraintLeft_toRightOf="@+id/tv_label_state"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_profile_email" />
+
+    <TextView
+        android:id="@+id/tv_interest"
+        style="?normalText"
+        android:hint="Areas of Interest"
+        android:background="@drawable/border"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/screen_margin"
+        android:layout_marginTop="@dimen/paragraph_margin"
+        android:layout_marginRight="@dimen/screen_margin"
+        android:clickable="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_profile_city" />
+
+    <Button
+        android:id="@+id/btn_save"
+        style="?button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/screen_margin"
+        android:text="Save"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_interest"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/screen_margin"
+        android:layout_marginRight="@dimen/screen_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_save" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
