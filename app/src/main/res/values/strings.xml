@@ -43,8 +43,8 @@
     <string name="link_sent">A link has been sent to your email, please using it to reset your password.</string>
 
     <!--Trending screen-->
-    <string name="search">Search</string>
-    <string name="empty_result">No result found.</string>
+    <string name="search">Search by Category</string>
+    <string name="empty_result">No Result Found ～</string>
 
     <!--Me Screen-->
     <string name="edit_profile">Edit Profile</string>
@@ -70,6 +70,8 @@
         <item>Entertainment</item>
         <item>Music</item>
         <item>Workout</item>
+        <item>Party</item>
+        <item>Study</item>
         <item>Other</item>
     </string-array>
 
@@ -77,4 +79,23 @@
     <string name="mBuilderOK">OK</string>
     <string name="mBuilderDismiss">Dismiss</string>
     <string name="mBuilderClearAll">Clear all</string>
+
+    <!--Edit Profile Screen -->
+    <string name="takePhoto">Take Photo</string>
+    <string name="choosePhoto">Choose from Album</string>
+    <string name="cancelUpload">Cancel</string>
+    <string name="userName">Username: </string>
+    <string name="email">Email: </string>
+    <string name="interest">Area of Interest: </string>
+    <string name="country">Country: </string>
+    <string name="state">State: </string>
+    <string name="city">City: </string>
+    <string name="zipCode">Zip Code: </string>
+
+    <!--Change Password Screen -->
+    <string name="hint">Use the Form below to Change your Password ... </string>
+    <string name="currentPassword">Current Password</string>
+    <string name="newPassword">New Password</string>
+    <string name="confirmNewPassword">Confirm New Password</string>
+
 </resources>

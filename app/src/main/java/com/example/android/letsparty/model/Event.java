@@ -33,7 +33,6 @@ public class Event {
         return location;
     }
 
-
     public String getCategory() {
         return category;
     }

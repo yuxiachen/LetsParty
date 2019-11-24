@@ -1,5 +1,6 @@
 package com.example.android.letsparty.ui;
 
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,7 +10,11 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -44,7 +50,10 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EditProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -52,52 +61,71 @@ public class EditProfileActivity extends AppCompatActivity {
     private TextView tv_interest;
     private String[] interestItems;
     private boolean[] checkedItems;
-    private ArrayList<Integer> mInterestItems = new ArrayList<>();
+    private Set<Integer> mInterestItems = new HashSet<>();
     private ImageView imageView_item_etProfile;
     private EditText et_profile_username, et_profile_email, et_profile_city, et_profile_state;
-    private Button btn_save, btn_camera;
+    private EditText et_profile_country, et_profile_zipCode;
+    private Button btn_save;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private StorageReference mStorageReference;
     private Uri mImageUri;
     private ProgressBar mProgressBar;
     private String cameraFilePath;
+    private Dialog dialog;
+    private View inflate;
+    private Button takePhoto, choosePhoto, cancelUpload;
+    private Set<String> set;
+    private String originalImageUrl;
+    private DatabaseReference databaseReference;
+    private Location location;
+    private StorageReference fileReference;
+    private String downloadUrl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         imageView_item_etProfile = (ImageView) findViewById(R.id.imageView_item_etProfile);
         et_profile_username = (EditText) findViewById(R.id.et_profile_username);
         et_profile_email = (EditText) findViewById(R.id.et_profile_email);
+        et_profile_country = (EditText) findViewById(R.id.et_profile_country);
         et_profile_city = (EditText) findViewById(R.id.et_profile_city);
         et_profile_state = (EditText) findViewById(R.id.et_profile_state);
+        et_profile_zipCode = (EditText) findViewById(R.id.et_profile_zipcode);
+        tv_interest = (TextView) findViewById(R.id.tv_interest);
         btn_save = (Button) findViewById(R.id.btn_save);
-        btn_camera = (Button) findViewById(R.id.btn_camera);
         mStorageReference = FirebaseStorage.getInstance().getReference("profileImages");
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference databaseReference = firebaseDatabase.getReference("users/" + firebaseAuth.getUid());
+
+        set = new HashSet<>();
+
+        interestItems = getResources().getStringArray(R.array.interest_array);
+
+        checkedItems = new boolean[interestItems.length];
+
+        databaseReference = firebaseDatabase.getReference(getString(R.string.db_user) + "/" + firebaseAuth.getUid());
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                et_profile_username.setText(user.getUserName());
-                et_profile_email.setText(user.getEmail());
-                if (user.getLocation() != null) {
-                    et_profile_city.setText(user.getLocation().getCity());
-                    et_profile_state.setText(user.getLocation().getState());
-                }
-                if (user.getInterest() != null) {
-                    tv_interest.setText(user.getInterest());
-                }
 
-                if (user.getProfileImageUrl() != null) {
-                    Picasso.get().load(user.getProfileImageUrl())
-                            .fit()
-                            .into(imageView_item_etProfile);
+                setupView(user);
+
+                originalImageUrl = user.getProfileImageUrl();
+
+                for (int i = 0; i < interestItems.length; i++) {
+                    if (set.contains(interestItems[i])) {
+                        checkedItems[i] = true;
+
+                        mInterestItems.add(i);
+
+                        System.out.println(mInterestItems);
+                    }
                 }
             }
 
@@ -107,24 +135,27 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        // Pop Up a Window by Clicking on the Profile Picture
         imageView_item_etProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openFileChooser();
+                showPopupWindow(v);
             }
-        });//pick a picture by clicking on the profile picture
-
+        });
 
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Location location = new Location(et_profile_city.getText().toString(), et_profile_state.getText().toString());
+                location = new Location(et_profile_city.getText().toString(), et_profile_country.getText().toString(), et_profile_state.getText().toString(), et_profile_zipCode.getText().toString());
+
                 if (mImageUri == null) {
-                    User user = new User(et_profile_username.getText().toString(), et_profile_email.getText().toString(), location, tv_interest.getText().toString());
+                    User user = new User(et_profile_username.getText().toString(), originalImageUrl, et_profile_email.getText().toString(), location, tv_interest.getText().toString());
+
                     databaseReference.setValue(user);
+
                     Toast.makeText(EditProfileActivity.this, "Profile updated successfully", Toast.LENGTH_LONG).show();
                 } else {
-                    final StorageReference fileReference = mStorageReference.child(System.currentTimeMillis() + "." + getFileExtension(mImageUri));
+                    fileReference = mStorageReference.child(System.currentTimeMillis() + "." + getFileExtension(mImageUri));
 
                     fileReference.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -139,9 +170,12 @@ public class EditProfileActivity extends AppCompatActivity {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    final String downloadUrl = uri.toString();
+                                    downloadUrl = uri.toString();
+
                                     User user = new User(et_profile_username.getText().toString(), downloadUrl, et_profile_email.getText().toString(), location, tv_interest.getText().toString());
+
                                     databaseReference.setValue(user);
+
                                     Toast.makeText(EditProfileActivity.this, "Profile updated successfully", Toast.LENGTH_LONG).show();
 
                                 }
@@ -163,10 +197,6 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        tv_interest = (TextView) findViewById(R.id.tv_interest);
-        interestItems = getResources().getStringArray(R.array.interest_array);
-        checkedItems = new boolean[interestItems.length];
-
         tv_interest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,22 +208,30 @@ public class EditProfileActivity extends AppCompatActivity {
                         if (isChecked) {
                             if (!mInterestItems.contains(position)) {
                                 mInterestItems.add(position);
+
+                                System.out.println(mInterestItems);
                             }
                         } else {
                             if (mInterestItems.contains(position)) {
                                 mInterestItems.remove(position);
+
+                                System.out.println(mInterestItems);
                             }
                         }
                     }
                 });
+
                 mBuilder.setCancelable(false);
+
                 mBuilder.setPositiveButton(R.string.mBuilderOK, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String item = "";
-                        for (int i = 0; i < mInterestItems.size(); i++) {
-                            item += interestItems[mInterestItems.get(i)];
-                            if (i != mInterestItems.size() - 1) {
+                        for (int i = 0; i < interestItems.length; i++) {
+                            if (mInterestItems.contains(i)) {
+                                item += interestItems[i];
+
+
                                 item += ", ";
                             }
                         }
@@ -220,24 +258,97 @@ public class EditProfileActivity extends AppCompatActivity {
                 });
 
                 AlertDialog mDialog = mBuilder.create();
+
                 mBuilder.show();
             }
         });
+    }
 
-        btn_camera.setOnClickListener(new View.OnClickListener() {
+    private void setupView(User user) {
+        if (user == null)   return;
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(user.getUserName());
+
+        et_profile_username.setText(user.getUserName());
+        et_profile_email.setText(user.getEmail());
+        if (user.getLocation() != null) {
+            et_profile_country.setText(user.getLocation().getCountry());
+            et_profile_city.setText(user.getLocation().getCity());
+            et_profile_state.setText(user.getLocation().getState());
+            et_profile_zipCode.setText(user.getLocation().getZipCode());
+        }
+        if (user.getInterest() != null) {
+            tv_interest.setText(user.getInterest());
+
+            set.addAll(Arrays.asList(user.getInterest().split(", ")));
+        }
+
+        if (user.getProfileImageUrl() != null) {
+            Picasso.get().load(user.getProfileImageUrl())
+                    .fit()
+                    .into(imageView_item_etProfile);
+        }
+    }
+
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    public void showPopupWindow(View view) {
+        dialog = new Dialog(this);
+
+        inflate = LayoutInflater.from(this).inflate(R.layout.popup_window, null);
+
+        takePhoto = (Button) inflate.findViewById(R.id.take_photo);
+        choosePhoto = (Button) inflate.findViewById(R.id.choose_photo);
+        cancelUpload = (Button) inflate.findViewById(R.id.cancel_upload);
+
+        dialog.setContentView(inflate);
+
+        Window dialogWindow = dialog.getWindow();
+
+        dialogWindow.setGravity(Gravity.BOTTOM);
+
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+
+        dialogWindow.setAttributes(lp);
+
+        dialog.show();
+
+        // Trigger the Camera
+        takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { //trigger the camera
-                //try {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    Log.e("aaaa", "put extra");
-                    //intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile
-                            //(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", createImageFile())); //this one has some problem
-                    Log.e("aaaa", "start");
-                    startActivityForResult(intent, CAMERA_REQUEST_CODE);
-                //}
-                // catch (IOException ex) {
-                  //  ex.printStackTrace();
-                //}
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                Log.e("aaaa", "put extra");
+
+                // This one has some Problem
+                /*
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile
+                (getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", createImageFile()));
+                */
+
+                Log.e("aaaa", "start");
+
+                startActivityForResult(intent, CAMERA_REQUEST_CODE);
+            }
+        });
+
+        choosePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openFileChooser();
+            }
+        });
+
+        cancelUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
             }
         });
     }
@@ -269,17 +380,21 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private String getFileExtension(Uri uri) {
         ContentResolver cR = getContentResolver();
+
         MimeTypeMap mime = MimeTypeMap.getSingleton();
+
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
     private File createImageFile() throws IOException {
-
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
         String imageFileName = "JPEG_" + timeStamp+"_";
+
         File storageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DCIM), "Camera");
+
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */

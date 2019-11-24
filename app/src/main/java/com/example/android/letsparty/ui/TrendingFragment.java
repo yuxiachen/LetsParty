@@ -50,21 +50,16 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         searchInTrending = view.findViewById(R.id.search_in_trending);
         emptyResult = view.findViewById(R.id.tv_no_result);
 
-        recyclerView = view.findViewById(R.id.trending_event_list);
-        resultEvents = new ArrayList<>();
-        eventKeys = new ArrayList<>();
-        mAdapter = new EventListAdapter(resultEvents, eventKeys, this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-        recyclerView.setAdapter(mAdapter);
-        showTrending();
         searchInTrending.setIconifiedByDefault(false);
-        searchInTrending.setSubmitButtonEnabled(true);
+        // searchInTrending.setSubmitButtonEnabled(true);
         searchInTrending.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Query queryResult = FirebaseDatabase.getInstance().getReference("events")
-                        .orderByChild("category").startAt(query).endAt(query + "\uf8ff");
-                queryResult.addListenerForSingleValueEvent(resultListener);
+                        .orderByChild("category").startAt(query.toLowerCase()).endAt(query.toLowerCase() + "\uf8ff");
+
+                queryResult.addValueEventListener(resultListener);
+
                 return false;
             }
 
@@ -74,9 +69,18 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                     showTrending();
                     emptyResult.setVisibility(View.GONE);
                 }
+
                 return false;
             }
         });
+
+        recyclerView = view.findViewById(R.id.trending_event_list);
+        resultEvents = new ArrayList<>();
+        eventKeys = new ArrayList<>();
+        mAdapter = new EventListAdapter(resultEvents, eventKeys, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+        recyclerView.setAdapter(mAdapter);
+        showTrending();
 
         return view;
 
@@ -106,6 +110,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
 
         }
     };
+
     private void showTrending(){
         long currTime = new Date().getTime();
         Query eventQuery = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event)).orderByChild("time").startAt(currTime);
@@ -135,7 +140,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         });
 
     }
-
 
     private void openEventDetailActivity(String key){
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
