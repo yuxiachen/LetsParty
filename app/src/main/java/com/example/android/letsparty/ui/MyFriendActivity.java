@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,9 +31,10 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
     private ArrayList<User> friends;
     private ArrayList<String> friendKeys;
     private FriendListAdapter adapter;
+    private RecyclerView rvFriends;
     private TextView emptyResult;
     private LinearLayout llAddNewFriend;
-    private LinearLayout llUserList;
+    private ConstraintLayout clUserList;
     private String searchText;
 
     @Override
@@ -70,8 +72,8 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
     }
 
     private void initFriendListView() {
-        llUserList = findViewById(R.id.ll_user_list);
-        RecyclerView rvFriends = findViewById(R.id.rv_list);
+        clUserList = findViewById(R.id.ll_user_list);
+        rvFriends = findViewById(R.id.rv_list);
         emptyResult = findViewById(R.id.tv_no_result);
         friendKeys = new ArrayList<>();
         friends = new ArrayList<>();
@@ -94,13 +96,13 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
     private void getMyFriends(){
         Query query = FirebaseDatabase.getInstance()
                 .getReference("friends/" + FirebaseAuth.getInstance().getUid())
-                .orderByChild("username");
+                .orderByChild("userName");
         query.addValueEventListener(resultListener);
     }
 
     private void searchNewFriend(){
         Query query = FirebaseDatabase.getInstance().getReference("users")
-                .orderByChild("username")
+                .orderByChild("userName")
                 .startAt(searchText).endAt(searchText + "\uf8ff");
         query.addValueEventListener(resultListener);
         showFriendList();
@@ -108,12 +110,22 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
 
     private void showSearchNewFriend() {
         llAddNewFriend.setVisibility(View.VISIBLE);
-        llUserList.setVisibility(View.GONE);
+        clUserList.setVisibility(View.GONE);
     }
 
     private void showFriendList(){
         llAddNewFriend.setVisibility(View.GONE);
-        llUserList.setVisibility(View.VISIBLE);
+        clUserList.setVisibility(View.VISIBLE);
+    }
+
+    private void showEmptyResult(){
+        emptyResult.setVisibility(View.VISIBLE);
+        rvFriends.setVisibility(View.GONE);
+    }
+
+    private void showListResult(){
+        emptyResult.setVisibility(View.GONE);
+        rvFriends.setVisibility(View.VISIBLE);
     }
 
     private ValueEventListener resultListener = new ValueEventListener() {
@@ -128,10 +140,10 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
                     friends.add(friend);
                     friendKeys.add(key);
                 }
+                showListResult();
                 adapter.notifyDataSetChanged();
             } else {
-                emptyResult.setVisibility(View.VISIBLE);
-                Log.e(MyFriendActivity.class.getSimpleName(), "No data exists");
+                showEmptyResult();
             }
         }
 

@@ -37,6 +37,8 @@ public class EventDetailActivity extends AppCompatActivity {
     private boolean saveState;
     private Button btn_join;
     private ToggleButton btn_save;
+    private User user;
+    private String organizer_name;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +67,23 @@ public class EventDetailActivity extends AppCompatActivity {
                         setButtonText();
                     }
 
-                    setupView(currEvent);
+                    db.getReference(getString(R.string.db_user) + "/" + currEvent.getOrganizer()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                user = dataSnapshot.getValue(User.class);
+
+                                organizer_name = user.getUserName();
+                            }
+
+                            setupView(currEvent);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 } else {
                     Log.e(EventDetailActivity.class.getSimpleName(), "data not exist");
                 }
@@ -153,7 +171,7 @@ public class EventDetailActivity extends AppCompatActivity {
         TextView tv_min_number = findViewById(R.id.tv_min_number);
         tv_min_number.setText(minPeople);
 
-        String organizer = getString(R.string.eventOrganizer) + " " + event.getOrganizer();
+        String organizer = getString(R.string.eventOrganizer) + " " + organizer_name;
         TextView tv_publisher = findViewById(R.id.tv_organizer);
         tv_publisher.setText(organizer);
 

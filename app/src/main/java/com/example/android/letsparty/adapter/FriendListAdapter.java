@@ -20,8 +20,8 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
     private List<User> mFriends;
     private List<String> mFriendsKeys;
     private onFriendItemClickedListener mListener;
-    private ArrayList<User> tempFriendList = null;
-    private ArrayList<String> tempFriendKeys = null;
+    private ArrayList<User> tempFriendList = new ArrayList<>();
+    private ArrayList<String> tempFriendKeys = new ArrayList<>();
 
     public FriendListAdapter(List<User> friends, List<String> friendKeys, onFriendItemClickedListener listener) {
         this.mFriends = friends;
