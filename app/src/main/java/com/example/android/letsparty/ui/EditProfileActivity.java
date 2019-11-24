@@ -48,7 +48,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,7 +61,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private TextView tv_interest;
     private String[] interestItems;
     private boolean[] checkedItems;
-    private ArrayList<Integer> mInterestItems = new ArrayList<>();
+    private Set<Integer> mInterestItems = new HashSet<>();
     private ImageView imageView_item_etProfile;
     private EditText et_profile_username, et_profile_email, et_profile_city, et_profile_state;
     private EditText et_profile_country, et_profile_zipCode;
@@ -124,6 +123,8 @@ public class EditProfileActivity extends AppCompatActivity {
                         checkedItems[i] = true;
 
                         mInterestItems.add(i);
+
+                        System.out.println(mInterestItems);
                     }
                 }
             }
@@ -207,10 +208,14 @@ public class EditProfileActivity extends AppCompatActivity {
                         if (isChecked) {
                             if (!mInterestItems.contains(position)) {
                                 mInterestItems.add(position);
+
+                                System.out.println(mInterestItems);
                             }
                         } else {
                             if (mInterestItems.contains(position)) {
                                 mInterestItems.remove(position);
+
+                                System.out.println(mInterestItems);
                             }
                         }
                     }
@@ -222,9 +227,11 @@ public class EditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String item = "";
-                        for (int i = 0; i < mInterestItems.size(); i++) {
-                            item += interestItems[mInterestItems.get(i)];
-                            if (i != mInterestItems.size() - 1) {
+                        for (int i = 0; i < interestItems.length; i++) {
+                            if (mInterestItems.contains(i)) {
+                                item += interestItems[i];
+
+
                                 item += ", ";
                             }
                         }

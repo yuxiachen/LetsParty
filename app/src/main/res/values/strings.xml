@@ -68,8 +68,9 @@
         <item>Sports</item>
         <item>Kid</item>
         <item>Entertainment</item>
-        <item>Party</item>
+        <item>Music</item>
         <item>Workout</item>
+        <item>Party</item>
         <item>Study</item>
         <item>Other</item>
     </string-array>
