@@ -3,7 +3,7 @@ package com.example.android.letsparty.model;
 import java.util.List;
 
 public class User {
-    private String username;
+    private String userName;
     private String profileImageUrl;
     private String email;
     private String userId;
@@ -16,25 +16,25 @@ public class User {
 
     public User(String userName, String email){
         this.email = email;
-        this.username = userName;
+        this.userName = userName;
     }
 
-    public User(String username, String email, String profileImageUrl){
-        this.username = username;
+    public User(String userName, String email, String profileImageUrl){
+        this.userName = userName;
         this.email = email;
         this.profileImageUrl = profileImageUrl;
     }
 
-    public User(String username, String profileImageUrl, String email, Location location, String interest) {
-        this.username = username;
+    public User(String userName, String profileImageUrl, String email, Location location, String interest) {
+        this.userName = userName;
         this.profileImageUrl = profileImageUrl;
         this.email = email;
         this.location = location;
         this.interest = interest;
     }
 
-    public User(String username, String email, Location location, String interest) {
-        this.username = username;
+    public User(String userName, String email, Location location, String interest) {
+        this.userName = userName;
         this.email = email;
         this.location = location;
         this.interest = interest;
@@ -43,8 +43,9 @@ public class User {
     public String getInterest(){
         return interest;
     }
+
     public String getUserName() {
-        return username;
+        return userName;
     }
 
     public String getProfileImageUrl() {
@@ -55,8 +56,12 @@ public class User {
         return location;
     }
 
+    public String getEmail(){
+        return email;
+    }
+
     public void setUserName(String userName) {
-        this.username = userName;
+        this.userName = userName;
     }
 
     public void setProfileImageUrl(String profileImageUrl) {
@@ -66,8 +71,4 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getEmail(){
-        return email;
-    }
-
 }

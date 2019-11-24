@@ -14,6 +14,13 @@ public class Location {
         this.state = state;
     }
 
+    public Location(String city, String country, String state, String zipCode) {
+        this.city = city;
+        this.country = country;
+        this.state = state;
+        this.zipCode = zipCode;
+    }
+
     public Location(String addressLine, String city, String country, String state, String zipCode) {
         this.addressLine = addressLine;
         this.city = city;

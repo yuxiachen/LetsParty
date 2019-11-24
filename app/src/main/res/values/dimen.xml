@@ -2,8 +2,10 @@
 <resources>
 
     <dimen name="line_margin">8dp</dimen>
+    <dimen name="btn_margin">30dp</dimen>
     <dimen name="paragraph_margin">16dp</dimen>
     <dimen name="screen_margin">10dp</dimen>
+    <dimen name="larger_screen_margin">20dp</dimen>
     <dimen name="item_margin">4dp</dimen>
 
     <dimen name="title_text_size">20sp</dimen>
@@ -15,10 +17,16 @@
     <dimen name="icon_height">31dp</dimen>
 
     <dimen name="btn_width">100dp</dimen>
+    <dimen name="popup_window_width">360dp</dimen>
+    <dimen name="long_input_width">275dp</dimen>
+    <dimen name="short_input_width">100dp</dimen>
+    <dimen name="text_width">100dp</dimen>
+    <dimen name="short_text_width">75dp</dimen>
 
     <dimen name="large_corner_radius">8dp</dimen>
     <dimen name="small_corner_radius">4dp</dimen>
 
     <dimen name="img_size">80dp</dimen>
+    <dimen name="mid_img_size">120dp</dimen>
     <dimen name="large_img_size">240dp</dimen>
 </resources>

@@ -35,7 +35,7 @@
             style="?normalText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/item_margin"
+            android:layout_marginTop="@dimen/item_margin"
             app:layout_constraintLeft_toLeftOf="@+id/title_item_event"
             app:layout_constraintTop_toBottomOf="@+id/title_item_event" />
 
@@ -44,6 +44,7 @@
             style="?normalText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin"
             android:layout_alignTop="@id/time_item_event"
             app:layout_constraintLeft_toLeftOf="@+id/time_item_event"
             app:layout_constraintTop_toBottomOf="@+id/time_item_event" />
