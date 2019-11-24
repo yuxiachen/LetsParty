@@ -85,7 +85,7 @@ public class MeFragment extends Fragment {
         friends_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FriendActivity.class);
+                Intent intent = new Intent(getActivity(), MyFriendActivity.class);
                 startActivity(intent);
             }
         });

@@ -58,7 +58,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         recyclerView.setAdapter(mAdapter);
         showTrending();
         searchInTrending.setIconifiedByDefault(false);
-        searchInTrending.setSubmitButtonEnabled(true);
         searchInTrending.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

@@ -77,4 +77,8 @@
     <string name="mBuilderOK">OK</string>
     <string name="mBuilderDismiss">Dismiss</string>
     <string name="mBuilderClearAll">Clear all</string>
+
+
+    <!--my friend screen-->
+    <string name="mAddNewFriend">New friend</string>
 </resources>
