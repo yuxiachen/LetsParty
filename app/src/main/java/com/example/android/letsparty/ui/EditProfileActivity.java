@@ -4,6 +4,10 @@ import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,6 +34,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.letsparty.R;
+import com.example.android.letsparty.adapter.CircleTransform;
 import com.example.android.letsparty.model.Location;
 import com.example.android.letsparty.model.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,11 +50,11 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -227,6 +232,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String item = "";
+
                         for (int i = 0; i < interestItems.length; i++) {
                             if (mInterestItems.contains(i)) {
                                 item += interestItems[i];
@@ -235,7 +241,8 @@ public class EditProfileActivity extends AppCompatActivity {
                                 item += ", ";
                             }
                         }
-                        tv_interest.setText(item);
+
+                        tv_interest.setText(item.substring(0, item.length() - 2));
                     }
                 });
 
@@ -287,7 +294,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         if (user.getProfileImageUrl() != null) {
             Picasso.get().load(user.getProfileImageUrl())
-                    .fit()
+                    .transform(new CircleTransform())
                     .into(imageView_item_etProfile);
         }
     }
@@ -365,12 +372,12 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mImageUri = data.getData();
-            Picasso.get().load(mImageUri).into(imageView_item_etProfile);
+            Picasso.get().load(mImageUri).transform(new CircleTransform()).into(imageView_item_etProfile);
         } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             try {
                 createImageFile();
                 mImageUri = Uri.parse(cameraFilePath);
-                Picasso.get().load(mImageUri).into(imageView_item_etProfile);
+                Picasso.get().load(mImageUri).transform(new CircleTransform()).into(imageView_item_etProfile);
             } catch (Exception e) {
                 Log.e("aaa", "can't save image" + e.getMessage());
             }

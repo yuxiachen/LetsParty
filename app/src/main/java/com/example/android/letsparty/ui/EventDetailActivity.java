@@ -14,6 +14,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.letsparty.R;
+import com.example.android.letsparty.adapter.RoundTransform;
 import com.example.android.letsparty.model.Event;
 import com.example.android.letsparty.model.User;
 import com.google.firebase.auth.FirebaseAuth;

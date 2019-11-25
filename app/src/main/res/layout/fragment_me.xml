@@ -22,6 +22,7 @@
         style="?title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/name_text_size"
         android:layout_marginStart="@dimen/paragraph_margin"
         android:layout_marginTop="@dimen/paragraph_margin"
         app:layout_constraintLeft_toRightOf="@id/imageView_item_user"
