@@ -20,8 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:layout_marginBottom="@dimen/screen_margin"
-        android:layout_marginTop="@dimen/screen_margin">
+        android:layout_margin="@dimen/screen_margin">
         <ImageView
             android:id="@+id/iv_friend_img"
             android:layout_width="@dimen/small_img_size"

@@ -3,6 +3,7 @@ package com.example.android.letsparty.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,6 +43,10 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(getString(R.string.friends));
+
         initSearchView();
         initFriendListView();
         initAddNewFriendView();
@@ -48,6 +54,7 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
 
     private void initSearchView(){
         SearchView search = findViewById(R.id.sv_search);
+        search.setIconifiedByDefault(false);
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -65,6 +72,7 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
                     }
                 } else {
                     getMyFriends();
+                    showFriendList();
                 }
                 return false;
             }
@@ -153,14 +161,24 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
         }
     };
 
-    private void openFriendProfileActivity(String key) {
+    private void openFriendProfileActivity(String key, String name) {
         Intent intent = new Intent(this, FriendProfileActivity.class);
         intent.putExtra("userKey", key);
+        intent.putExtra("userName", name);
         startActivity(intent);
     }
 
     @Override
-    public void onFriendItemClicked(String userKey) {
-        openFriendProfileActivity(userKey);
+    public void onFriendItemClicked(String userKey, String name) {
+        openFriendProfileActivity(userKey, name);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

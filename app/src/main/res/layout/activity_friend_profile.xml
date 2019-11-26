@@ -4,6 +4,112 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/iv_profile_img"
+        android:layout_width="@dimen/mid_img_size"
+        android:layout_height="@dimen/mid_img_size"
+        android:src="@drawable/default_profile_logo"
+        android:layout_marginBottom="@dimen/screen_margin"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/paragraph_margin"
+        />
 
+    <TextView
+        android:id="@+id/username_item_user"
+        style="?title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paragraph_margin"
+        android:layout_marginTop="@dimen/paragraph_margin" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="?normalText"
+            android:text="@string/email"
+            android:layout_width="@dimen/text_width"
+            android:layout_height="@dimen/line_height"
+            android:gravity="right"
+            android:layout_marginTop="@dimen/paragraph_margin"
+            android:layout_marginRight="@dimen/paragraph_margin" />
+
+
+        <TextView
+            android:id="@+id/tv_profile_email"
+            style="?normalText"
+            android:layout_width="@dimen/long_input_width"
+            android:layout_height="@dimen/line_height"
+            android:layout_marginTop="@dimen/paragraph_margin"
+            android:layout_marginRight="@dimen/screen_margin"
+            android:inputType="none"
+            android:focusable="false" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="?normalText"
+            android:text="@string/mRegion"
+            android:layout_width="@dimen/text_width"
+            android:layout_height="@dimen/line_height"
+            android:gravity="right"
+            android:layout_marginTop="@dimen/paragraph_margin"
+            android:layout_marginRight="@dimen/paragraph_margin" />
+
+
+        <TextView
+            android:id="@+id/tv_region"
+            style="?normalText"
+            android:layout_width="@dimen/long_input_width"
+            android:layout_height="@dimen/line_height"
+            android:layout_marginTop="@dimen/paragraph_margin"
+            android:layout_marginRight="@dimen/screen_margin"
+            android:inputType="none"
+            android:focusable="false" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="?normalText"
+            android:text="@string/interest"
+            android:layout_width="@dimen/text_width"
+            android:layout_height="@dimen/line_height"
+            android:gravity="right"
+            android:layout_marginTop="@dimen/paragraph_margin"
+            android:layout_marginRight="@dimen/paragraph_margin" />
+
+
+        <TextView
+            android:id="@+id/tv_interest"
+            style="?normalText"
+            android:layout_width="@dimen/long_input_width"
+            android:layout_height="@dimen/line_height"
+            android:layout_marginTop="@dimen/paragraph_margin"
+            android:layout_marginRight="@dimen/screen_margin"
+            android:inputType="none"
+            android:focusable="false" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_add_or_delete_friend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?button"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/mAddFriend"
+        android:layout_marginTop="@dimen/btn_margin"/>
 
 </LinearLayout>

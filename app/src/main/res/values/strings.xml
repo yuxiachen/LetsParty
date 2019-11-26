@@ -17,6 +17,8 @@
     <string name="db_joined_event">joinedEvents</string>
     <string name="db_saved_event">savedEvents</string>
     <string name="db_joined_user">joinedUsers</string>
+    <string name="db_friend">friends</string>
+    <string name="db_notifications">notifications</string>
 
     <!--login screen-->
     <string name="mail">Email</string>
@@ -43,7 +45,7 @@
     <string name="link_sent">A link has been sent to your email, please using it to reset your password.</string>
 
     <!--Trending screen-->
-    <string name="search">Search by Category</string>
+    <string name="search">Search</string>
     <string name="empty_result">No Result Found ～</string>
 
     <!--Me Screen-->
@@ -85,6 +87,11 @@
     <!--my friend screen-->
     <string name="mAddNewFriend">New friend</string>
 
+    <!-- friend profile screen-->
+    <string name="mRegion">Region:</string>
+    <string name="mAddFriend">Add Friend</string>
+    <string name="mDeleteFriend">Delete Friend</string>
+
     <!--Edit Profile Screen -->
     <string name="takePhoto">Take Photo</string>
     <string name="choosePhoto">Choose from Album</string>
@@ -102,4 +109,8 @@
     <string name="currentPassword">Current Password</string>
     <string name="newPassword">New Password</string>
     <string name="confirmNewPassword">Confirm New Password</string>
+
+
+    <!--inbox screen-->
+    <string name="friend_request">Wants to be friends with you.</string>
 </resources>

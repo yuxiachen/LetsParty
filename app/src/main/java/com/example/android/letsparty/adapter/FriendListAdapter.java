@@ -1,5 +1,6 @@
 package com.example.android.letsparty.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +21,12 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
     private List<User> mFriends;
     private List<String> mFriendsKeys;
     private onFriendItemClickedListener mListener;
-    private ArrayList<User> tempFriendList = new ArrayList<>();
-    private ArrayList<String> tempFriendKeys = new ArrayList<>();
+
 
     public FriendListAdapter(List<User> friends, List<String> friendKeys, onFriendItemClickedListener listener) {
         this.mFriends = friends;
         mFriendsKeys = friendKeys;
         this.mListener = listener;
-        tempFriendList.addAll(friends);
-        tempFriendKeys.addAll(friendKeys);
     }
 
     @NonNull
@@ -54,7 +52,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
     @Override
     public void onClick(View v) {
         int pos = ((RecyclerView) v.getParent()).getChildAdapterPosition(v);
-        mListener.onFriendItemClicked(mFriendsKeys.get(pos));
+        mListener.onFriendItemClicked(mFriendsKeys.get(pos), mFriends.get(pos).getUserName());
     }
 
      static class FriendItemViewHolder extends RecyclerView.ViewHolder {
@@ -78,19 +76,21 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
     }
 
     public void filter(String query) {
-            mFriends.clear();
-            mFriendsKeys.clear();
-            for (int i = 0; i < tempFriendList.size(); i++) {
-                if (tempFriendList.get(i).getUserName().toLowerCase().contains(query)) {
-                    mFriends.add(tempFriendList.get(i));
-                    mFriendsKeys.add(tempFriendKeys.get(i));
-                }
+        ArrayList<User> tempFriendList = new ArrayList<>(mFriends);
+        ArrayList<String> tempFriendKeys = new ArrayList<>(mFriendsKeys);
+        mFriends.clear();
+        mFriendsKeys.clear();
+        for (int i = 0; i < tempFriendList.size(); i++) {
+            if (tempFriendList.get(i).getUserName().toLowerCase().contains(query)) {
+                mFriends.add(tempFriendList.get(i));
+                mFriendsKeys.add(tempFriendKeys.get(i));
+            }
             }
             notifyDataSetChanged();
         }
 
     public interface onFriendItemClickedListener {
-        void onFriendItemClicked(String userKey);
+        void onFriendItemClicked(String userKey, String userName);
     }
 
 }
