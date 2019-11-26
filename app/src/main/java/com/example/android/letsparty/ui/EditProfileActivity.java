@@ -166,12 +166,14 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Handler handler = new Handler();
+
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     mProgressBar.setProgress(0);
                                 }
                             }, 500);
+
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -185,6 +187,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
                                 }
                             });
+
+                            // Delete the Previous Image in FireBase Storage
+                            FirebaseStorage.getInstance().getReferenceFromUrl(originalImageUrl).delete();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -331,15 +336,11 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                Log.e("aaaa", "put extra");
-
                 // This one has some Problem
                 /*
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile
                 (getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", createImageFile()));
                 */
-
-                Log.e("aaaa", "start");
 
                 startActivityForResult(intent, CAMERA_REQUEST_CODE);
             }
@@ -379,7 +380,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 mImageUri = Uri.parse(cameraFilePath);
                 Picasso.get().load(mImageUri).transform(new CircleTransform()).into(imageView_item_etProfile);
             } catch (Exception e) {
-                Log.e("aaa", "can't save image" + e.getMessage());
+                Log.e(EditProfileActivity.class.getSimpleName(), "Can't Save Image" + e.getMessage());
             }
 
         }
