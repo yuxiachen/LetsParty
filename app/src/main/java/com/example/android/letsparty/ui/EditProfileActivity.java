@@ -4,10 +4,6 @@ import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -50,7 +46,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.io.File;
 import java.io.IOException;
@@ -158,7 +153,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                     databaseReference.setValue(user);
 
-                    Toast.makeText(EditProfileActivity.this, "Profile updated successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditProfileActivity.this, "Profile Updated Successfully", Toast.LENGTH_LONG).show();
                 } else {
                     fileReference = mStorageReference.child(System.currentTimeMillis() + "." + getFileExtension(mImageUri));
 
@@ -183,7 +178,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                                     databaseReference.setValue(user);
 
-                                    Toast.makeText(EditProfileActivity.this, "Profile updated successfully", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(EditProfileActivity.this, "Profile Updated Successfully", Toast.LENGTH_LONG).show();
 
                                 }
                             });
