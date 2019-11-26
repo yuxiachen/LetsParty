@@ -2,23 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/line_height"
         android:background="@color/colorAccent"
+        android:paddingLeft="@dimen/screen_margin"
         android:layout_gravity="center_horizontal"
+        style="?title"
         android:id="@+id/tv_title"/>
     <ImageView
         android:layout_width="@dimen/img_size"
         android:layout_height="@dimen/img_size"
         android:background="@drawable/img_shape"
         android:id="@+id/iv_photo"
+        android:layout_marginTop="@dimen/screen_margin"
         android:layout_gravity="center_horizontal"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="?normalText"
+        android:layout_marginLeft="@dimen/screen_margin"
+        android:layout_marginRight="@dimen/screen_margin"
         android:id="@+id/tv_message"/>
 
 </LinearLayout>

@@ -131,10 +131,6 @@ public class FriendProfileActivity extends AppCompatActivity {
     private void addFriend() {
         User sender = new User(currUser.getUserName(), currUser.getEmail(), currUser.getProfileImageUrl());
         Notification notification = new Notification(Constants.FRIEND_REQUEST_NOTIFICATION, sender, currUserKey, new Date().getTime());
-
-        Log.e("aaaaa", Long.toString(notification.getTime()));
-        Log.e("aaaaa", "user is " + notification.getSenderKey());
-
         FirebaseDatabase.getInstance().getReference("notifications").child(userKey).push().setValue(notification);
     }
 

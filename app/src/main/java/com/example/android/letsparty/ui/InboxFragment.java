@@ -32,6 +32,7 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class InboxFragment extends Fragment implements NotificationAdapter.OnNotificationItemClickedListener {
 
@@ -108,21 +109,28 @@ public class InboxFragment extends Fragment implements NotificationAdapter.OnNot
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.image_dialog_layout, null);
         TextView title = view.findViewById(R.id.tv_title);
         ImageView image = view.findViewById(R.id.iv_photo);
+        TextView message = view.findViewById(R.id.tv_message);
         title.setText(Constants.FRIEND_REQUEST_NOTIFICATION);
+        message.setText(notification.getSender().getUserName() + getString(R.string.friend_request));
         if (notification.getSender().getProfileImageUrl() != null) {
             Picasso.get().load(notification.getSender().getProfileImageUrl()).into(image);
         } else {
             image.setVisibility(View.GONE);
         }
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                // add friend
+                User temp = new User(currUser.getUserName(), currUser.getEmail(), currUser.getProfileImageUrl());
                 FirebaseDatabase.getInstance().getReference("friends/" + currUserKey).child(notification.getSenderKey()).setValue(notification.getSender());
-                FirebaseDatabase.getInstance().getReference("friends/" + notification.getSenderKey()).child(currUserKey).setValue(new User(currUser.getUserName(), currUser.getEmail(), currUser.getProfileImageUrl()));
+                FirebaseDatabase.getInstance().getReference("friends/" + notification.getSenderKey()).child(currUserKey).setValue(temp);
+                // send friend request accepted notification to sender
+                Notification acceptedNotification = new Notification(Constants.FRIEND_REQUEST_ACCEPTED_NOTIFICATION, temp, currUserKey, new Date().getTime());
+                FirebaseDatabase.getInstance().getReference("notifications").child(notification.getSenderKey()).push().setValue(acceptedNotification);
                 deleteNotification(notificationKey);
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 deleteNotification(notificationKey);
@@ -132,7 +140,28 @@ public class InboxFragment extends Fragment implements NotificationAdapter.OnNot
         builder.show();
     }
 
-    private void showFriendRequestAcceptedDialog(Notification notification, String notificationKey) {
+    private void showFriendRequestAcceptedDialog(Notification notification, final String notificationKey) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.image_dialog_layout, null);
+        TextView title = view.findViewById(R.id.tv_title);
+        ImageView image = view.findViewById(R.id.iv_photo);
+        title.setText(Constants.FRIEND_REQUEST_ACCEPTED_NOTIFICATION);
+        TextView message = view.findViewById(R.id.tv_message);
+        message.setText(notification.getSender().getUserName() + getString(R.string.friend_request_accepted));
+        if (notification.getSender().getProfileImageUrl() != null) {
+            Picasso.get().load(notification.getSender().getProfileImageUrl()).into(image);
+        } else {
+            image.setVisibility(View.GONE);
+        }
+
+        builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteNotification(notificationKey);
+            }
+        });
+        builder.setView(view);
+        builder.show();
 
     }
 

@@ -78,6 +78,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     message = notification.getSender().getUserName() + Constants.FRIEND_REQUEST_NOTIFICATION_MESSAGE;
                     if (notification.getSender().getProfileImageUrl() != null) imgUrl = notification.getSender().getProfileImageUrl();
                     break;
+                case Constants.FRIEND_REQUEST_ACCEPTED_NOTIFICATION:
+                    message = notification.getSender().getUserName() + Constants.FRIEND_REQUEST_ACCEPTED_NOTIFICATION_MESSAGE;
+                    if (notification.getSender().getProfileImageUrl() != null) imgUrl = notification.getSender().getProfileImageUrl();
                 default:
                     break;
             }

@@ -18,5 +18,6 @@ public class Constants {
 
     // Notification message
     public final static String FRIEND_REQUEST_NOTIFICATION_MESSAGE = " sents you a friend invitation";
+    public final static String FRIEND_REQUEST_ACCEPTED_NOTIFICATION_MESSAGE = " has accepted your friend request. You are firend now!";
 
 }
