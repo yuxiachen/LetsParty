@@ -77,7 +77,7 @@ public class PasswordResetActivity extends AppCompatActivity {
         }
         if (sNewPwd.equals(sNewPwdConfirm)) {
             if(sNewPwd.length() <= 5){
-                Toast.makeText(getApplicationContext(), "The password should be at least 6 characters!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "The password should be at least 6 Characters!", Toast.LENGTH_SHORT).show();
             }else updatePassword();
         }
     }
@@ -96,19 +96,19 @@ public class PasswordResetActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getApplicationContext(),
-                                        "Password has been updated",
+                                        "Password has been Updated",
                                         Toast.LENGTH_SHORT).show();
                             } else {
-                                Log.e(TAG, "Error in updating password",
+                                Log.e(TAG, "Error in updating Password",
                                         task.getException());
                                 Toast.makeText(getApplicationContext(),
-                                        "Failed to update password.",
+                                        "Failed to Update Password.",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 } else {
-                    Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Authentication Failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
