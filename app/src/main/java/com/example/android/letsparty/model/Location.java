@@ -1,5 +1,7 @@
 package com.example.android.letsparty.model;
 
+import androidx.annotation.NonNull;
+
 public class Location {
     String addressLine;
     String city;
@@ -67,5 +69,15 @@ public class Location {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if (city != null) sb.append(city);
+        if (!sb.toString().isEmpty()) sb.append(", ");
+        if (state != null) sb.append(state);
+        return sb.toString();
     }
 }
