@@ -50,6 +50,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.PasswordResetActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.CreateEventActivty"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -14,7 +14,7 @@ public class Location {
         this.state = state;
     }
 
-    public Location(String addressLine, String city, String country, String state, String zipCode) {
+    public Location(String addressLine, String city,  String state, String country,String zipCode) {
         this.addressLine = addressLine;
         this.city = city;
         this.country = country;
