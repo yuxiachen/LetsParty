@@ -51,7 +51,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         emptyResult = view.findViewById(R.id.tv_no_result);
 
         searchInTrending.setIconifiedByDefault(false);
-        // searchInTrending.setSubmitButtonEnabled(true);
         searchInTrending.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

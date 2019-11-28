@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/item_margin"
+    >
+    <ImageView
+        android:id="@+id/iv_friend_img"
+        android:layout_width="@dimen/small_img_size"
+        android:layout_height="@dimen/small_img_size"
+        android:src="@drawable/default_profile_logo"
+        android:background="@drawable/small_img_shape"
+        />
+    <TextView
+        android:id="@+id/tv_friend_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/friends"
+        style="@style/myNormalText"
+        android:layout_marginStart="@dimen/line_margin"
+        android:gravity="center_vertical"
+        />
+
+
+
+</LinearLayout>

@@ -1,7 +1,10 @@
 package com.example.android.letsparty.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -14,10 +17,16 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.letsparty.R;
+import com.example.android.letsparty.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 
 public class LogInActivity extends AppCompatActivity {
@@ -84,6 +93,25 @@ public class LogInActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             if (auth.getCurrentUser().isEmailVerified()) {
+                                FirebaseDatabase.getInstance().getReference(getString(R.string.db_user)).child(auth.getUid()).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        String currUserKey = auth.getUid();
+                                        User currUser = dataSnapshot.getValue(User.class);
+                                        SharedPreferences myPrefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                                        SharedPreferences.Editor prefsEditor = myPrefs.edit();
+                                        Gson gson = new Gson();
+                                        String json = gson.toJson(currUser);
+                                        prefsEditor.putString("currUser", json);
+                                        prefsEditor.putString("currUserKey", currUserKey);
+                                        prefsEditor.commit();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
                                 openHomeActivity();
                             } else {
                                 showErrorMessage(getString(R.string.error_email_not_verified));

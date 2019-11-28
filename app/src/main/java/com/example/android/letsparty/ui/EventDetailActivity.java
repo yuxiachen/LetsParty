@@ -39,6 +39,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private ToggleButton btn_save;
     private User user;
     private String organizer_name;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +50,8 @@ public class EventDetailActivity extends AppCompatActivity {
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         btn_join = findViewById(R.id.btn_join);
         btn_save = findViewById(R.id.btn_save);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         fetchJoinState();
         fetchSaveState();
@@ -61,6 +64,7 @@ public class EventDetailActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     currEvent = dataSnapshot.getValue(Event.class);
+                    actionBar.setTitle(currEvent.getTitle());
 
                     if (currEvent.getOrganizer().equals(userId)) {
                         isOrganizer = true;
