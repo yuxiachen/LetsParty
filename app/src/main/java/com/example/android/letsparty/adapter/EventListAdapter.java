@@ -1,5 +1,12 @@
 package com.example.android.letsparty.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.android.letsparty.R;
 import com.example.android.letsparty.model.Event;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,6 +81,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             eventLocationTextView.setText(event.getLocation().getAddressLine());
             Picasso.get().load(event.getImgUrl())
                     .fit()
+                    .transform(new RoundTransform())
                     .into(eventImageView);
         }
     }
