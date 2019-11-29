@@ -3,11 +3,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/search_view"
-        />
+        android:layout_marginTop="@dimen/screen_margin"
+        layout="@layout/search_view" />
 
     <include
         android:id="@+id/ll_user_list"
@@ -21,13 +22,13 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_margin="@dimen/screen_margin">
+
         <ImageView
             android:id="@+id/iv_friend_img"
             android:layout_width="@dimen/small_img_size"
             android:layout_height="@dimen/small_img_size"
-            android:src="@drawable/ic_add_new_friend"
-            android:background="@drawable/small_img_shape"
-            />
+            android:src="@drawable/ic_add_new_friend" />
+
         <TextView
             android:id="@+id/tv_friend_name"
             android:layout_width="wrap_content"
@@ -35,8 +36,8 @@
             android:text="@string/mAddNewFriend"
             style="@style/myNormalText"
             android:layout_marginStart="@dimen/line_margin"
-            android:gravity="center_vertical"
-            />
+            android:gravity="center_vertical" />
+
     </LinearLayout>
 
 </LinearLayout>

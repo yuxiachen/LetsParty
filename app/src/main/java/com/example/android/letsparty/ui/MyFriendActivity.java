@@ -88,6 +88,7 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
         adapter = new FriendListAdapter(friends, friendKeys, this);
         rvFriends.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         rvFriends.setAdapter(adapter);
+
         getMyFriends();
     }
 
@@ -106,6 +107,8 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
                 .getReference("friends/" + FirebaseAuth.getInstance().getUid())
                 .orderByChild("userName");
         query.addValueEventListener(resultListener);
+
+        emptyResult.setText(getString(R.string.noFriend));
     }
 
     private void searchNewFriend(){
@@ -113,6 +116,9 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
                 .orderByChild("userName")
                 .startAt(searchText).endAt(searchText + "\uf8ff");
         query.addValueEventListener(resultListener);
+
+        emptyResult.setText(getString(R.string.empty_result));
+
         showFriendList();
     }
 

@@ -64,7 +64,6 @@ public class EventDetailActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     currEvent = dataSnapshot.getValue(Event.class);
-                    actionBar.setTitle(currEvent.getTitle());
 
                     if (currEvent.getOrganizer().equals(userId)) {
                         isOrganizer = true;

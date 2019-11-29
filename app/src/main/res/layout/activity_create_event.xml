@@ -7,207 +7,353 @@
     android:layout_marginLeft="@dimen/screen_margin"
     android:layout_marginRight="@dimen/screen_margin"
     android:orientation="vertical">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/screen_margin"
+        android:layout_marginBottom="@dimen/screen_margin"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent" >
+
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="240dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/large_img_size"
                 android:id="@+id/iv_event_photo"
                 android:src="@drawable/empty_image"
                 android:clickable="true"
                 android:layout_marginTop="@dimen/screen_margin"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Title:"
-                android:id="@+id/tv_title"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/iv_event_photo"
-                app:layout_constraintLeft_toLeftOf="parent" />
-            <EditText
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/et_event_title"
-                android:padding="8dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_title"
-                app:layout_constraintLeft_toRightOf="@+id/tv_title" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date:"
-                android:id="@+id/tv_event_date"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title"
-                app:layout_constraintLeft_toLeftOf="parent" />
-            <EditText
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/et_event_date"
-                android:clickable="true"
-                android:padding="8dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_event_date"
-                app:layout_constraintLeft_toRightOf="@+id/tv_event_date"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Time:"
-                android:id="@+id/tv_event_time"
-                android:padding="8dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_event_date"
-                app:layout_constraintLeft_toRightOf="@+id/et_event_date" />
-            <EditText
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/et_event_time"
-                android:clickable="true"
-                android:padding="8dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_event_time"
-                app:layout_constraintLeft_toRightOf="@+id/tv_event_time"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Location:"
-                android:id="@+id/tv_event_location"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_event_time"
-                app:layout_constraintLeft_toLeftOf="parent" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Street:"
-                android:id="@+id/tv_location_street"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_event_location"
-                app:layout_constraintLeft_toLeftOf="parent" />
-            <EditText
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/et_location_street"
-                android:padding="8dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_location_street"
-                app:layout_constraintLeft_toRightOf="@+id/tv_location_street"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="City:"
-                android:id="@+id/tv_location_city"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_location_street"
-                app:layout_constraintLeft_toLeftOf="parent" />
-            <EditText
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/et_location_city"
-                android:padding="8dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_location_city"
-                app:layout_constraintLeft_toRightOf="@+id/tv_location_city"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="State:"
-                android:id="@+id/tv_location_state"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_location_city"
-                app:layout_constraintLeft_toLeftOf="parent" />
-            <EditText
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/et_location_state"
-                android:padding="8dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_location_state"
-                app:layout_constraintLeft_toRightOf="@+id/tv_location_state"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Country:"
-                android:id="@+id/tv_location_country"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_location_state"
-                app:layout_constraintLeft_toLeftOf="parent" />
-            <EditText
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/et_location_country"
-                android:padding="8dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_location_country"
-                app:layout_constraintLeft_toRightOf="@+id/tv_location_country"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Zip code:"
-                android:id="@+id/tv_location_zipcode"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_location_country"
-                app:layout_constraintLeft_toLeftOf="parent" />
-            <EditText
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/et_location_zipcode"
-                android:padding="8dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_location_zipcode"
-                app:layout_constraintLeft_toRightOf="@+id/tv_location_zipcode"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Category:"
-                android:id="@+id/tv_event_category"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_location_zipcode"
-                app:layout_constraintLeft_toLeftOf="parent"/>
-            <Spinner
+
+            <LinearLayout
+                android:id="@+id/linear_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinner_category"
-                android:entries="@array/interest_array"
-                android:padding="8dp"
+                android:layout_marginTop="@dimen/paragraph_margin"
+                app:layout_constraintTop_toBottomOf="@id/iv_event_photo"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_event_category"/>
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:layout_width="@dimen/text_width"
+                    android:layout_height="wrap_content"
+                    style="?normalText"
+                    android:text="@string/eventTitle"
+                    android:id="@+id/tv_title"
+                    android:padding="8dp"/>
+
+                <EditText
+                    android:layout_width="@dimen/long_input_width"
+                    android:layout_height="@dimen/line_height"
+                    style="?editText"
+                    android:id="@+id/et_event_title"
+                    android:singleLine="true"
+                    android:layout_marginRight="@dimen/screen_margin"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paragraph_margin"
+                app:layout_constraintTop_toBottomOf="@id/linear_title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:layout_width="@dimen/short_text_width"
+                    android:layout_height="wrap_content"
+                    style="?normalText"
+                    android:text="@string/eventDate"
+                    android:id="@+id/tv_event_date"
+                    android:layout_marginRight="@dimen/screen_margin"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:layout_width="@dimen/short_input_width"
+                    android:layout_height="wrap_content"
+                    style="?editText"
+                    android:id="@+id/et_event_date"
+                    android:singleLine="true"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:layout_width="@dimen/short_text_width"
+                    android:layout_height="wrap_content"
+                    style="?normalText"
+                    android:text="@string/eventHour"
+                    android:id="@+id/tv_event_time"
+                    android:layout_marginLeft="@dimen/paragraph_margin"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:layout_width="@dimen/short_input_width"
+                    android:layout_height="wrap_content"
+                    style="?editText"
+                    android:id="@+id/et_event_time"
+                    android:singleLine="true"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:layout_marginRight="@dimen/screen_margin"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_street"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paragraph_margin"
+                app:layout_constraintTop_toBottomOf="@id/linear_time"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:layout_width="@dimen/text_width"
+                    android:layout_height="wrap_content"
+                    style="?normalText"
+                    android:text="@string/eventStreet"
+                    android:id="@+id/tv_location_street"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:layout_width="@dimen/long_input_width"
+                    android:layout_height="wrap_content"
+                    style="?editText"
+                    android:singleLine="true"
+                    android:id="@+id/et_location_street"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paragraph_margin"
+                app:layout_constraintTop_toBottomOf="@id/linear_street"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:layout_width="@dimen/text_width"
+                    android:layout_height="wrap_content"
+                    style="?normalText"
+                    android:text="@string/eventCity"
+                    android:id="@+id/tv_location_city"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:layout_width="@dimen/long_input_width"
+                    android:layout_height="wrap_content"
+                    style="?editText"
+                    android:singleLine="true"
+                    android:id="@+id/et_location_city"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paragraph_margin"
+                app:layout_constraintTop_toBottomOf="@id/linear_city"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:layout_width="@dimen/text_width"
+                    android:layout_height="wrap_content"
+                    style="?normalText"
+                    android:text="@string/eventState"
+                    android:id="@+id/tv_location_state"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:layout_width="@dimen/long_input_width"
+                    android:layout_height="wrap_content"
+                    style="?editText"
+                    android:singleLine="true"
+                    android:id="@+id/et_location_state"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paragraph_margin"
+                app:layout_constraintTop_toBottomOf="@id/linear_state"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:layout_width="@dimen/text_width"
+                    android:layout_height="wrap_content"
+                    style="?normalText"
+                    android:text="@string/eventCountry"
+                    android:id="@+id/tv_location_country"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:layout_width="@dimen/long_input_width"
+                    android:layout_height="wrap_content"
+                    style="?editText"
+                    android:singleLine="true"
+                    android:id="@+id/et_location_country"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_zipCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paragraph_margin"
+                app:layout_constraintTop_toBottomOf="@id/linear_country"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:layout_width="@dimen/text_width"
+                    android:layout_height="wrap_content"
+                    style="?normalText"
+                    android:text="@string/eventZip"
+                    android:id="@+id/tv_location_zipcode"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:layout_width="@dimen/long_input_width"
+                    android:layout_height="wrap_content"
+                    style="?editText"
+                    android:singleLine="true"
+                    android:id="@+id/et_location_zipcode"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paragraph_margin"
+                app:layout_constraintTop_toBottomOf="@id/linear_zipCode"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:layout_width="@dimen/text_width"
+                    android:layout_height="wrap_content"
+                    style="?normalText"
+                    android:text="@string/eventCategory"
+                    android:id="@+id/tv_event_category"
+                    android:padding="8dp" />
+
+                <Spinner
+                    android:layout_width="@dimen/long_input_width"
+                    android:layout_height="wrap_content"
+                    style="?editText"
+                    android:id="@+id/spinner_category"
+                    android:entries="@array/interest_array"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_minPeople"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paragraph_margin"
+                app:layout_constraintTop_toBottomOf="@id/linear_category"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:layout_width="@dimen/long_text_width"
+                    android:layout_height="wrap_content"
+                    style="?normalText"
+                    android:text="@string/eventMinPeople"
+                    android:id="@+id/tv_event_minPeople"
+                    android:layout_marginRight="@dimen/larger_paragraph_margin"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:layout_width="@dimen/input_width"
+                    android:layout_height="wrap_content"
+                    style="?editText"
+                    android:singleLine="true"
+                    android:id="@+id/et_minPeople"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description:"
+                style="?normalText"
+                android:text="@string/eventDescription"
                 android:id="@+id/tv_event_description"
                 android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_category"
+                android:layout_marginTop="@dimen/paragraph_margin"
+                app:layout_constraintTop_toBottomOf="@+id/linear_minPeople"
                 app:layout_constraintLeft_toLeftOf="parent"/>
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                style="?editText"
                 android:padding="8dp"
                 android:id="@+id/et_description"
                 android:inputType="textMultiLine"
                 android:lines="5"
                 android:maxLength="100"
+                android:layout_marginLeft="@dimen/screen_margin"
+                android:layout_marginRight="@dimen/screen_margin"
                 app:layout_constraintTop_toBottomOf="@+id/tv_event_description"
                 app:layout_constraintLeft_toLeftOf="parent"/>
-            <TextView
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:id="@+id/linear_friendsOnly"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Friends only:"
-                android:id="@+id/tv_event_friendsOnly"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/et_description"
-                app:layout_constraintLeft_toLeftOf="parent"/>
-            <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tb_friendsOnly"
-                android:checked="false"
-                android:textOff="NO"
-                android:textOn="YES"
-                app:layout_constraintLeft_toRightOf="@+id/tv_event_friendsOnly"
-                app:layout_constraintBaseline_toBaselineOf="@id/tv_event_friendsOnly" />
+                android:layout_marginTop="@dimen/paragraph_margin"
+                app:layout_constraintTop_toBottomOf="@id/et_description"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?normalText"
+                    android:text="@string/friendsOnly"
+                    android:id="@+id/tv_event_friendsOnly"
+                    android:layout_marginRight="@dimen/paragraph_margin"
+                    android:padding="8dp" />
+
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tb_friendsOnly"
+                    android:background="@color/colorPrimaryDark"
+                    android:checked="false"
+                    android:textOff="@string/no"
+                    android:textOn="@string/yes"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_event_friendsOnly"
+                    app:layout_constraintBaseline_toBaselineOf="@id/tv_event_friendsOnly" />
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -221,7 +367,6 @@
         android:layout_marginBottom="10dp"
         android:textSize="@dimen/title_text_size"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

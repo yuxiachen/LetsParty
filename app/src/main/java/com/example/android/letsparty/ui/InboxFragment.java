@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.letsparty.R;
+import com.example.android.letsparty.adapter.CircleTransform;
 import com.example.android.letsparty.adapter.NotificationAdapter;
 import com.example.android.letsparty.model.Notification;
 import com.example.android.letsparty.model.User;
@@ -59,8 +60,12 @@ public class InboxFragment extends Fragment implements NotificationAdapter.OnNot
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         adapter = new NotificationAdapter(notifications, notificationKeys, this);
         recyclerView.setAdapter(adapter);
+
+        emptyResult.setText(getString(R.string.noMessage));
+
         showEmptyResult();
         getNotifications();
+
         return view;
     }
 
@@ -149,7 +154,7 @@ public class InboxFragment extends Fragment implements NotificationAdapter.OnNot
         TextView message = view.findViewById(R.id.tv_message);
         message.setText(notification.getSender().getUserName() + getString(R.string.friend_request_accepted));
         if (notification.getSender().getProfileImageUrl() != null) {
-            Picasso.get().load(notification.getSender().getProfileImageUrl()).into(image);
+            Picasso.get().load(notification.getSender().getProfileImageUrl()).transform(new CircleTransform()).into(image);
         } else {
             image.setVisibility(View.GONE);
         }

@@ -378,6 +378,8 @@ public class EditProfileActivity extends AppCompatActivity {
             }
 
         }
+
+        dialog.dismiss();
     }
 
     private String getFileExtension(Uri uri) {
