@@ -25,6 +25,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SavedFragment extends Fragment implements EventListAdapter.OnEventItemClickedListener {
 
@@ -67,9 +68,9 @@ public class SavedFragment extends Fragment implements EventListAdapter.OnEventI
                         eventIDs.add(snapshot.getKey());
                     }
 
+                    long currTime = new Date().getTime();
                     // Find the Event
-                    Query eventQuery = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event)).orderByChild("time");
-
+                    Query eventQuery = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event)).orderByChild("time").startAt(currTime);
                     eventQuery.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

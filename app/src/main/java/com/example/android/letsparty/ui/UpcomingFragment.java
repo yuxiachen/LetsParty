@@ -65,9 +65,9 @@ public class UpcomingFragment extends Fragment implements EventListAdapter.OnEve
                         eventIDs.add(snapshot.getKey());
                     }
 
+                    long currTime = new Date().getTime();
                     // Find the Event
-                    Query eventQuery = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event)).orderByChild("time");
-
+                    Query eventQuery = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event)).orderByChild("time").startAt(currTime);
                     eventQuery.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -76,17 +76,13 @@ public class UpcomingFragment extends Fragment implements EventListAdapter.OnEve
                                 eventKeys.clear();
 
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    if (eventIDs.contains(snapshot.getKey())) {
-                                        Long time = (Long)snapshot.child("time").getValue();
-                                        if (new Date().getTime() < time) {
-                                            Event event = snapshot.getValue(Event.class);
-                                            String key = snapshot.getKey();
-                                            resultEvents.add(event);
-                                            eventKeys.add(key);
-                                        }
+                                    Event event = snapshot.getValue(Event.class);
+                                    String key = snapshot.getKey();
+                                    if (eventIDs.contains(key)) {
+                                        resultEvents.add(event);
+                                        eventKeys.add(key);
                                     }
                                 }
-
                                 mAdapter.notifyDataSetChanged();
                             } else {
                                 Log.e(UpcomingFragment.class.getSimpleName(), "No data exists");
