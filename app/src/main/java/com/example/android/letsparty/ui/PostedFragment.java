@@ -82,11 +82,9 @@ public class PostedFragment extends Fragment implements EventListAdapter.OnEvent
                                     Event event = snapshot.getValue(Event.class);
                                     String key = snapshot.getKey();
                                     if (eventIDs.contains(key)) {
-                                        Long time = (Long)snapshot.child("time").getValue();
-                                        if (new Date().getTime() < time) {
-                                            resultEvents.add(event);
-                                            eventKeys.add(key);
-                                        }
+                                        resultEvents.add(event);
+                                        eventKeys.add(key);
+
                                     }
                                 }
 

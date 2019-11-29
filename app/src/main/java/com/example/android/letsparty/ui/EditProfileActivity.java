@@ -258,8 +258,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 });
 
                 AlertDialog mDialog = mBuilder.create();
-
-                mBuilder.show();
+                mDialog.show();
             }
         });
     }

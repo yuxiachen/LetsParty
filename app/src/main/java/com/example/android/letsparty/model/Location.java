@@ -16,6 +16,7 @@ public class Location {
         this.state = state;
     }
 
+
     public Location(String city, String country, String state, String zipCode) {
         this.city = city;
         this.country = country;
@@ -23,11 +24,11 @@ public class Location {
         this.zipCode = zipCode;
     }
 
-    public Location(String addressLine, String city, String country, String state, String zipCode) {
+    public Location(String addressLine, String city, String state, String country, String zipCode) {
         this.addressLine = addressLine;
         this.city = city;
-        this.country = country;
         this.state = state;
+        this.country = country;
         this.zipCode = zipCode;
     }
 

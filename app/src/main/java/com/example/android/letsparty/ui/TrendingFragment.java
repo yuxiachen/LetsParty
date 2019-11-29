@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.android.letsparty.R;
 import com.example.android.letsparty.adapter.EventListAdapter;
 import com.example.android.letsparty.model.Event;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,12 +40,13 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
     private SearchView searchInTrending;
     private ConstraintLayout frame;
     private TextView emptyResult;
+    private FloatingActionButton fab;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trending, null);
-
+        fab = view.findViewById(R.id.fab);
         frame = view.findViewById(R.id.fragment_trending);
         frame.requestFocus();
         searchInTrending = view.findViewById(R.id.search_in_trending);
@@ -56,8 +58,8 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
             public boolean onQueryTextSubmit(String query) {
                 Query queryResult = FirebaseDatabase.getInstance().getReference("events")
                         .orderByChild("category").startAt(query.toLowerCase()).endAt(query.toLowerCase() + "\uf8ff");
-
                 queryResult.addValueEventListener(resultListener);
+
 
                 return false;
             }
@@ -70,6 +72,13 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                 }
 
                 return false;
+            }
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateEventActivty.class);
+                startActivity(intent);
             }
         });
 
@@ -122,7 +131,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Event event = snapshot.getValue(Event.class);
                         String key = snapshot.getKey();
-
                         resultEvents.add(event);
                         eventKeys.add(key);
                     }
@@ -143,6 +151,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
     private void openEventDetailActivity(String key){
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra("key", key);
+
         startActivity(intent);
     }
 

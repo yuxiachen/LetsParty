@@ -46,7 +46,9 @@
         android:screenOrientation="portrait"/>
     <activity android:name=".ui.EventDetailActivity"
         android:screenOrientation="portrait"/>
-    <activity android:name=".ui.EditProfileActivity"
+        <activity android:name=".ui.CreateEventActivty"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.EditProfileActivity"
         android:screenOrientation="portrait"/>
     <activity android:name=".ui.PasswordResetActivity"
         android:screenOrientation="portrait"/>
