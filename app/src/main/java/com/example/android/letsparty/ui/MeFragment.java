@@ -45,7 +45,7 @@ public class MeFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        DatabaseReference databaseReference = firebaseDatabase.getReference("users/"+firebaseAuth.getUid());
+        DatabaseReference databaseReference = firebaseDatabase.getReference(getString(R.string.db_user) + "/" + firebaseAuth.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -73,6 +73,7 @@ public class MeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         password_card_view = view.findViewById(R.id.password_card_view);
         password_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,11 +82,12 @@ public class MeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         friends_card_view = view.findViewById(R.id.friends_card_view);
         friends_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FriendActivity.class);
+                Intent intent = new Intent(getActivity(), MyFriendActivity.class);
                 startActivity(intent);
             }
         });

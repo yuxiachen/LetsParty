@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/take_photo"
+        android:layout_width="@dimen/popup_window_width"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/line_margin"
+        android:layout_marginLeft="@dimen/screen_margin"
+        android:layout_marginRight="@dimen/screen_margin"
+        android:layout_marginTop="@dimen/line_margin"
+        android:padding="@dimen/line_margin"
+        android:background="@color/noColor"
+        android:text="@string/takePhoto" />
+
+    <Button
+        android:id="@+id/choose_photo"
+        android:layout_width="@dimen/popup_window_width"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/line_margin"
+        android:layout_marginLeft="@dimen/screen_margin"
+        android:layout_marginRight="@dimen/screen_margin"
+        android:padding="@dimen/line_margin"
+        android:background="@color/noColor"
+        android:text="@string/choosePhoto" />
+
+    <Button
+        android:id="@+id/cancel_upload"
+        android:layout_width="@dimen/popup_window_width"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/line_margin"
+        android:layout_marginLeft="@dimen/screen_margin"
+        android:layout_marginRight="@dimen/screen_margin"
+        android:padding="@dimen/line_margin"
+        android:background="@color/noColor"
+        android:text="@string/cancelUpload" />
+</LinearLayout>

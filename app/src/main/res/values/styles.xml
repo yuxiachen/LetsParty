@@ -43,6 +43,7 @@
     </style>
     <style name="myButton">
         <item name="android:textSize">@dimen/normal_text_size</item>
+        <item name="android:textAllCaps">false</item>
         <item name="android:background">@drawable/button_background</item>
     </style>
 

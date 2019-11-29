@@ -10,21 +10,20 @@
 
     <ImageView
         android:id="@+id/imageView_item_user"
-        android:layout_width="@dimen/img_size"
-        android:layout_height="@dimen/img_size"
+        android:layout_width="@dimen/mid_img_size"
+        android:layout_height="@dimen/mid_img_size"
         android:src="@drawable/default_profile_logo"
         android:layout_marginBottom="@dimen/screen_margin"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/username_item_user"
         style="?title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/line_margin"
-        android:layout_marginTop="@dimen/line_margin"
+        android:layout_marginStart="@dimen/paragraph_margin"
+        android:layout_marginTop="@dimen/paragraph_margin"
         app:layout_constraintLeft_toRightOf="@id/imageView_item_user"
         app:layout_constraintTop_toTopOf="@+id/imageView_item_user" />
 
@@ -33,10 +32,10 @@
         style="?normalText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/line_margin"
-        android:layout_marginTop="@dimen/line_margin"
+        android:layout_marginStart="@dimen/paragraph_margin"
+        android:layout_marginBottom="@dimen/paragraph_margin"
         app:layout_constraintLeft_toRightOf="@id/imageView_item_user"
-        app:layout_constraintTop_toBottomOf="@+id/username_item_user" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_item_user" />
 
     <Button
         android:id="@+id/btn_logout"
@@ -59,7 +58,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/screen_margin"
+            android:paddingTop="@dimen/btn_margin"
+            android:paddingBottom="@dimen/btn_margin"
+            android:paddingLeft="@dimen/paragraph_margin"
             android:orientation="horizontal">
 
             <ImageView
@@ -77,6 +78,7 @@
                 android:layout_marginStart="@dimen/screen_margin"/>
 
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -89,7 +91,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:paddingTop="@dimen/btn_margin"
+            android:paddingBottom="@dimen/btn_margin"
+            android:paddingLeft="@dimen/paragraph_margin"
             android:orientation="horizontal">
 
             <ImageView
@@ -107,6 +111,7 @@
                 android:layout_marginStart="@dimen/screen_margin"/>
 
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -120,7 +125,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:paddingTop="@dimen/btn_margin"
+            android:paddingBottom="@dimen/btn_margin"
+            android:paddingLeft="@dimen/paragraph_margin"
             android:orientation="horizontal">
 
             <ImageView
@@ -138,6 +145,7 @@
                 android:layout_marginStart="@dimen/screen_margin"/>
 
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

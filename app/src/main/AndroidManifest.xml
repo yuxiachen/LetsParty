@@ -46,12 +46,16 @@
         android:screenOrientation="portrait"/>
     <activity android:name=".ui.EventDetailActivity"
         android:screenOrientation="portrait"/>
-        <activity android:name=".ui.EditProfileActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.PasswordResetActivity"
-            android:screenOrientation="portrait"/>
         <activity android:name=".ui.CreateEventActivty"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.EditProfileActivity"
+        android:screenOrientation="portrait"/>
+    <activity android:name=".ui.PasswordResetActivity"
+        android:screenOrientation="portrait"/>
+    <activity android:name=".ui.MyFriendActivity"
+        android:screenOrientation="portrait"/>
+    <activity android:name=".ui.FriendProfileActivity"
+        android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

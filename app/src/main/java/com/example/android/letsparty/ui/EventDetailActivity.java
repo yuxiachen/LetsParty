@@ -37,6 +37,9 @@ public class EventDetailActivity extends AppCompatActivity {
     private boolean saveState;
     private Button btn_join;
     private ToggleButton btn_save;
+    private User user;
+    private String organizer_name;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +50,8 @@ public class EventDetailActivity extends AppCompatActivity {
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         btn_join = findViewById(R.id.btn_join);
         btn_save = findViewById(R.id.btn_save);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         fetchJoinState();
         fetchSaveState();
@@ -59,13 +64,30 @@ public class EventDetailActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     currEvent = dataSnapshot.getValue(Event.class);
+                    actionBar.setTitle(currEvent.getTitle());
 
                     if (currEvent.getOrganizer().equals(userId)) {
                         isOrganizer = true;
                         setButtonText();
                     }
 
-                    setupView(currEvent);
+                    db.getReference(getString(R.string.db_user) + "/" + currEvent.getOrganizer()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                user = dataSnapshot.getValue(User.class);
+
+                                organizer_name = user.getUserName();
+                            }
+
+                            setupView(currEvent);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 } else {
                     Log.e(EventDetailActivity.class.getSimpleName(), "data not exist");
                 }
@@ -153,7 +175,7 @@ public class EventDetailActivity extends AppCompatActivity {
         TextView tv_min_number = findViewById(R.id.tv_min_number);
         tv_min_number.setText(minPeople);
 
-        String organizer = getString(R.string.eventOrganizer) + " " + event.getOrganizer();
+        String organizer = getString(R.string.eventOrganizer) + " " + organizer_name;
         TextView tv_publisher = findViewById(R.id.tv_organizer);
         tv_publisher.setText(organizer);
 

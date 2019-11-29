@@ -1,5 +1,7 @@
 package com.example.android.letsparty.model;
 
+import androidx.annotation.NonNull;
+
 public class Location {
     String addressLine;
     String city;
@@ -14,11 +16,19 @@ public class Location {
         this.state = state;
     }
 
-    public Location(String addressLine, String city,  String state, String country,String zipCode) {
-        this.addressLine = addressLine;
+
+    public Location(String city, String country, String state, String zipCode) {
         this.city = city;
         this.country = country;
         this.state = state;
+        this.zipCode = zipCode;
+    }
+
+    public Location(String addressLine, String city, String state, String country, String zipCode) {
+        this.addressLine = addressLine;
+        this.city = city;
+        this.state = state;
+        this.country = country;
         this.zipCode = zipCode;
     }
 
@@ -60,5 +70,15 @@ public class Location {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if (city != null) sb.append(city);
+        if (!sb.toString().isEmpty()) sb.append(", ");
+        if (state != null) sb.append(state);
+        return sb.toString();
     }
 }
