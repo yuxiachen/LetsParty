@@ -3,7 +3,6 @@ package com.example.android.letsparty.ui;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,17 +15,17 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.letsparty.R;
+import com.example.android.letsparty.adapter.CircleTransform;
 import com.example.android.letsparty.model.Notification;
 import com.example.android.letsparty.model.User;
 import com.example.android.letsparty.utils.Constants;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+import com.google.gson.Gson;
 
 import java.util.Date;
 
@@ -95,19 +94,29 @@ public class FriendProfileActivity extends AppCompatActivity {
 
     private void initView(User user){
         ImageView ivPhoto = findViewById(R.id.iv_profile_img);
+        TextView tvUsername = findViewById(R.id.username_item_user);
         TextView tvEmail = findViewById(R.id.tv_profile_email);
         TextView tvRegion = findViewById(R.id.tv_region);
         TextView tvInterest = findViewById(R.id.tv_interest);
+
         tvEmail.setText(user.getEmail());
-        if (user.getLocation() != null) tvRegion.setText(user.getLocation().toString());
+
+        tvUsername.setText(user.getUserName());
+
+        if (user.getLocation() != null) {
+            tvRegion.setText(user.getLocation().toString());
+        }
+
         if(user.getInterest() != null) {
             tvInterest.setText(user.getInterest());
         }
+
         if (user.getProfileImageUrl() != null) {
             Picasso.get().load(user.getProfileImageUrl())
-                    .fit()
+                    .transform(new CircleTransform())
                     .into(ivPhoto);
         }
+
         btnAddOrDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

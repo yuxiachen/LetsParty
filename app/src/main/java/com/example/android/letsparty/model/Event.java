@@ -29,6 +29,18 @@ public class Event {
         this.description = description;
     }
 
+    public Event(String title, String imgUrl, long time, Location location, boolean friendsOnly, String category, String description, String organizer, int minPeople) {
+        this.title = title;
+        this.imgUrl = imgUrl;
+        this.time = time;
+        this.location = location;
+        this.friendsOnly = friendsOnly;
+        this.category = category;
+        this.description = description;
+        this.organizer = organizer;
+        this.minPeople = minPeople;
+    }
+
     public Event() {}
 
     public String getTitle(){

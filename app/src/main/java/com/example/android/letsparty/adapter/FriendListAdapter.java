@@ -69,7 +69,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
             name.setText(friend.getUserName());
             if (friend.getProfileImageUrl() != null) {
                 Picasso.get().load(friend.getProfileImageUrl())
-                        .fit()
+                        .transform(new CircleTransform())
                         .into(friendProfileImg);
             }
         }

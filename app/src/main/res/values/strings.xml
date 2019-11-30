@@ -82,9 +82,8 @@
     <string name="mBuilderDismiss">Dismiss</string>
     <string name="mBuilderClearAll">Clear all</string>
 
-
-
     <!--my friend screen-->
+    <string name="noFriend">You do not have any Friend yet ～</string>
     <string name="mAddNewFriend">New friend</string>
 
     <!-- friend profile screen-->
@@ -110,9 +109,24 @@
     <string name="newPassword">New Password</string>
     <string name="confirmNewPassword">Confirm New Password</string>
 
-
     <!--inbox screen-->
+    <string name="noMessage">Currently No Message in your Inbox ～</string>
     <string name="friend_request">\u0020wants to be friends with you.</string>
     <string name="friend_request_accepted">\u0020has accepted your friend request, you are friends now!</string>
+
+    <!--Create Event Screen -->
+    <string name="createEvent">Create Event</string>
+    <string name="eventTitle">Title: </string>
+    <string name="eventDate">Date: </string>
+    <string name="eventHour">Time: </string>
+    <string name="eventStreet">Street: </string>
+    <string name="eventCity">City: </string>
+    <string name="eventState">State: </string>
+    <string name="eventCountry">Country: </string>
+    <string name="eventZip">Zip Code: </string>
+    <string name="eventMinPeople">Minimum People: </string>
+    <string name="friendsOnly">Friends Only: </string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

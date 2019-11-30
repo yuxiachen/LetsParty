@@ -85,7 +85,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     break;
             }
             tvMessage.setText(message);
-            if (imgUrl != null) Picasso.get().load(imgUrl).fit().into(ivPhoto);
+            if (imgUrl != null) Picasso.get().load(imgUrl).transform(new CircleTransform()).into(ivPhoto);
         }
     }
 

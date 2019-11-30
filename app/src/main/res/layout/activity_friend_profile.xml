@@ -17,10 +17,11 @@
     <TextView
         android:id="@+id/username_item_user"
         style="?title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paragraph_margin"
-        android:layout_marginTop="@dimen/paragraph_margin" />
+        android:gravity="center"
+        android:layout_marginTop="@dimen/paragraph_margin"
+        android:layout_marginBottom="@dimen/screen_margin"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -30,20 +31,20 @@
         <TextView
             style="?normalText"
             android:text="@string/email"
-            android:layout_width="@dimen/text_width"
+            android:layout_width="@dimen/long_text_width"
             android:layout_height="@dimen/line_height"
-            android:gravity="right"
+            android:gravity="end"
             android:layout_marginTop="@dimen/paragraph_margin"
-            android:layout_marginRight="@dimen/paragraph_margin" />
+            android:layout_marginEnd="@dimen/paragraph_margin" />
 
 
         <TextView
             android:id="@+id/tv_profile_email"
             style="?normalText"
-            android:layout_width="@dimen/long_input_width"
+            android:layout_width="@dimen/input_width"
             android:layout_height="@dimen/line_height"
             android:layout_marginTop="@dimen/paragraph_margin"
-            android:layout_marginRight="@dimen/screen_margin"
+            android:layout_marginEnd="@dimen/screen_margin"
             android:inputType="none"
             android:focusable="false" />
 
@@ -57,20 +58,20 @@
         <TextView
             style="?normalText"
             android:text="@string/mRegion"
-            android:layout_width="@dimen/text_width"
+            android:layout_width="@dimen/long_text_width"
             android:layout_height="@dimen/line_height"
-            android:gravity="right"
+            android:gravity="end"
             android:layout_marginTop="@dimen/paragraph_margin"
-            android:layout_marginRight="@dimen/paragraph_margin" />
+            android:layout_marginEnd="@dimen/paragraph_margin" />
 
 
         <TextView
             android:id="@+id/tv_region"
             style="?normalText"
-            android:layout_width="@dimen/long_input_width"
+            android:layout_width="@dimen/input_width"
             android:layout_height="@dimen/line_height"
             android:layout_marginTop="@dimen/paragraph_margin"
-            android:layout_marginRight="@dimen/screen_margin"
+            android:layout_marginEnd="@dimen/screen_margin"
             android:inputType="none"
             android:focusable="false" />
 
@@ -84,20 +85,20 @@
         <TextView
             style="?normalText"
             android:text="@string/interest"
-            android:layout_width="@dimen/text_width"
+            android:layout_width="@dimen/long_text_width"
             android:layout_height="@dimen/line_height"
-            android:gravity="right"
+            android:gravity="end"
             android:layout_marginTop="@dimen/paragraph_margin"
-            android:layout_marginRight="@dimen/paragraph_margin" />
+            android:layout_marginEnd="@dimen/paragraph_margin" />
 
 
         <TextView
             android:id="@+id/tv_interest"
             style="?normalText"
-            android:layout_width="@dimen/long_input_width"
+            android:layout_width="@dimen/input_width"
             android:layout_height="@dimen/line_height"
             android:layout_marginTop="@dimen/paragraph_margin"
-            android:layout_marginRight="@dimen/screen_margin"
+            android:layout_marginEnd="@dimen/screen_margin"
             android:inputType="none"
             android:focusable="false" />
 

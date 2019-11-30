@@ -39,6 +39,7 @@
         <EditText
             android:id="@+id/et_profile_username"
             style="?editText"
+            android:singleLine="true"
             android:layout_width="@dimen/long_input_width"
             android:layout_height="@dimen/line_height"
             android:layout_marginTop="@dimen/paragraph_margin"
@@ -68,6 +69,7 @@
             <EditText
                 android:id="@+id/et_profile_email"
                 style="?editText"
+                android:singleLine="true"
                 android:layout_width="@dimen/long_input_width"
                 android:layout_height="@dimen/line_height"
                 android:layout_marginTop="@dimen/paragraph_margin"
@@ -100,6 +102,7 @@
         <EditText
             android:id="@+id/et_profile_country"
             style="?editText"
+            android:singleLine="true"
             android:layout_width="@dimen/short_input_width"
             android:layout_height="@dimen/line_height"
             android:layout_marginTop="@dimen/paragraph_margin"
@@ -118,6 +121,7 @@
         <EditText
             android:id="@+id/et_profile_state"
             style="?editText"
+            android:singleLine="true"
             android:layout_width="@dimen/short_input_width"
             android:layout_height="@dimen/line_height"
             android:layout_marginTop="@dimen/paragraph_margin"
@@ -148,6 +152,7 @@
         <EditText
             android:id="@+id/et_profile_city"
             style="?editText"
+            android:singleLine="true"
             android:layout_width="@dimen/short_input_width"
             android:layout_height="@dimen/line_height"
             android:layout_marginTop="@dimen/paragraph_margin"
@@ -166,6 +171,7 @@
         <EditText
             android:id="@+id/et_profile_zipcode"
             style="?editText"
+            android:singleLine="true"
             android:layout_width="@dimen/short_input_width"
             android:layout_height="@dimen/line_height"
             android:layout_marginTop="@dimen/paragraph_margin"
