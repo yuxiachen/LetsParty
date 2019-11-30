@@ -116,7 +116,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 setupView(user);
 
-                originalImageUrl = user.getProfileImageUrl();
+                if (user.getProfileImageUrl() == null) {
+                    originalImageUrl = null;
+                }
+                else {
+                    originalImageUrl = user.getProfileImageUrl();
+                }
 
                 for (int i = 0; i < interestItems.length; i++) {
                     if (set.contains(interestItems[i])) {
@@ -149,9 +154,16 @@ public class EditProfileActivity extends AppCompatActivity {
                 location = new Location(et_profile_city.getText().toString(), et_profile_country.getText().toString(), et_profile_state.getText().toString(), et_profile_zipCode.getText().toString());
 
                 if (mImageUri == null) {
-                    User user = new User(et_profile_username.getText().toString(), originalImageUrl, et_profile_email.getText().toString(), location, tv_interest.getText().toString());
+                    if (originalImageUrl == null) {
+                        User user = new User(et_profile_username.getText().toString(), et_profile_email.getText().toString(), location, tv_interest.getText().toString());
 
-                    databaseReference.setValue(user);
+                        databaseReference.setValue(user);
+                    }
+                    else {
+                        User user = new User(et_profile_username.getText().toString(), originalImageUrl, et_profile_email.getText().toString(), location, tv_interest.getText().toString());
+
+                        databaseReference.setValue(user);
+                    }
 
                     Toast.makeText(EditProfileActivity.this, "Profile Updated Successfully", Toast.LENGTH_LONG).show();
                 } else {
@@ -184,7 +196,9 @@ public class EditProfileActivity extends AppCompatActivity {
                             });
 
                             // Delete the Previous Image in FireBase Storage
-                            FirebaseStorage.getInstance().getReferenceFromUrl(originalImageUrl).delete();
+                            if (originalImageUrl != null) {
+                                FirebaseStorage.getInstance().getReferenceFromUrl(originalImageUrl).delete();
+                            }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
