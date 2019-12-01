@@ -175,6 +175,7 @@ public class CreateEventActivty extends AppCompatActivity {
                                     String zipcode = et_zipcode.getText().toString();
                                     String organizer = FirebaseAuth.getInstance().getUid();
                                     int minPeople = Integer.parseInt(et_minPeople.getText().toString());
+                                    int currentPeople = 1;
 
                                     if (time <= System.currentTimeMillis()) {
                                         Toast.makeText(CreateEventActivty.this, "Please pick a valid date and time.", Toast.LENGTH_SHORT).show();
@@ -215,14 +216,14 @@ public class CreateEventActivty extends AppCompatActivity {
                                         Toast.makeText(CreateEventActivty.this, output, Toast.LENGTH_LONG).show();
                                     } else {
                                         location = new Location(street, city, state, country, zipcode);
-                                        Event event = new Event(title, downloadUrl, time, location, friendsOnly, category, description, organizer, minPeople);
+                                        Event event = new Event(title, downloadUrl, time, location, friendsOnly, category, description, organizer, minPeople, currentPeople);
                                         String id = dbReference.push().getKey();
 
                                         dbReference.child(id).setValue(event);
                                         FirebaseDatabase.getInstance().getReference("postedEvents").child(organizer).child(id).setValue(true);
                                         FirebaseDatabase.getInstance().getReference("joinedEvents").child(organizer).child(id).setValue(true);
 
-                                        Toast.makeText(CreateEventActivty.this, "The event is posted successfully.", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(CreateEventActivty.this, "Post Event successfully.", Toast.LENGTH_LONG).show();
 
                                         finish();
                                     }

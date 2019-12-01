@@ -75,12 +75,33 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             String message = null;
             switch (type) {
                 case Constants.FRIEND_REQUEST_NOTIFICATION:
-                    message = notification.getSender().getUserName() + Constants.FRIEND_REQUEST_NOTIFICATION_MESSAGE;
+                    message = Constants.FRIEND_REQUEST_NOTIFICATION + " from " + notification.getSender().getUserName();
                     if (notification.getSender().getProfileImageUrl() != null) imgUrl = notification.getSender().getProfileImageUrl();
                     break;
                 case Constants.FRIEND_REQUEST_ACCEPTED_NOTIFICATION:
-                    message = notification.getSender().getUserName() + Constants.FRIEND_REQUEST_ACCEPTED_NOTIFICATION_MESSAGE;
+                    message = Constants.FRIEND_REQUEST_ACCEPTED_NOTIFICATION + " from " + notification.getSender().getUserName();
                     if (notification.getSender().getProfileImageUrl() != null) imgUrl = notification.getSender().getProfileImageUrl();
+                    break;
+                case Constants.EVENT_JOIN_NOTIFICATION:
+                    message = Constants.EVENT_JOIN_NOTIFICATION + " from " + notification.getSender().getUserName() + " for " + notification.getEvent().getTitle();
+                    if (notification.getSender().getProfileImageUrl() != null) imgUrl = notification.getSender().getProfileImageUrl();
+                    break;
+                case Constants.EVENT_QUIT_NOTIFICATION:
+                    message = Constants.EVENT_QUIT_NOTIFICATION + " from " + notification.getSender().getUserName() + " for " + notification.getEvent().getTitle();
+                    if (notification.getSender().getProfileImageUrl() != null) imgUrl = notification.getSender().getProfileImageUrl();
+                    break;
+                case Constants.EVENT_CANCEL_NOTIFICATION:
+                    message = Constants.EVENT_CANCEL_NOTIFICATION + " for " + notification.getEvent().getTitle();
+                    if (notification.getEvent().getImgUrl() != null) imgUrl = notification.getEvent().getImgUrl();
+                    break;
+                case Constants.EVENT_SET_NOTIFICATION:
+                    message = Constants.EVENT_SET_NOTIFICATION + " for " + notification.getEvent().getTitle();
+                    if (notification.getEvent().getImgUrl() != null) imgUrl = notification.getEvent().getImgUrl();
+                    break;
+                case Constants.EVENT_PENDING_NOTIFICATION:
+                    message = Constants.EVENT_PENDING_NOTIFICATION + " for " + notification.getEvent().getTitle();
+                    if (notification.getEvent().getImgUrl() != null) imgUrl = notification.getEvent().getImgUrl();
+                    break;
                 default:
                     break;
             }

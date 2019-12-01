@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -15,15 +16,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.letsparty.R;
 import com.example.android.letsparty.model.Event;
+import com.example.android.letsparty.model.Notification;
 import com.example.android.letsparty.model.User;
+import com.example.android.letsparty.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class EventDetailActivity extends AppCompatActivity {
@@ -38,8 +43,8 @@ public class EventDetailActivity extends AppCompatActivity {
     private Button btn_join;
     private ToggleButton btn_save;
     private User user;
+    private User currUser;
     private String organizer_name;
-    private ActionBar actionBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +58,7 @@ public class EventDetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        getUser(userId);
         fetchJoinState();
         fetchSaveState();
         fetchEvent();
@@ -240,6 +246,22 @@ public class EventDetailActivity extends AppCompatActivity {
         }
     }
 
+    private void getUser(String key) {
+        Query query = FirebaseDatabase.getInstance().getReference("users").child(key);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    currUser = dataSnapshot.getValue(User.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
     private void cancelEvent() {
         isOrganizer = false;
 
@@ -275,7 +297,27 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
 
-        db.getReference(getString(R.string.db_joined_user)).child(eventKey).removeValue();
+        db.getReference(getString(R.string.db_joined_user)).child(eventKey).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                        Event event = new Event(currEvent.getTitle(), currEvent.getImgUrl(), currEvent.getMinPeople(), currEvent.getTime(), currEvent.getFriendsOnly());
+                        Notification notification = new Notification(Constants.EVENT_CANCEL_NOTIFICATION, event, eventKey, new Date().getTime());
+                        FirebaseDatabase.getInstance().getReference("notifications").child(snapshot.getKey()).push().setValue(notification);
+
+                        snapshot.getRef().removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        // db.getReference(getString(R.string.db_joined_user)).child(eventKey).removeValue();
         db.getReference(getString(R.string.db_posted_event) + "/" + userId).child(eventKey).removeValue();
         db.getReference(getString(R.string.db_event)).child(eventKey).removeValue();
 
@@ -285,26 +327,102 @@ public class EventDetailActivity extends AppCompatActivity {
     private void quitEvent() {
         db.getReference(getString(R.string.db_joined_user) + "/" + eventKey).child(userId).removeValue();
         db.getReference(getString(R.string.db_joined_event) + "/" + userId).child(eventKey).removeValue();
+
+        User sender = new User(currUser.getUserName(), currUser.getEmail(), currUser.getProfileImageUrl());
+        Event event = new Event(currEvent.getTitle(), currEvent.getImgUrl(), currEvent.getMinPeople(), currEvent.getTime(), currEvent.getFriendsOnly());
+        Notification notification = new Notification(Constants.EVENT_QUIT_NOTIFICATION, sender, userId, event, eventKey, new Date().getTime());
+        FirebaseDatabase.getInstance().getReference("notifications").child(currEvent.getOrganizer()).push().setValue(notification);
+
         joinState = false;
         setButtonText();
+
+        Toast.makeText(EventDetailActivity.this, "Quit Event Successfully", Toast.LENGTH_LONG).show();
+
+        db.getReference(getString(R.string.db_event)).child(eventKey).child("currentPeople").setValue(currEvent.getCurrentPeople() - 1);
+
+        currEvent.setCurrentPeople(currEvent.getCurrentPeople() - 1);
+
+        if (currEvent.getCurrentPeople() == currEvent.getMinPeople() - 1) {
+            Notification organizerNotification = new Notification(Constants.EVENT_PENDING_NOTIFICATION, event, eventKey, new Date().getTime());
+            FirebaseDatabase.getInstance().getReference("notifications").child(currEvent.getOrganizer()).push().setValue(organizerNotification);
+
+            db.getReference(getString(R.string.db_joined_user)).child(eventKey).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                            Event event = new Event(currEvent.getTitle(), currEvent.getImgUrl(), currEvent.getMinPeople(), currEvent.getTime(), currEvent.getFriendsOnly());
+                            Notification notification = new Notification(Constants.EVENT_PENDING_NOTIFICATION, event, eventKey, new Date().getTime());
+                            FirebaseDatabase.getInstance().getReference("notifications").child(snapshot.getKey()).push().setValue(notification);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
     private void joinEvent() {
         db.getReference(getString(R.string.db_joined_user) + "/" + eventKey).child(userId).setValue(true);
         db.getReference(getString(R.string.db_joined_event) + "/" + userId).child(eventKey).setValue(true);
+
+        User sender = new User(currUser.getUserName(), currUser.getEmail(), currUser.getProfileImageUrl());
+        Event event = new Event(currEvent.getTitle(), currEvent.getImgUrl(), currEvent.getMinPeople(), currEvent.getTime(), currEvent.getFriendsOnly());
+        Notification notification = new Notification(Constants.EVENT_JOIN_NOTIFICATION, sender, userId, event, eventKey, new Date().getTime());
+        FirebaseDatabase.getInstance().getReference("notifications").child(currEvent.getOrganizer()).push().setValue(notification);
+
         joinState = true;
         setButtonText();
+
+        Toast.makeText(EventDetailActivity.this, "Join Event Successfully", Toast.LENGTH_LONG).show();
+
+        db.getReference(getString(R.string.db_event)).child(eventKey).child("currentPeople").setValue(currEvent.getCurrentPeople() + 1);
+
+        currEvent.setCurrentPeople(currEvent.getCurrentPeople() + 1);
+
+        if (currEvent.getCurrentPeople() == currEvent.getMinPeople()) {
+            Notification organizerNotification = new Notification(Constants.EVENT_SET_NOTIFICATION, event, eventKey, new Date().getTime());
+            FirebaseDatabase.getInstance().getReference("notifications").child(currEvent.getOrganizer()).push().setValue(organizerNotification);
+
+            db.getReference(getString(R.string.db_joined_user)).child(eventKey).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                            Event event = new Event(currEvent.getTitle(), currEvent.getImgUrl(), currEvent.getMinPeople(), currEvent.getTime(), currEvent.getFriendsOnly());
+                            Notification notification = new Notification(Constants.EVENT_SET_NOTIFICATION, event, eventKey, new Date().getTime());
+                            FirebaseDatabase.getInstance().getReference("notifications").child(snapshot.getKey()).push().setValue(notification);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
     private void saveEvent() {
         db.getReference(getString(R.string.db_saved_event) + "/" + userId).child(eventKey).setValue(true);
+
         saveState = true;
         setToggleButtonState();
+
+        Toast.makeText(EventDetailActivity.this, "Save Event Successfully", Toast.LENGTH_LONG).show();
     }
 
     private void unsaveEvent() {
         db.getReference(getString(R.string.db_saved_event) + "/" + userId).child(eventKey).removeValue();
+
         saveState = false;
         setToggleButtonState();
+
+        Toast.makeText(EventDetailActivity.this, "Unsave Event Successfully", Toast.LENGTH_LONG).show();
     }
 }
