@@ -31,7 +31,7 @@
         <TextView
             style="?normalText"
             android:text="@string/email"
-            android:layout_width="@dimen/long_text_width"
+            android:layout_width="@dimen/text_width"
             android:layout_height="@dimen/line_height"
             android:gravity="end"
             android:layout_marginTop="@dimen/paragraph_margin"
@@ -41,7 +41,7 @@
         <TextView
             android:id="@+id/tv_profile_email"
             style="?normalText"
-            android:layout_width="@dimen/input_width"
+            android:layout_width="@dimen/long_input_width"
             android:layout_height="@dimen/line_height"
             android:layout_marginTop="@dimen/paragraph_margin"
             android:layout_marginEnd="@dimen/screen_margin"
@@ -58,7 +58,7 @@
         <TextView
             style="?normalText"
             android:text="@string/mRegion"
-            android:layout_width="@dimen/long_text_width"
+            android:layout_width="@dimen/text_width"
             android:layout_height="@dimen/line_height"
             android:gravity="end"
             android:layout_marginTop="@dimen/paragraph_margin"
@@ -68,7 +68,7 @@
         <TextView
             android:id="@+id/tv_region"
             style="?normalText"
-            android:layout_width="@dimen/input_width"
+            android:layout_width="@dimen/long_input_width"
             android:layout_height="@dimen/line_height"
             android:layout_marginTop="@dimen/paragraph_margin"
             android:layout_marginEnd="@dimen/screen_margin"
@@ -84,8 +84,8 @@
 
         <TextView
             style="?normalText"
-            android:text="@string/interest"
-            android:layout_width="@dimen/long_text_width"
+            android:text="@string/interests"
+            android:layout_width="@dimen/text_width"
             android:layout_height="@dimen/line_height"
             android:gravity="end"
             android:layout_marginTop="@dimen/paragraph_margin"
@@ -95,7 +95,7 @@
         <TextView
             android:id="@+id/tv_interest"
             style="?normalText"
-            android:layout_width="@dimen/input_width"
+            android:layout_width="@dimen/long_input_width"
             android:layout_height="@dimen/line_height"
             android:layout_marginTop="@dimen/paragraph_margin"
             android:layout_marginEnd="@dimen/screen_margin"

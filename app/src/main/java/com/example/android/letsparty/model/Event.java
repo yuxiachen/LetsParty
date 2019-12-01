@@ -10,6 +10,17 @@ public class Event {
     private String organizer;
     private String description;
     private boolean friendsOnly;
+    private int currentPeople;
+
+    public Event() {}
+
+    public Event(String title, String imgUrl, int minPeople, long time, boolean friendsOnly) {
+        this.title = title;
+        this.imgUrl = imgUrl;
+        this.minPeople = minPeople;
+        this.time = time;
+        this.friendsOnly = friendsOnly;
+    }
 
     public Event(String category, String title, long time, Location location, String imgUrl) {
         this.category = category;
@@ -29,7 +40,7 @@ public class Event {
         this.description = description;
     }
 
-    public Event(String title, String imgUrl, long time, Location location, boolean friendsOnly, String category, String description, String organizer, int minPeople) {
+    public Event(String title, String imgUrl, long time, Location location, boolean friendsOnly, String category, String description, String organizer, int minPeople, int currentPeople) {
         this.title = title;
         this.imgUrl = imgUrl;
         this.time = time;
@@ -39,9 +50,8 @@ public class Event {
         this.description = description;
         this.organizer = organizer;
         this.minPeople = minPeople;
+        this.currentPeople = currentPeople;
     }
-
-    public Event() {}
 
     public String getTitle(){
         return title;
@@ -77,5 +87,13 @@ public class Event {
 
     public boolean getFriendsOnly() {
         return friendsOnly;
+    }
+
+    public int getCurrentPeople() {
+        return currentPeople;
+    }
+
+    public void setCurrentPeople(int currentPeople) {
+        this.currentPeople = currentPeople;
     }
 }

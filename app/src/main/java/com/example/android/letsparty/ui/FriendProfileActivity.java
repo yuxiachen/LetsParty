@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -141,11 +142,18 @@ public class FriendProfileActivity extends AppCompatActivity {
         User sender = new User(currUser.getUserName(), currUser.getEmail(), currUser.getProfileImageUrl());
         Notification notification = new Notification(Constants.FRIEND_REQUEST_NOTIFICATION, sender, currUserKey, new Date().getTime());
         FirebaseDatabase.getInstance().getReference("notifications").child(userKey).push().setValue(notification);
+
+        Toast.makeText(FriendProfileActivity.this, "Friend Request has been Sent", Toast.LENGTH_LONG).show();
     }
 
     private void deleteFriend() {
         FirebaseDatabase.getInstance().getReference("friends/" + currUserKey).child(userKey).removeValue();
         FirebaseDatabase.getInstance().getReference("friends/" + userKey).child(currUserKey).removeValue();
+
+        isFriend = false;
+        setButtonText();
+
+        Toast.makeText(FriendProfileActivity.this, "Delete Friend Successfully", Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -63,7 +63,8 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                String query = newText.trim().toLowerCase();
+                String query = newText.trim();
+
                 if (query.length() != 0) {
                     adapter.filter(query);
                     if (adapter.getItemCount() == 0) {
@@ -74,6 +75,7 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
                     getMyFriends();
                     showFriendList();
                 }
+
                 return false;
             }
         });
@@ -151,8 +153,11 @@ public class MyFriendActivity extends AppCompatActivity implements FriendListAda
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User friend = snapshot.getValue(User.class);
                     String key = snapshot.getKey();
-                    friends.add(friend);
-                    friendKeys.add(key);
+
+                    if (!key.equals(FirebaseAuth.getInstance().getUid())) {
+                        friends.add(friend);
+                        friendKeys.add(key);
+                    }
                 }
                 showListResult();
                 adapter.notifyDataSetChanged();

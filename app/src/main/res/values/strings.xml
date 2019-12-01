@@ -88,6 +88,7 @@
 
     <!-- friend profile screen-->
     <string name="mRegion">Region:</string>
+    <string name="interests">Interests: </string>
     <string name="mAddFriend">Add Friend</string>
     <string name="mDeleteFriend">Delete Friend</string>
 
@@ -111,8 +112,15 @@
 
     <!--inbox screen-->
     <string name="noMessage">Currently No Message in your Inbox ～</string>
-    <string name="friend_request">\u0020wants to be friends with you.</string>
-    <string name="friend_request_accepted">\u0020has accepted your friend request, you are friends now!</string>
+    <string name="friend_request">\u0020wants to be friends with you ～</string>
+    <string name="friend_request_accepted">\u0020has accepted your friend request, you are friends now !</string>
+    <string name="event_join_1">\u0020has joined your event\u0020</string>
+    <string name="event_join_2">\u0020!</string>
+    <string name="event_quit_1">\u0020has quit your event\u0020</string>
+    <string name="event_quit_2">\u0020!</string>
+    <string name="event_cancel">\u0020has been cancelled !</string>
+    <string name="event_set">\u0020has been set. Please follow the location and schedule to join the event !</string>
+    <string name="event_pending">\u0020has became pending due to someone quit the event. Sorry for the inconvenience ～</string>
 
     <!--Create Event Screen -->
     <string name="createEvent">Create Event</string>

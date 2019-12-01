@@ -73,7 +73,7 @@ public class InboxFragment extends Fragment implements NotificationAdapter.OnNot
         Query query = FirebaseDatabase.getInstance()
                 .getReference("notifications")
                 .child(FirebaseAuth.getInstance().getUid()).orderByChild("time");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -111,17 +111,22 @@ public class InboxFragment extends Fragment implements NotificationAdapter.OnNot
 
     private void showFriendRequestDialog(final Notification notification, final String notificationKey) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.image_dialog_layout, null);
+
         TextView title = view.findViewById(R.id.tv_title);
         ImageView image = view.findViewById(R.id.iv_photo);
         TextView message = view.findViewById(R.id.tv_message);
         title.setText(Constants.FRIEND_REQUEST_NOTIFICATION);
+
         message.setText(notification.getSender().getUserName() + getString(R.string.friend_request));
+
         if (notification.getSender().getProfileImageUrl() != null) {
-            Picasso.get().load(notification.getSender().getProfileImageUrl()).into(image);
+            Picasso.get().load(notification.getSender().getProfileImageUrl()).transform(new CircleTransform()).into(image);
         } else {
             image.setVisibility(View.GONE);
         }
+
         builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -135,39 +140,190 @@ public class InboxFragment extends Fragment implements NotificationAdapter.OnNot
                 deleteNotification(notificationKey);
             }
         });
+
         builder.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 deleteNotification(notificationKey);
             }
         });
+
         builder.setView(view);
         builder.show();
     }
 
     private void showFriendRequestAcceptedDialog(Notification notification, final String notificationKey) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.image_dialog_layout, null);
+
         TextView title = view.findViewById(R.id.tv_title);
         ImageView image = view.findViewById(R.id.iv_photo);
         title.setText(Constants.FRIEND_REQUEST_ACCEPTED_NOTIFICATION);
         TextView message = view.findViewById(R.id.tv_message);
+
         message.setText(notification.getSender().getUserName() + getString(R.string.friend_request_accepted));
+
         if (notification.getSender().getProfileImageUrl() != null) {
             Picasso.get().load(notification.getSender().getProfileImageUrl()).transform(new CircleTransform()).into(image);
         } else {
             image.setVisibility(View.GONE);
         }
 
-        builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteNotification(notificationKey);
             }
         });
+
         builder.setView(view);
         builder.show();
+    }
 
+    private void showEventQuitDialog(Notification notification, final String notificationKey) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.image_dialog_layout, null);
+
+        TextView title = view.findViewById(R.id.tv_title);
+        ImageView image = view.findViewById(R.id.iv_photo);
+        title.setText(Constants.EVENT_QUIT_NOTIFICATION);
+        TextView message = view.findViewById(R.id.tv_message);
+
+        message.setText(notification.getSender().getUserName() + getString(R.string.event_quit_1) + notification.getEvent().getTitle() + getString(R.string.event_quit_2));
+
+        if (notification.getEvent().getImgUrl() != null) {
+            Picasso.get().load(notification.getEvent().getImgUrl()).transform(new CircleTransform()).into(image);
+        } else {
+            image.setVisibility(View.GONE);
+        }
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteNotification(notificationKey);
+            }
+        });
+
+        builder.setView(view);
+        builder.show();
+    }
+
+    private void showEventJoinDialog(Notification notification, final String notificationKey) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.image_dialog_layout, null);
+
+        TextView title = view.findViewById(R.id.tv_title);
+        ImageView image = view.findViewById(R.id.iv_photo);
+        title.setText(Constants.EVENT_JOIN_NOTIFICATION);
+        TextView message = view.findViewById(R.id.tv_message);
+
+        message.setText(notification.getSender().getUserName() + getString(R.string.event_join_1) + notification.getEvent().getTitle() + getString(R.string.event_join_2));
+
+        if (notification.getEvent().getImgUrl() != null) {
+            Picasso.get().load(notification.getEvent().getImgUrl()).transform(new CircleTransform()).into(image);
+        } else {
+            image.setVisibility(View.GONE);
+        }
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteNotification(notificationKey);
+            }
+        });
+
+        builder.setView(view);
+        builder.show();
+    }
+
+    private void showEventCancelDialog(Notification notification, final String notificationKey) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.image_dialog_layout, null);
+
+        TextView title = view.findViewById(R.id.tv_title);
+        ImageView image = view.findViewById(R.id.iv_photo);
+        title.setText(Constants.EVENT_CANCEL_NOTIFICATION);
+        TextView message = view.findViewById(R.id.tv_message);
+
+        message.setText(notification.getEvent().getTitle() + getString(R.string.event_cancel));
+
+        if (notification.getEvent().getImgUrl() != null) {
+            Picasso.get().load(notification.getEvent().getImgUrl()).transform(new CircleTransform()).into(image);
+        } else {
+            image.setVisibility(View.GONE);
+        }
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteNotification(notificationKey);
+            }
+        });
+
+        builder.setView(view);
+        builder.show();
+    }
+
+    private void showEventSetDialog(Notification notification, final String notificationKey) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.image_dialog_layout, null);
+
+        TextView title = view.findViewById(R.id.tv_title);
+        ImageView image = view.findViewById(R.id.iv_photo);
+        title.setText(Constants.EVENT_SET_NOTIFICATION);
+        TextView message = view.findViewById(R.id.tv_message);
+
+        message.setText(notification.getEvent().getTitle() + getString(R.string.event_set));
+
+        if (notification.getEvent().getImgUrl() != null) {
+            Picasso.get().load(notification.getEvent().getImgUrl()).transform(new CircleTransform()).into(image);
+        } else {
+            image.setVisibility(View.GONE);
+        }
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteNotification(notificationKey);
+            }
+        });
+
+        builder.setView(view);
+        builder.show();
+    }
+
+    private void showEventPendingDialog(Notification notification, final String notificationKey) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.image_dialog_layout, null);
+
+        TextView title = view.findViewById(R.id.tv_title);
+        ImageView image = view.findViewById(R.id.iv_photo);
+        title.setText(Constants.EVENT_PENDING_NOTIFICATION);
+        TextView message = view.findViewById(R.id.tv_message);
+
+        message.setText(notification.getEvent().getTitle() + getString(R.string.event_pending));
+
+        if (notification.getEvent().getImgUrl() != null) {
+            Picasso.get().load(notification.getEvent().getImgUrl()).transform(new CircleTransform()).into(image);
+        } else {
+            image.setVisibility(View.GONE);
+        }
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteNotification(notificationKey);
+            }
+        });
+
+        builder.setView(view);
+        builder.show();
     }
 
     private void deleteNotification(String notificationKey) {
@@ -183,6 +339,21 @@ public class InboxFragment extends Fragment implements NotificationAdapter.OnNot
                 break;
             case Constants.FRIEND_REQUEST_ACCEPTED_NOTIFICATION:
                 showFriendRequestAcceptedDialog(notification, notificationKey);
+                break;
+            case Constants.EVENT_JOIN_NOTIFICATION:
+                showEventJoinDialog(notification, notificationKey);
+                break;
+            case Constants.EVENT_QUIT_NOTIFICATION:
+                showEventQuitDialog(notification, notificationKey);
+                break;
+            case Constants.EVENT_CANCEL_NOTIFICATION:
+                showEventCancelDialog(notification, notificationKey);
+                break;
+            case Constants.EVENT_SET_NOTIFICATION:
+                showEventSetDialog(notification, notificationKey);
+                break;
+            case Constants.EVENT_PENDING_NOTIFICATION:
+                showEventPendingDialog(notification, notificationKey);
                 break;
             case Constants.EVENT_INVITATION_NOTIFICATION:
                 // todo:

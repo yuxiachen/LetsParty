@@ -20,12 +20,17 @@ public class Notification {
     public Notification(String notificationType, Event event, String eventKey, long time) {
         this.notificationType = notificationType;
         this.event = event;
+        this.eventKey = eventKey;
+        this.time = time;
     }
 
     public Notification(String notificationType, User sender, String senderKey, Event event, String eventKey, long time) {
         this.notificationType = notificationType;
         this.sender = sender;
+        this.senderKey = senderKey;
         this.event = event;
+        this.eventKey = eventKey;
+        this.time = time;
     }
 
     public String getNotificationType() {
