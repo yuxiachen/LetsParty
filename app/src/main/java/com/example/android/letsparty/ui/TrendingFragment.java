@@ -38,7 +38,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
     private EventListAdapter mAdapter;
     private ArrayList<Event> resultEvents;
     private ArrayList<String> eventKeys;
-    private HashSet<String> existEvents;
     private SearchView searchInTrending;
     private ConstraintLayout frame;
     private TextView emptyResult;
@@ -87,7 +86,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         recyclerView = view.findViewById(R.id.trending_event_list);
         resultEvents = new ArrayList<>();
         eventKeys = new ArrayList<>();
-        existEvents = new HashSet<>();
         mAdapter = new EventListAdapter(resultEvents, eventKeys, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(mAdapter);
@@ -134,7 +132,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 resultEvents.clear();
                 eventKeys.clear();
-                existEvents.clear();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Event event = snapshot.getValue(Event.class);
