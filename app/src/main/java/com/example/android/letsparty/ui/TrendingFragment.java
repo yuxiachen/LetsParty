@@ -21,20 +21,16 @@ import com.example.android.letsparty.R;
 import com.example.android.letsparty.adapter.EventListAdapter;
 import com.example.android.letsparty.model.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+
 
 public class TrendingFragment extends Fragment implements EventListAdapter.OnEventItemClickedListener{
 
@@ -47,9 +43,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
     private ConstraintLayout frame;
     private TextView emptyResult;
     private FloatingActionButton fab;
-    private String currUser;
-    private Event event;
-    private String key;
 
     @Nullable
     @Override
@@ -91,8 +84,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
             }
         });
 
-        currUser = FirebaseAuth.getInstance().getUid();
-
         recyclerView = view.findViewById(R.id.trending_event_list);
         resultEvents = new ArrayList<>();
         eventKeys = new ArrayList<>();
@@ -114,8 +105,8 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
             eventKeys.clear();
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    event = snapshot.getValue(Event.class);
-                    key = snapshot.getKey();
+                    Event event = snapshot.getValue(Event.class);
+                    String key = snapshot.getKey();
 
                     if (event.getTime() > new Date().getTime()) {
                         resultEvents.add(event);
@@ -146,8 +137,8 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                 existEvents.clear();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        event = snapshot.getValue(Event.class);
-                        key = snapshot.getKey();
+                        Event event = snapshot.getValue(Event.class);
+                        String key = snapshot.getKey();
 
                         resultEvents.add(event);
                         eventKeys.add(key);
