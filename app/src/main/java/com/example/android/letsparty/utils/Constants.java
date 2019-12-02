@@ -18,13 +18,12 @@ public class Constants {
     public final static String EVENT_PENDING_NOTIFICATION = "Event Pending Notification";
 
     // Notification message
-    public final static String FRIEND_REQUEST_NOTIFICATION_MESSAGE = " sents you a friend invitation ～";
-    public final static String FRIEND_REQUEST_ACCEPTED_NOTIFICATION_MESSAGE = " has accepted your friend request. You are friends now !";
-    public final static String EVENT_JOIN_NOTIFICATION_MESSAGE_1 = " has joined your event ";
-    public final static String EVENT_JOIN_NOTIFICATION_MESSAGE_2 = " !";
-    public final static String EVENT_QUIT_NOTIFICATION_MESSAGE_1 = " has quit your event ";
-    public final static String EVENT_QUIT_NOTIFICATION_MESSAGE_2 = " !";
-    public final static String EVENT_CANCEL_NOTIFICATION_MESSAGE = " has been cancelled !";
-    public final static String EVENT_SET_NOTIFICATION_MESSAGE = " has been set. Please follow the location and schedule to join the event !";
-    public final static String EVENT_PENDING_NOTIFICATION_MESSAGE = " has became pending due to someone quit the event. Sorry for the inconvenience ～";
+    public final static String FRIEND_REQUEST_NOTIFICATION_MESSAGE = " Sent you a Friend Request";
+    public final static String FRIEND_REQUEST_ACCEPTED_NOTIFICATION_MESSAGE = " has Accepted your Friend Request";
+    public final static String EVENT_JOIN_NOTIFICATION_MESSAGE = " has Joined your Event ";
+    public final static String EVENT_QUIT_NOTIFICATION_MESSAGE = " has Quit your Event - ";
+    public final static String EVENT_CANCEL_NOTIFICATION_MESSAGE = " has been Cancelled";
+    public final static String EVENT_SET_NOTIFICATION_MESSAGE = " has been Set";
+    public final static String EVENT_PENDING_NOTIFICATION_MESSAGE = " has became Pending";
+    public final static String EVENT_PREFIX_NOTIFICATION_MESSAGE = "Event ";
 }

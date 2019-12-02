@@ -15,6 +15,7 @@ import com.example.android.letsparty.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.concurrent.locks.Condition;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationItemViewHolder> implements View.OnClickListener{
     private List<Notification> notifications;
@@ -75,31 +76,31 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             String message = null;
             switch (type) {
                 case Constants.FRIEND_REQUEST_NOTIFICATION:
-                    message = Constants.FRIEND_REQUEST_NOTIFICATION + " from " + notification.getSender().getUserName();
+                    message = notification.getSender().getUserName() + Constants.FRIEND_REQUEST_NOTIFICATION_MESSAGE;
                     if (notification.getSender().getProfileImageUrl() != null) imgUrl = notification.getSender().getProfileImageUrl();
                     break;
                 case Constants.FRIEND_REQUEST_ACCEPTED_NOTIFICATION:
-                    message = Constants.FRIEND_REQUEST_ACCEPTED_NOTIFICATION + " from " + notification.getSender().getUserName();
+                    message = notification.getSender().getUserName() + Constants.FRIEND_REQUEST_ACCEPTED_NOTIFICATION_MESSAGE;
                     if (notification.getSender().getProfileImageUrl() != null) imgUrl = notification.getSender().getProfileImageUrl();
                     break;
                 case Constants.EVENT_JOIN_NOTIFICATION:
-                    message = Constants.EVENT_JOIN_NOTIFICATION + " from " + notification.getSender().getUserName() + " for " + notification.getEvent().getTitle();
+                    message = notification.getSender().getUserName() + Constants.EVENT_JOIN_NOTIFICATION_MESSAGE + notification.getEvent().getTitle();
                     if (notification.getSender().getProfileImageUrl() != null) imgUrl = notification.getSender().getProfileImageUrl();
                     break;
                 case Constants.EVENT_QUIT_NOTIFICATION:
-                    message = Constants.EVENT_QUIT_NOTIFICATION + " from " + notification.getSender().getUserName() + " for " + notification.getEvent().getTitle();
+                    message = notification.getSender().getUserName() + Constants.EVENT_QUIT_NOTIFICATION_MESSAGE + notification.getEvent().getTitle();
                     if (notification.getSender().getProfileImageUrl() != null) imgUrl = notification.getSender().getProfileImageUrl();
                     break;
                 case Constants.EVENT_CANCEL_NOTIFICATION:
-                    message = Constants.EVENT_CANCEL_NOTIFICATION + " for " + notification.getEvent().getTitle();
+                    message = Constants.EVENT_PREFIX_NOTIFICATION_MESSAGE + notification.getEvent().getTitle() + Constants.EVENT_CANCEL_NOTIFICATION_MESSAGE;
                     if (notification.getEvent().getImgUrl() != null) imgUrl = notification.getEvent().getImgUrl();
                     break;
                 case Constants.EVENT_SET_NOTIFICATION:
-                    message = Constants.EVENT_SET_NOTIFICATION + " for " + notification.getEvent().getTitle();
+                    message = Constants.EVENT_PREFIX_NOTIFICATION_MESSAGE + notification.getEvent().getTitle() + Constants.EVENT_SET_NOTIFICATION_MESSAGE;
                     if (notification.getEvent().getImgUrl() != null) imgUrl = notification.getEvent().getImgUrl();
                     break;
                 case Constants.EVENT_PENDING_NOTIFICATION:
-                    message = Constants.EVENT_PENDING_NOTIFICATION + " for " + notification.getEvent().getTitle();
+                    message = Constants.EVENT_PREFIX_NOTIFICATION_MESSAGE + notification.getEvent().getTitle() + Constants.EVENT_PENDING_NOTIFICATION_MESSAGE;
                     if (notification.getEvent().getImgUrl() != null) imgUrl = notification.getEvent().getImgUrl();
                     break;
                 default:

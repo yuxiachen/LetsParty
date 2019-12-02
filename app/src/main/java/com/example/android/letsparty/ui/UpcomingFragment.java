@@ -66,6 +66,7 @@ public class UpcomingFragment extends Fragment implements EventListAdapter.OnEve
                     }
 
                     long currTime = new Date().getTime();
+
                     // Find the Event
                     Query eventQuery = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event)).orderByChild("time").startAt(currTime);
                     eventQuery.addValueEventListener(new ValueEventListener() {

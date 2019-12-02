@@ -21,6 +21,7 @@ import com.example.android.letsparty.R;
 import com.example.android.letsparty.adapter.EventListAdapter;
 import com.example.android.letsparty.model.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +31,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class TrendingFragment extends Fragment implements EventListAdapter.OnEventItemClickedListener{
 
@@ -37,10 +42,14 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
     private EventListAdapter mAdapter;
     private ArrayList<Event> resultEvents;
     private ArrayList<String> eventKeys;
+    private HashSet<String> existEvents;
     private SearchView searchInTrending;
     private ConstraintLayout frame;
     private TextView emptyResult;
     private FloatingActionButton fab;
+    private String currUser;
+    private Event event;
+    private String key;
 
     @Nullable
     @Override
@@ -60,7 +69,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                         .orderByChild("category").startAt(query.toLowerCase()).endAt(query.toLowerCase() + "\uf8ff");
                 queryResult.addValueEventListener(resultListener);
 
-
                 return false;
             }
 
@@ -74,6 +82,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                 return false;
             }
         });
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,12 +91,16 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
             }
         });
 
+        currUser = FirebaseAuth.getInstance().getUid();
+
         recyclerView = view.findViewById(R.id.trending_event_list);
         resultEvents = new ArrayList<>();
         eventKeys = new ArrayList<>();
+        existEvents = new HashSet<>();
         mAdapter = new EventListAdapter(resultEvents, eventKeys, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(mAdapter);
+
         showTrending();
 
         return view;
@@ -101,10 +114,13 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
             eventKeys.clear();
             if (dataSnapshot.exists()) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Event event = snapshot.getValue(Event.class);
-                    String key = snapshot.getKey();
-                    resultEvents.add(event);
-                    eventKeys.add(key);
+                    event = snapshot.getValue(Event.class);
+                    key = snapshot.getKey();
+
+                    if (event.getTime() > new Date().getTime()) {
+                        resultEvents.add(event);
+                        eventKeys.add(key);
+                    }
                 }
                 mAdapter.notifyDataSetChanged();
             } else {
@@ -119,7 +135,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         }
     };
 
-    private void showTrending(){
+    private void showTrending() {
         long currTime = new Date().getTime();
         Query eventQuery = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event)).orderByChild("time").startAt(currTime);
         eventQuery.addValueEventListener(new ValueEventListener() {
@@ -127,10 +143,12 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 resultEvents.clear();
                 eventKeys.clear();
+                existEvents.clear();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Event event = snapshot.getValue(Event.class);
-                        String key = snapshot.getKey();
+                        event = snapshot.getValue(Event.class);
+                        key = snapshot.getKey();
+
                         resultEvents.add(event);
                         eventKeys.add(key);
                     }
@@ -143,9 +161,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-
         });
-
     }
 
     private void openEventDetailActivity(String key){

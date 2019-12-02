@@ -19,9 +19,11 @@ import com.example.android.letsparty.model.Event;
 import com.example.android.letsparty.model.Notification;
 import com.example.android.letsparty.model.User;
 import com.example.android.letsparty.utils.Constants;
+import com.google.android.gms.common.data.DataBufferSafeParcelable;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -30,6 +32,8 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EventDetailActivity extends AppCompatActivity {
 
@@ -40,16 +44,21 @@ public class EventDetailActivity extends AppCompatActivity {
     private boolean isOrganizer;
     private boolean joinState;
     private boolean saveState;
+    private boolean isFriendsOnly;
     private Button btn_join;
     private ToggleButton btn_save;
     private User user;
     private User currUser;
     private String organizer_name;
+    private Set<String> friendList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
+
+        friendList = new HashSet<>();
+
         eventKey = getIntent().getStringExtra("key");
         db = FirebaseDatabase.getInstance();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -75,6 +84,22 @@ public class EventDetailActivity extends AppCompatActivity {
                         isOrganizer = true;
                         setButtonText();
                     }
+
+                    db.getReference(getString(R.string.db_friend)).child(currEvent.getOrganizer()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                    friendList.add(snapshot.getKey());
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
 
                     db.getReference(getString(R.string.db_user) + "/" + currEvent.getOrganizer()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -188,6 +213,18 @@ public class EventDetailActivity extends AppCompatActivity {
         TextView tv_description = findViewById(R.id.tv_description);
         tv_description.setText(description);
 
+        String friendsOnly = "";
+        if (event.getFriendsOnly()) {
+            friendsOnly += getString(R.string.eventFriendsOnly) + " " + getString(R.string.yes);
+        }
+        else {
+            friendsOnly += getString(R.string.eventFriendsOnly) + " " + getString(R.string.no);
+        }
+        TextView tv_friendsOnly = findViewById(R.id.tv_friendsOnly);
+        tv_friendsOnly.setText(friendsOnly);
+
+        isFriendsOnly = event.getFriendsOnly();
+
         btn_join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,7 +235,12 @@ public class EventDetailActivity extends AppCompatActivity {
                     if (joinState) {
                         quitEvent();
                     } else {
-                        joinEvent();
+                        if (isFriendsOnly && !friendList.contains(userId)) {
+                            Toast.makeText(EventDetailActivity.this, "You have to be a Friend with the Organizer to Join in this Event", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            joinEvent();
+                        }
                     }
                 }
             }

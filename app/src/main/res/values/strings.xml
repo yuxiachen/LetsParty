@@ -61,13 +61,14 @@
     <string name="eventPeople">Minimum Number of People: </string>
     <string name="eventOrganizer">Organizer: </string>
     <string name="eventDescription">Description: </string>
+    <string name="eventFriendsOnly">Friends Only: </string>
     <string name="join">Join</string>
     <string name="quit">Quit</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
 
     <string-array name="interest_array">
-        <item>Sports</item>
+        <item>Sport</item>
         <item>Kid</item>
         <item>Entertainment</item>
         <item>Music</item>
