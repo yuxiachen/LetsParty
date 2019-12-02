@@ -23,7 +23,6 @@ import com.example.android.letsparty.model.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -60,7 +59,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                         .orderByChild("category").startAt(query.toLowerCase()).endAt(query.toLowerCase() + "\uf8ff");
                 queryResult.addValueEventListener(resultListener);
 
-
                 return false;
             }
 
@@ -74,6 +72,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                 return false;
             }
         });
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +87,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         mAdapter = new EventListAdapter(resultEvents, eventKeys, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(mAdapter);
+
         showTrending();
 
         return view;
@@ -103,8 +103,11 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Event event = snapshot.getValue(Event.class);
                     String key = snapshot.getKey();
-                    resultEvents.add(event);
-                    eventKeys.add(key);
+
+                    if (event.getTime() > new Date().getTime()) {
+                        resultEvents.add(event);
+                        eventKeys.add(key);
+                    }
                 }
                 mAdapter.notifyDataSetChanged();
             } else {
@@ -119,7 +122,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         }
     };
 
-    private void showTrending(){
+    private void showTrending() {
         long currTime = new Date().getTime();
         Query eventQuery = FirebaseDatabase.getInstance().getReference(getString(R.string.db_event)).orderByChild("time").startAt(currTime);
         eventQuery.addValueEventListener(new ValueEventListener() {
@@ -131,6 +134,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Event event = snapshot.getValue(Event.class);
                         String key = snapshot.getKey();
+
                         resultEvents.add(event);
                         eventKeys.add(key);
                     }
@@ -143,9 +147,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-
         });
-
     }
 
     private void openEventDetailActivity(String key){

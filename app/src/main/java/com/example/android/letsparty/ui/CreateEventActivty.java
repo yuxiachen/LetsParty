@@ -166,7 +166,7 @@ public class CreateEventActivty extends AppCompatActivity {
                                     final String downloadUrl = uri.toString();
                                     String title = et_title.getText().toString();
                                     long time = calendar.getTimeInMillis();
-                                    String category = spinnerCategory.getSelectedItem().toString();
+                                    String category = spinnerCategory.getSelectedItem().toString().toLowerCase();
                                     String description = et_description.getText().toString().trim();
                                     String street = et_street.getText().toString();
                                     String city = et_city.getText().toString();
