@@ -29,8 +29,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-
 
 public class TrendingFragment extends Fragment implements EventListAdapter.OnEventItemClickedListener{
 

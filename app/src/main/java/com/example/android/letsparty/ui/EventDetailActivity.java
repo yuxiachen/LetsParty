@@ -191,7 +191,7 @@ public class EventDetailActivity extends AppCompatActivity {
             btn_join.setEnabled(false);
         }
 
-        String category = getString(R.string.eventCategory) + " " + event.getCategory();
+        String category = getString(R.string.eventCategory) + " " + event.getCategory().substring(0, 1).toUpperCase() + event.getCategory().substring(1);
         TextView tv_category = findViewById(R.id.tv_category);
         tv_category.setText(category);
 
