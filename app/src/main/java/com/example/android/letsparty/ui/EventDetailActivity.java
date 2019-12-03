@@ -1,7 +1,10 @@
 package com.example.android.letsparty.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,7 +22,6 @@ import com.example.android.letsparty.model.Event;
 import com.example.android.letsparty.model.Notification;
 import com.example.android.letsparty.model.User;
 import com.example.android.letsparty.utils.Constants;
-import com.google.android.gms.common.data.DataBufferSafeParcelable;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,10 +49,13 @@ public class EventDetailActivity extends AppCompatActivity {
     private boolean isFriendsOnly;
     private Button btn_join;
     private ToggleButton btn_save;
+    private ToggleButton btn_invite;
     private User user;
     private User currUser;
     private String organizer_name;
     private Set<String> friendList;
+    private ArrayList<User> friends;
+    private ArrayList<String> friendKeys;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,12 +63,15 @@ public class EventDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_detail);
 
         friendList = new HashSet<>();
+        friends = new ArrayList<>();
+        friendKeys = new ArrayList<>();
 
         eventKey = getIntent().getStringExtra("key");
         db = FirebaseDatabase.getInstance();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         btn_join = findViewById(R.id.btn_join);
         btn_save = findViewById(R.id.btn_save);
+        btn_invite = findViewById(R.id.btn_invite);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -84,6 +92,25 @@ public class EventDetailActivity extends AppCompatActivity {
                         isOrganizer = true;
                         setButtonText();
                     }
+
+                    db.getReference(getString(R.string.db_friend)).child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                    friends.add(snapshot.getValue(User.class));
+                                    friendKeys.add(snapshot.getKey());
+                                }
+
+                                System.out.println(friendKeys);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
 
                     db.getReference(getString(R.string.db_friend)).child(currEvent.getOrganizer()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -259,6 +286,23 @@ public class EventDetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+        if (isOrganizer || joinState) {
+            btn_invite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Put Methods Here
+                }
+            });
+        }
+        else {
+            btn_invite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(EventDetailActivity.this, "You have to Join in this Event first to Invite a Friend", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     public boolean onSupportNavigateUp() {
