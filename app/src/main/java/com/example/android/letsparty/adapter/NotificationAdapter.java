@@ -103,6 +103,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     message = Constants.EVENT_PREFIX_NOTIFICATION_MESSAGE + notification.getEvent().getTitle() + Constants.EVENT_PENDING_NOTIFICATION_MESSAGE;
                     if (notification.getEvent().getImgUrl() != null) imgUrl = notification.getEvent().getImgUrl();
                     break;
+                case Constants.EVENT_INVITATION_NOTIFICATION:
+                    message = notification.getSender().getUserName() + Constants.EVENT_INVITATION_NOTIFICATION_MESSAGE + notification.getEvent().getTitle();
+                    if (notification.getSender().getProfileImageUrl() != null) imgUrl = notification.getSender().getProfileImageUrl();
+                    break;
                 default:
                     break;
             }

@@ -35,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class EventDetailActivity extends AppCompatActivity {
@@ -54,8 +55,12 @@ public class EventDetailActivity extends AppCompatActivity {
     private User currUser;
     private String organizer_name;
     private Set<String> friendList;
+    private Set<Integer> invitedFriendList;
     private ArrayList<User> friends;
     private ArrayList<String> friendKeys;
+    private ArrayList<String> friendNames;
+    private String[] friendNamesArray;
+    private boolean[] checkedFriends;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +70,9 @@ public class EventDetailActivity extends AppCompatActivity {
         friendList = new HashSet<>();
         friends = new ArrayList<>();
         friendKeys = new ArrayList<>();
+        friendNames = new ArrayList<>();
+        invitedFriendList = new HashSet<>();
+
 
         eventKey = getIntent().getStringExtra("key");
         db = FirebaseDatabase.getInstance();
@@ -100,8 +108,10 @@ public class EventDetailActivity extends AppCompatActivity {
                                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                                     friends.add(snapshot.getValue(User.class));
                                     friendKeys.add(snapshot.getKey());
+                                    friendNames.add(snapshot.getValue(User.class).getUserName());
                                 }
-
+                                friendNamesArray = friendNames.toArray(new String[friendNames.size()]);
+                                checkedFriends = new boolean[friendNamesArray.length];
                                 System.out.println(friendKeys);
                             }
                         }
@@ -292,6 +302,50 @@ public class EventDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     // Put Methods Here
+                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(EventDetailActivity.this);
+                    mBuilder.setTitle("Friend List:");
+                    mBuilder.setMultiChoiceItems(friendNamesArray, checkedFriends, new DialogInterface.OnMultiChoiceClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int position, boolean isChecked) {
+                            if(isChecked){
+                                if(!invitedFriendList.contains(position)){
+                                    invitedFriendList.add(position);
+                                }
+                            }else{
+                                if(invitedFriendList.contains(position)){
+                                    invitedFriendList.remove(position);
+                                }
+                            }
+                        }
+                    });
+                    mBuilder.setCancelable(false);
+                    mBuilder.setPositiveButton(R.string.mBuilderOK, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Iterator<Integer> iterator = invitedFriendList.iterator();
+                            while(iterator.hasNext()){
+                                Notification inviteNotification = new Notification(Constants.EVENT_INVITATION_NOTIFICATION, currUser, userId, currEvent, eventKey, new Date().getTime());
+                                FirebaseDatabase.getInstance().getReference("notifications").child(friendKeys.get(iterator.next())).push().setValue(inviteNotification);
+                            }
+                        }
+                    });
+                    mBuilder.setNegativeButton(R.string.mBuilderDismiss, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    mBuilder.setNeutralButton(R.string.mBuilderClearAll, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            for(int i=0; i<checkedFriends.length; i++){
+                                checkedFriends[i]=false;
+                            }
+                            invitedFriendList.clear();
+                        }
+                    });
+                    AlertDialog mDialog = mBuilder.create();
+                    mDialog.show();
                 }
             });
         }

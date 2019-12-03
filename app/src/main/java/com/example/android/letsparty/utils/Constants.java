@@ -26,4 +26,5 @@ public class Constants {
     public final static String EVENT_SET_NOTIFICATION_MESSAGE = " has been Set";
     public final static String EVENT_PENDING_NOTIFICATION_MESSAGE = " has became Pending";
     public final static String EVENT_PREFIX_NOTIFICATION_MESSAGE = "Event ";
+    public final static String EVENT_INVITATION_NOTIFICATION_MESSAGE = " invited you to join ";
 }

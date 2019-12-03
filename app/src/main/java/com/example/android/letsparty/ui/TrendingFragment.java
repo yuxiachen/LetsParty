@@ -153,7 +153,6 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
     private void openEventDetailActivity(String key){
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra("key", key);
-
         startActivity(intent);
     }
 
