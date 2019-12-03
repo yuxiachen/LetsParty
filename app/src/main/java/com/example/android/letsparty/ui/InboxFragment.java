@@ -3,6 +3,7 @@ package com.example.android.letsparty.ui;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -325,6 +326,13 @@ public class InboxFragment extends Fragment implements NotificationAdapter.OnNot
         builder.setView(view);
         builder.show();
     }
+    private void openEventDetailActivity(Notification notification, final String notificationKey){
+        String eventKey = notification.getEventKey();
+        Intent intent = new Intent(getActivity(), EventDetailActivity.class);
+        intent.putExtra("key", eventKey);
+        deleteNotification(notificationKey);
+        startActivity(intent);
+    }
 
     private void deleteNotification(String notificationKey) {
         FirebaseDatabase.getInstance().getReference("notifications/" + currUserKey).child(notificationKey).removeValue();
@@ -356,8 +364,7 @@ public class InboxFragment extends Fragment implements NotificationAdapter.OnNot
                 showEventPendingDialog(notification, notificationKey);
                 break;
             case Constants.EVENT_INVITATION_NOTIFICATION:
-                // todo:
-                // openEventDetailActivity(notification.getEvent());
+                openEventDetailActivity(notification, notificationKey);
                 break;
             default:
                 break;
