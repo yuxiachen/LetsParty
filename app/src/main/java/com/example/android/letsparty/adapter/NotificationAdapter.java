@@ -15,7 +15,6 @@ import com.example.android.letsparty.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.concurrent.locks.Condition;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationItemViewHolder> implements View.OnClickListener{
     private List<Notification> notifications;
