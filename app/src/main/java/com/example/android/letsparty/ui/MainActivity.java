@@ -11,13 +11,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.MenuItem;
 
 import android.os.PersistableBundle;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.android.letsparty.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">LetsParty</string>
 
-    <!-- Date Format -->
+    <!-- Date format -->
     <string name="dateFormat">yyyy-MM-dd HH:mm:ss</string>
 
-    <!-- navigation icon title-->
+    <!-- Navigation icon title-->
     <string name="title_trending">Trending</string>
     <string name="title_my_event">My Events</string>
     <string name="title_inbox">Inbox</string>
@@ -20,7 +20,7 @@
     <string name="db_friend">friends</string>
     <string name="db_notifications">notifications</string>
 
-    <!--login screen-->
+    <!--Login screen-->
     <string name="mail">Email</string>
     <string name="password">Password</string>
     <string name="signup">SignUp</string>
@@ -31,7 +31,7 @@
     <string name="error_empty_password">Error: Password can not be empty!</string>
     <string name="error_email_not_verified">Error: Please verify your email address before login!</string>
 
-    <!--signup screen-->
+    <!--Sign up screen-->
     <string name="username">Username</string>
     <string name="confirmPassword">Confirm Password</string>
     <string name="error_invalid_confirm_password">Error: Confirm password is not consistent with the password entered!</string>
@@ -39,7 +39,7 @@
     <string name="error_invalid_password">Error: Password should be at least 8 characters!</string>
 
 
-    <!--password reset screen-->
+    <!--Password reset screen-->
     <string name="enter_email_for_reset">Please enter your email address, and we will send you a link to reset your password.</string>
     <string name="reset_password">Reset Password</string>
     <string name="link_sent">A link has been sent to your email, please using it to reset your password.</string>
@@ -48,9 +48,9 @@
     <string name="search">Search</string>
     <string name="empty_result">No Result Found ～</string>
 
-    <!--Me Screen-->
+    <!--Me screen-->
     <string name="edit_profile">Edit Profile</string>
-    <string name="change_password">Change password</string>
+    <string name="change_password">Change Password</string>
     <string name="friends">Friends</string>
 
 
@@ -84,17 +84,17 @@
     <string name="mBuilderDismiss">Dismiss</string>
     <string name="mBuilderClearAll">Clear all</string>
 
-    <!--my friend screen-->
+    <!--My friend screen-->
     <string name="noFriend">You do not have any Friend yet ～</string>
     <string name="mAddNewFriend">New friend</string>
 
-    <!-- friend profile screen-->
+    <!--Friend profile screen-->
     <string name="mRegion">Region:</string>
     <string name="interests">Interests: </string>
     <string name="mAddFriend">Add Friend</string>
     <string name="mDeleteFriend">Delete Friend</string>
 
-    <!--Edit Profile Screen -->
+    <!--Edit profile screen -->
     <string name="takePhoto">Take Photo</string>
     <string name="choosePhoto">Choose from Album</string>
     <string name="cancelUpload">Cancel</string>
@@ -106,13 +106,13 @@
     <string name="city">City: </string>
     <string name="zipCode">Zip Code: </string>
 
-    <!--Change Password Screen -->
+    <!--Change password screen -->
     <string name="hint">Use the Form below to Change your Password ... </string>
     <string name="currentPassword">Current Password</string>
     <string name="newPassword">New Password</string>
     <string name="confirmNewPassword">Confirm New Password</string>
 
-    <!--inbox screen-->
+    <!--Inbox screen-->
     <string name="noMessage">Currently No Message in your Inbox ～</string>
     <string name="friend_request">\u0020wants to be friends with you ～</string>
     <string name="friend_request_accepted">\u0020has accepted your friend request, you are friends now !</string>
@@ -124,7 +124,7 @@
     <string name="event_set">\u0020has been set. Please follow the location and schedule to join the event !</string>
     <string name="event_pending">\u0020has became pending due to someone quit the event. Sorry for the inconvenience ～</string>
 
-    <!--Create Event Screen -->
+    <!--Create event screen -->
     <string name="createEvent">Create Event</string>
     <string name="eventTitle">Title: </string>
     <string name="eventDate">Date: </string>

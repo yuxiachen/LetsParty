@@ -7,8 +7,6 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,20 +31,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.android.letsparty.R;
 import com.example.android.letsparty.model.Event;
 import com.example.android.letsparty.model.Location;
-import com.example.android.letsparty.model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -56,7 +51,6 @@ public class CreateEventActivty extends AppCompatActivity {
     private ImageView imageView;
     private EditText et_title, et_date, et_time, et_street, et_city, et_state, et_country, et_zipcode, et_description, et_minPeople;
     private Button btn_post;
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference dbReference;
     private StorageReference mStorageReference;
     private final Calendar calendar = Calendar.getInstance();
@@ -66,7 +60,7 @@ public class CreateEventActivty extends AppCompatActivity {
     private boolean friendsOnly;
     private Dialog dialog;
     private View inflate;
-    private Button takePhoto, choosePhoto, cancelUpload;
+    private Button choosePhoto, cancelUpload;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
