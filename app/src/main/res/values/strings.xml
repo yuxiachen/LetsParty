@@ -66,6 +66,7 @@
     <string name="quit">Quit</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="invite">Invite Friend</string>
 
     <string-array name="interest_array">
         <item>Sport</item>
