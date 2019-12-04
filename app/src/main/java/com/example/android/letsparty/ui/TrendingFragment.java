@@ -2,7 +2,6 @@ package com.example.android.letsparty.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,7 +75,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CreateEventActivty.class);
+                Intent intent = new Intent(getActivity(), CreateEventActivity.class);
                 startActivity(intent);
             }
         });

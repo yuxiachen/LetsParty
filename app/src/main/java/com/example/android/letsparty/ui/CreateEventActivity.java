@@ -7,8 +7,6 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,24 +31,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.android.letsparty.R;
 import com.example.android.letsparty.model.Event;
 import com.example.android.letsparty.model.Location;
-import com.example.android.letsparty.model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class CreateEventActivty extends AppCompatActivity {
+public class CreateEventActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri mUri;
     private ImageView imageView;
@@ -113,14 +108,14 @@ public class CreateEventActivty extends AppCompatActivity {
         et_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(CreateEventActivty.this, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(CreateEventActivity.this, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
         et_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(CreateEventActivty.this, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(CreateEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
@@ -151,7 +146,7 @@ public class CreateEventActivty extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(mUri == null){
-                    Toast.makeText(CreateEventActivty.this, "Please pick an event image.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateEventActivity.this, "Please pick an event image.", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     final StorageReference fileReference = mStorageReference.child(System.currentTimeMillis() + "." + getFileExtension(mUri));
@@ -178,7 +173,7 @@ public class CreateEventActivty extends AppCompatActivity {
                                     int currentPeople = 1;
 
                                     if (time <= System.currentTimeMillis()) {
-                                        Toast.makeText(CreateEventActivty.this, "Please pick a valid date and time.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CreateEventActivity.this, "Please pick a valid date and time.", Toast.LENGTH_SHORT).show();
                                     }
 
                                     String output = "";
@@ -213,7 +208,7 @@ public class CreateEventActivty extends AppCompatActivity {
 
                                     if (!output.equals("")) {
                                         output = output.substring(0, output.length() - 2) + " can not be empty.";
-                                        Toast.makeText(CreateEventActivty.this, output, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(CreateEventActivity.this, output, Toast.LENGTH_LONG).show();
                                     } else {
                                         location = new Location(street, city, state, country, zipcode);
                                         Event event = new Event(title, downloadUrl, time, location, friendsOnly, category, description, organizer, minPeople, currentPeople);
@@ -223,7 +218,7 @@ public class CreateEventActivty extends AppCompatActivity {
                                         FirebaseDatabase.getInstance().getReference("postedEvents").child(organizer).child(id).setValue(true);
                                         FirebaseDatabase.getInstance().getReference("joinedEvents").child(organizer).child(id).setValue(true);
 
-                                        Toast.makeText(CreateEventActivty.this, "Post Event successfully.", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(CreateEventActivity.this, "Post Event successfully.", Toast.LENGTH_LONG).show();
 
                                         finish();
                                     }
@@ -231,7 +226,7 @@ public class CreateEventActivty extends AppCompatActivity {
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(CreateEventActivty.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CreateEventActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
 
                             });
