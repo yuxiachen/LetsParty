@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -276,7 +277,7 @@ public class EventDetailActivity extends AppCompatActivity {
                             Toast.makeText(EventDetailActivity.this, "You have to be a Friend with the Organizer to Join in this Event", Toast.LENGTH_LONG).show();
                         }
                         else {
-                            joinEvent();
+                            confirmInfo();
                         }
                     }
                 }
@@ -506,7 +507,29 @@ public class EventDetailActivity extends AppCompatActivity {
         }
     }
 
+    private void confirmInfo() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.confirm_join_dialog, null);
+        TextView title = view.findViewById(R.id.tv_title);
+        EditText etName = view.findViewById(R.id.et_name);
+        EditText etEmail = view.findViewById(R.id.et_email);
+        Button btnConfirm = view.findViewById(R.id.btn_confirm);
+        title.setText("Please confirm your info");
+        etName.setText(currUser.getUserName());
+        etEmail.setText(currUser.getEmail());
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                joinEvent();
+            }
+        });
+
+        builder.setView(view);
+        builder.show();
+    }
     private void joinEvent() {
+
         db.getReference(getString(R.string.db_joined_user) + "/" + eventKey).child(userId).setValue(true);
         db.getReference(getString(R.string.db_joined_event) + "/" + userId).child(eventKey).setValue(true);
 
