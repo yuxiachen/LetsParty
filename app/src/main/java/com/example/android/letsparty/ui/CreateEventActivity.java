@@ -51,7 +51,6 @@ public class CreateEventActivity extends AppCompatActivity {
     private ImageView imageView;
     private EditText et_title, et_date, et_time, et_street, et_city, et_state, et_country, et_zipcode, et_description, et_minPeople;
     private Button btn_post;
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference dbReference;
     private StorageReference mStorageReference;
     private final Calendar calendar = Calendar.getInstance();
@@ -61,7 +60,7 @@ public class CreateEventActivity extends AppCompatActivity {
     private boolean friendsOnly;
     private Dialog dialog;
     private View inflate;
-    private Button takePhoto, choosePhoto, cancelUpload;
+    private Button choosePhoto, cancelUpload;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

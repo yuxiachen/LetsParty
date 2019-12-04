@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,10 +25,10 @@ import com.example.android.letsparty.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -57,7 +56,6 @@ public class EventDetailActivity extends AppCompatActivity {
     private String organizer_name;
     private Set<String> friendList;
     private Set<Integer> invitedFriendList;
-    private ArrayList<User> friends;
     private ArrayList<String> friendKeys;
     private ArrayList<String> friendNames;
     private String[] friendNamesArray;
@@ -69,7 +67,6 @@ public class EventDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_detail);
 
         friendList = new HashSet<>();
-        friends = new ArrayList<>();
         friendKeys = new ArrayList<>();
         friendNames = new ArrayList<>();
         invitedFriendList = new HashSet<>();
@@ -107,13 +104,11 @@ public class EventDetailActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
                                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                                    friends.add(snapshot.getValue(User.class));
                                     friendKeys.add(snapshot.getKey());
                                     friendNames.add(snapshot.getValue(User.class).getUserName());
                                 }
                                 friendNamesArray = friendNames.toArray(new String[friendNames.size()]);
                                 checkedFriends = new boolean[friendNamesArray.length];
-                                System.out.println(friendKeys);
                             }
                         }
 
@@ -461,6 +456,9 @@ public class EventDetailActivity extends AppCompatActivity {
         // db.getReference(getString(R.string.db_joined_user)).child(eventKey).removeValue();
         db.getReference(getString(R.string.db_posted_event) + "/" + userId).child(eventKey).removeValue();
         db.getReference(getString(R.string.db_event)).child(eventKey).removeValue();
+
+        // Delete the Image of the Event if Cancel
+        FirebaseStorage.getInstance().getReferenceFromUrl(currEvent.getImgUrl()).delete();
 
         finish();
     }
