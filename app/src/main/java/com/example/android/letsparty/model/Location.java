@@ -11,12 +11,6 @@ public class Location {
 
     public Location() {}
 
-    public Location(String city, String state) {
-        this.city = city;
-        this.state = state;
-    }
-
-
     public Location(String city, String country, String state, String zipCode) {
         this.city = city;
         this.country = country;

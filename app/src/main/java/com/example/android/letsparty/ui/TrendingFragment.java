@@ -86,6 +86,7 @@ public class TrendingFragment extends Fragment implements EventListAdapter.OnEve
         mAdapter = new EventListAdapter(resultEvents, eventKeys, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(mAdapter);
+        recyclerView.setNestedScrollingEnabled(true);
 
         showTrending();
 

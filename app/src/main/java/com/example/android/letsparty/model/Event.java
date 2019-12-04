@@ -22,24 +22,6 @@ public class Event {
         this.friendsOnly = friendsOnly;
     }
 
-    public Event(String category, String title, long time, Location location, String imgUrl) {
-        this.category = category;
-        this.time = time;
-        this.title = title;
-        this.location = location;
-        this.imgUrl = imgUrl;
-    }
-
-    public Event(String title, String imgUrl, long time, Location location, boolean friendsOnly, String category, String description) {
-        this.title = title;
-        this.imgUrl = imgUrl;
-        this.time = time;
-        this.location = location;
-        this.friendsOnly = friendsOnly;
-        this.category = category;
-        this.description = description;
-    }
-
     public Event(String title, String imgUrl, long time, Location location, boolean friendsOnly, String category, String description, String organizer, int minPeople, int currentPeople) {
         this.title = title;
         this.imgUrl = imgUrl;
